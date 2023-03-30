@@ -54,7 +54,6 @@
 			code
 		}) {
 			this.code = code
-			document.getElementById("openApp").style.display = 'none'
 			document.getElementsByTagName("body")[0].style = ""
 		},
 		methods: {
