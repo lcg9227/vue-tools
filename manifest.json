@@ -23,7 +23,8 @@
             "OAuth" : {},
             "Share" : {},
             "Barcode" : {},
-            "Geolocation" : {}
+            "Geolocation" : {},
+            "Push" : {}
         },
         "distribute" : {
             "android" : {
@@ -57,7 +58,10 @@
             },
             "sdkConfigs" : {
                 "push" : {
-                    "unipush" : null
+                    "unipush" : {
+                        "version" : "2",
+                        "offline" : false
+                    }
                 },
                 "ad" : {},
                 "share" : {},
@@ -69,6 +73,9 @@
                 "maps" : {},
                 "oauth" : {},
                 "payment" : {}
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
             }
         }
     },
