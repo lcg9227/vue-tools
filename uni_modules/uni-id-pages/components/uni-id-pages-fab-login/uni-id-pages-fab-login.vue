@@ -422,7 +422,7 @@
 					fail: async (err) => {
 						console.log(err);
 						uni.hideLoading()
-					}
+					},
 				})
 			},
 			login(params, type) { //联网验证登录
