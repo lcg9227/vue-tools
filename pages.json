@@ -232,7 +232,7 @@
 				"pagePath": "pages/grid/grid",
 				"iconPath": "static/tabbar/grid.png",
 				"selectedIconPath": "static/tabbar/grid_active.png",
-				"text": "宫格"
+				"text": "工具"
 			},
 			{
 				"pagePath": "pages/ucenter/ucenter",
