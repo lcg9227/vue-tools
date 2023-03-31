@@ -14,18 +14,10 @@
 		list: {
 			type: Array,
 			default: [
-				{ title: '测试1', icon: 't_xiaoxi1' },
-				{ title: '测试2', icon: 't_xiaoxi1' },
-				{ title: '测试3', icon: 't_xiaoxi1' },
-				{ title: '测试4', icon: 't_xiaoxi1' },
-				{ title: '测试5', icon: 'c_wode1' },
-				{ title: '测试6', icon: 'c_wode1' },
-				{ title: '测试7', icon: 'c_wode1' },
-				{ title: '测试8', icon: 'c_wode1' },
-				{ title: '测试9', icon: 'c_wode1' },
-				{ title: '测试10', icon: 'c_wode1' },
-				{ title: '测试11', icon: 't_xiaoxi1' },
-				{ title: '测试12', icon: 't_xiaoxi1' },
+				{ title: '测试1', icon: 't_xiaoxi1', type: 'page', url: '' },
+				{ title: '测试2', icon: 't_xiaoxi1', type: 'page', url: '' },
+				{ title: '测试3', icon: 'c_wode1', type: 'page', url: '' },
+				{ title: '测试4', icon: 'c_wode1', type: 'page', url: '' },
 			],
 		},
 		column: {

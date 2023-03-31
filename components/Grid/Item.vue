@@ -1,16 +1,17 @@
 <!-- item -->
 <template>
 	<div class="item-box">
-		<div class="item">
-			<Iconfont :type="config.icon" :font-size="config.iconFontSize || 60" :color="config.iconColor || '#007aff'" />
+		<div class="item" @click="click">
+			<Iconfont :type="config.icon || 'xiaoxi1'" :font-size="config.iconFontSize || 40" :color="config.iconColor || '#007aff'" />
 			<div class="title">{{ title }}</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import { defineProps } from 'vue'
+	import { defineProps, getCurrentInstance } from 'vue'
 	import Iconfont from '../Iconfont/Iconfont.vue'
+	const { proxy } = getCurrentInstance()
 	const props = defineProps({
 		title: {
 			type: String,
@@ -18,11 +19,16 @@
 		},
 		config: {
 			type: Object,
-			default: {
-				icon: 'xiaoxi1',
-			},
+			default: {},
 		},
 	})
+	// 点击事件
+	const click = () => {
+		if (props.config.type === 'page') {
+			console.log('>>>', proxy)
+			proxy.goPage('pages/grid/grid')
+		}
+	}
 </script>
 
 <style scoped lang="scss">
@@ -36,6 +42,7 @@
 		justify-content: center;
 		align-items: center;
 		padding: 20rpx 0;
+		cursor: pointer;
 	}
 	.title {
 		text-align: center;
