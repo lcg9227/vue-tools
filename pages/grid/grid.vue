@@ -17,11 +17,7 @@
 			</swiper>
 		</unicloud-db>
 		<!-- 宫格 -->
-		<view class="section-box">
-			<text class="decoration"></text>
-			<text class="section-text">{{ $t('grid.grid') }}</text>
-		</view>
-
+		<Title title="我的工具" />
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
 				<template v-for="(item, i) in gridList">
@@ -43,12 +39,14 @@
 	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar'
 	// #endif
 	import Iconfont from '../../components/Iconfont'
+	import Title from '../../components/Title'
 	export default {
 		components: {
 			// #ifdef APP-PLUS
 			statusBar,
 			// #endif
 			Iconfont,
+			Title
 		},
 		data() {
 			return {
@@ -133,22 +131,6 @@
 	}
 	/* #endif */
 
-	.section-box {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		padding: 20rpx;
-	}
-	.decoration {
-		width: 4px;
-		height: 12px;
-		border-radius: 10px;
-		background-color: #2979ff;
-	}
-	.section-text {
-		color: #333;
-		margin-left: 15rpx;
-	}
 
 	/* #ifdef APP-NVUE */
 	.warp {
