@@ -3,8 +3,10 @@ import i18n from './lang/i18n'
 
 // #ifndef VUE3
 import Vue from 'vue'
+import pocket from '@/common/pocket.js'
 
 Vue.config.productionTip = false
+Vue.config.globalProperties.pocket = pocket
 App.mpType = 'app'
 const app = new Vue({
 	i18n,

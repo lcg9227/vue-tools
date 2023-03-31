@@ -1,6 +1,5 @@
 <script>
 	import initApp from '@/common/appInit.js'
-	// import pocket from '@/common/pocket.js'
 	import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js'
 	export default {
 		globalData: {
@@ -12,7 +11,6 @@
 		},
 		onLaunch: function () {
 			console.log('App Launch')
-			// this.globalData.pocket = pocket
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
 			initApp()

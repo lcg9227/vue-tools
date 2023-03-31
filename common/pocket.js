@@ -35,10 +35,3 @@ export const throttle = (fn, delay = 300) => {
 		}
 	}
 }
-// 跳转页面
-export const goPage = url => {
-	uni.navigateTo({
-		url,
-		animationType: 'fade-in',
-	})
-}

@@ -26,7 +26,7 @@
 	const click = () => {
 		if (props.config.type === 'page') {
 			console.log('>>>', proxy)
-			proxy.goPage('pages/grid/grid')
+			// proxy.goPage('pages/grid/grid')
 		}
 	}
 </script>
