@@ -1,94 +1,92 @@
 @font-face {
-  font-family: "ticonfont"; /* Project id 3988277 */
-  src: url('//at.alicdn.com/t/c/font_3988277_plnrab0h7vo.woff2?t=1680248666382') format('woff2'),
-       url('//at.alicdn.com/t/c/font_3988277_plnrab0h7vo.woff?t=1680248666382') format('woff'),
-       url('//at.alicdn.com/t/c/font_3988277_plnrab0h7vo.ttf?t=1680248666382') format('truetype');
+	font-family: 'ticonfont'; /* Project id 3988277 */
+	src: url('./ticonfont.ttf') format('truetype');
 }
 
 .ticonfont {
-  font-family: "ticonfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: 'ticonfont' !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .t_shouye1:before {
-  content: "\e671";
+	content: '\e671';
 }
 
 .t_xiaoxi1:before {
-  content: "\e673";
+	content: '\e673';
 }
 
 .t_wode1:before {
-  content: "\e675";
+	content: '\e675';
 }
 
 .t_yingyongchanpin1:before {
-  content: "\e677";
+	content: '\e677';
 }
 
 .t_zhengce1:before {
-  content: "\e679";
+	content: '\e679';
 }
 
 .t_xiangmu1:before {
-  content: "\e67b";
+	content: '\e67b';
 }
 
 .t_xiangmu11:before {
-  content: "\e67d";
+	content: '\e67d';
 }
 
 .t_dingyue1:before {
-  content: "\e67f";
+	content: '\e67f';
 }
 
 .t_gengduo1:before {
-  content: "\e681";
+	content: '\e681';
 }
 
 .t_jinrong1:before {
-  content: "\e683";
+	content: '\e683';
 }
 
 .t_chuangye1:before {
-  content: "\e685";
+	content: '\e685';
 }
 
 .t_xiaoxi11:before {
-  content: "\e687";
+	content: '\e687';
 }
 
 .t_fuwuquan1:before {
-  content: "\e689";
+	content: '\e689';
 }
 
 .t_faxian1:before {
-  content: "\e68b";
+	content: '\e68b';
 }
 
 .t_shoucang1:before {
-  content: "\e68d";
+	content: '\e68d';
 }
 
 .t_huiyuan1:before {
-  content: "\e68f";
+	content: '\e68f';
 }
 
 .t_renzheng1:before {
-  content: "\e690";
+	content: '\e690';
 }
 
 .t_shangpu1:before {
-  content: "\e691";
+	content: '\e691';
 }
 
 .t_chengguo1:before {
-  content: "\e692";
+	content: '\e692';
 }
 
 .t_tongji1:before {
-  content: "\e693";
+	content: '\e693';
 }
