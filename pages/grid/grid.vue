@@ -18,7 +18,9 @@
 		</unicloud-db>
 		<!-- 宫格 -->
 		<Title title="我的工具" />
-		<Grid />
+		<unicloud-db ref="toolsdb" v-slot:default="{ data, loading, error, options }" collection="tool-list" @load="onqueryload">
+			<Grid :list="data" />
+		</unicloud-db>
 	</view>
 </template>
 
