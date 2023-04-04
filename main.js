@@ -1,17 +1,21 @@
 import App from './App'
 import i18n from './lang/i18n'
+import * as pocket from './common/pocket'
 
+const config = {
+	globalProperties: { pocket },
+	errorHandler: (err, vm, info) => console.error(err)
+}
 // #ifndef VUE3
 import Vue from 'vue'
-import pocket from '@/common/pocket.js'
 
 Vue.config.productionTip = false
-Vue.config.globalProperties.pocket = pocket
 App.mpType = 'app'
 const app = new Vue({
 	i18n,
-	...App,
+	...App
 })
+Object.assign(app.config, config)
 app.$mount()
 // #endif
 
@@ -20,6 +24,7 @@ import { createSSRApp } from 'vue'
 
 export function createApp() {
 	const app = createSSRApp(App)
+	Object.assign(app.config, config)
 	app.use(i18n)
 	return { app }
 }

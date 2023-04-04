@@ -99,13 +99,8 @@
 		background-color: #ffffff;
 	}
 
-	.image {
-		width: 50rpx;
-		height: 50rpx;
-	}
-
 	.banner-image {
-		width: 750rpx;
+		width: 100%;
 		height: 400rpx;
 	}
 

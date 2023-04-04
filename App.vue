@@ -13,6 +13,7 @@
 			console.log('App Launch')
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
+			this.globalData.aaaaa = ()=> console.log('>>>');
 			initApp()
 			uniIdPageInit()
 			// #ifdef APP-PLUS

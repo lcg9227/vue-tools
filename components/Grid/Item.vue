@@ -2,7 +2,7 @@
 <template>
 	<div class="item-box">
 		<div class="item" @click="click">
-			<Iconfont :type="config.icon || 'xiaoxi1'" :font-size="config.iconFontSize || 40" :color="config.iconColor || '#007aff'" />
+			<Iconfont :type="config.icon || 'xiaoxi1'" :font-size="config.iconFontSize || 50" :color="config.iconColor || '#007aff'" />
 			<div class="title">{{ title }}</div>
 		</div>
 	</div>
@@ -15,18 +15,21 @@
 	const props = defineProps({
 		title: {
 			type: String,
-			default: '',
+			default: ''
 		},
 		config: {
 			type: Object,
-			default: {},
-		},
+			default: {}
+		}
 	})
 	// 点击事件
 	const click = () => {
-		if (props.config.type === 'page') {
-			console.log('>>>', proxy)
-			// proxy.goPage('pages/grid/grid')
+		const { type, url } = props.config
+		if (type === 0) {
+			if (url) {
+				proxy.pocket.goPage()
+				return
+			}
 		}
 	}
 </script>
@@ -52,5 +55,6 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		font-size: 28rpx;
 	}
 </style>

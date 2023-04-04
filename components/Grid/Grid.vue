@@ -2,7 +2,7 @@
 <template>
 	<div class="grid">
 		<template v-for="(item, index) in list" :key="index">
-			<Item :style="{ width: itemWidth }" :title="item.title" :config="item" />
+			<Item :style="{ width: itemWidth }" :title="item.name" :config="item" />
 		</template>
 	</div>
 </template>
@@ -13,19 +13,13 @@
 	const props = defineProps({
 		list: {
 			type: Array,
-			default: [
-				{ title: '测试1', icon: 't_xiaoxi1', type: 'page', url: '' },
-				{ title: '测试2', icon: 't_xiaoxi1', type: 'page', url: '' },
-				{ title: '测试3', icon: 'c_wode1', type: 'page', url: '' },
-				{ title: '测试41', icon: 'c_wode1', type: 'page', url: '' },
-			],
+			default: [],
 		},
 		column: {
 			type: Number,
 			default: 4,
 		},
 	})
-
 	const itemWidth = computed(() => {
 		return `${100 / props.column}%`
 	})
