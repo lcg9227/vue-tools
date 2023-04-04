@@ -8,7 +8,7 @@
 			}
 		},
 		{
-			"path": "pages/grid/grid",
+			"path": "pages/tools/tools",
 			"style": {
 				"enablePullDownRefresh": true,
 				"navigationStyle": "custom"
@@ -226,10 +226,10 @@
 				"pagePath": "pages/list/list",
 				"iconPath": "static/tabbar/list.png",
 				"selectedIconPath": "static/tabbar/list_active.png",
-				"text": "列表"
+				"text": "文章"
 			},
 			{
-				"pagePath": "pages/grid/grid",
+				"pagePath": "pages/tools/tools",
 				"iconPath": "static/tabbar/grid.png",
 				"selectedIconPath": "static/tabbar/grid_active.png",
 				"text": "工具"
