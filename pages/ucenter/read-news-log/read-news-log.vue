@@ -40,7 +40,7 @@
 			console.log(typeof readNewsLogIds,readNewsLogIds);
 			this.udbWhere = `"_id" in ${JSON.stringify(readNewsLogIds)}`
 			uni.setNavigationBarTitle({
-				title: this.$t('newsLog.navigationBarTitle')
+				title: '个人资料'
 			})
 		},
 		onPullDownRefresh() {

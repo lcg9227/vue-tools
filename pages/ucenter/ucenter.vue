@@ -9,7 +9,7 @@
 
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{ userInfo.nickname || userInfo.username || userInfo.mobile }}</text>
-				<text class="uer-name" v-else>{{ $t('mine.notLogged') }}</text>
+				<text class="uer-name" v-else>{{ '未登录' }}</text>
 			</view>
 		</view>
 		<uni-grid class="grid" :column="4" :showBorder="false" :square="true">
@@ -63,52 +63,35 @@
 		// #endif
 		data() {
 			return {
-				gridList: [
-					// {
-					// 	text: this.$t('mine.showText'),
-					// 	icon: 'chat',
-					// },
-					// {
-					// 	text: this.$t('mine.showText'),
-					// 	icon: 'cloud-upload',
-					// },
-					// {
-					// 	text: this.$t('mine.showText'),
-					// 	icon: 'contact',
-					// },
-					// {
-					// 	text: this.$t('mine.showText'),
-					// 	icon: 'download',
-					// },
-				],
+				gridList: [],
 				ucenterList: [
 					[
 						{
-							title: this.$t('mine.readArticles'),
+							title: '阅读过的文章',
 							to: '/pages/ucenter/read-news-log/read-news-log',
-							icon: 'flag',
-						},
+							icon: 'flag'
+						}
 					],
 					[
 						{
-							title: this.$t('mine.feedback'),
+							title: '问题与反馈',
 							to: '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
-							icon: 'help',
+							icon: 'help'
 						},
 						{
-							title: this.$t('mine.settings'),
+							title: '设置',
 							to: '/pages/ucenter/settings/settings',
-							icon: 'gear',
-						},
+							icon: 'gear'
+						}
 					],
 					// #ifdef APP-PLUS
 					[
 						{
-							title: this.$t('mine.about'),
+							title: '关于',
 							to: '/pages/ucenter/about/about',
-							icon: 'info',
-						},
-					],
+							icon: 'info'
+						}
+					]
 					// #endif
 				],
 				listStyles: {
@@ -119,15 +102,15 @@
 						color: '#eee', // 边框颜色
 						width: '1px', // 边框宽度
 						style: 'solid', // 边框样式
-						radius: '100%', // 边框圆角，支持百分比
-					},
-				},
+						radius: '100%' // 边框圆角，支持百分比
+					}
+				}
 			}
 		},
 		onLoad() {
 			//#ifdef APP-PLUS
 			// this.ucenterList[this.ucenterList.length - 2].unshift({
-			// 	title:this.$t('mine.checkUpdate'),// this.this.$t('mine.checkUpdate')"检查更新"
+			// 	title:'检查更新',
 			// 	rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 			// 	event: 'checkVersion',
 			// 	icon: 'loop',
@@ -150,12 +133,12 @@
 			// #endif
 			appConfig() {
 				return getApp().globalData.config
-			},
+			}
 		},
 		methods: {
 			toSettings() {
 				uni.navigateTo({
-					url: '/pages/ucenter/settings/settings',
+					url: '/pages/ucenter/settings/settings'
 				})
 			},
 			/**
@@ -174,23 +157,22 @@
 				} else {
 					uni.showToast({
 						title: res.result.message,
-						icon: 'none',
+						icon: 'none'
 					})
 				}
 			},
 			toUserInfo() {
 				uni.navigateTo({
-					url: '/uni_modules/uni-id-pages/pages/userinfo/userinfo',
+					url: '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
 				})
 			},
 			tapGrid(index) {
 				uni.showToast({
-					// title: '你点击了，第' + (index + 1) + '个',
-					title: this.$t('mine.clicked') + ' ' + (index + 1),
-					icon: 'none',
+					title: `你点击了，第${index + 1}个`,
+					icon: 'none'
 				})
-			},
-		},
+			}
+		}
 	}
 </script>
 

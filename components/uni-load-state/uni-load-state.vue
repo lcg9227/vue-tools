@@ -3,12 +3,12 @@
 		<view v-if="state.error">
 			<view class="box" v-if="networkType == 'none'">
 				<image class="icon-image" src="@/static/uni-load-state/disconnection.png" mode="widthFix"></image>
-				<text class="tip-text">{{noNetwork}}</text>
+				<text class="tip-text">{{'网络异常'}}</text>
 				<view class="btn btn-default" @click="openSettings">
-					<text class="btn-text">{{toSet}}</text>
+					<text class="btn-text">{{'前往设置'}}</text>
 				</view>
 			</view>
-			<text class="error" v-else>{{error}}：{{JSON.stringify(state.error)}}</text>
+			<text class="error" v-else>{{'错误'}}：{{JSON.stringify(state.error)}}</text>
 		</view>
 		<template v-else>
 			<!-- #ifdef APP-NVUE -->
@@ -23,30 +23,8 @@
 </template>
 
 <script>
-	import {
-		initVueI18n
-	} from '@dcloudio/uni-i18n'
-	import messages from './i18n/index.js'
-	const {
-		t
-	} = initVueI18n(messages)
-
 	export default {
 		name: "uni-load-state",
-		computed: {
-			noData() {
-				return t('noData')
-			},
-			noNetwork() {
-				return t('noNetwork')
-			},
-			toSet() {
-				return t('toSet')
-			},
-			error() {
-				return t('error')
-			}
-		},
 		data() {
 			return {
 				"networkType": ""

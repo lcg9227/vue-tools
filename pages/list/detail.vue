@@ -11,23 +11,31 @@
 		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
 		<!-- #endif -->
 		<view class="article-title">{{ title }}</view>
-		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" collection="opendb-news-articles,uni-id-users"
-			:field="field" :getone="true" :where="where" :manual="true" ref="detail"
-			foreignKey="opendb-news-articles.user_id" @load="loadData">
+		<unicloud-db
+			v-slot:default="{ data, loading, error, options }"
+			:options="formData"
+			collection="opendb-news-articles,uni-id-users"
+			:field="field"
+			:getone="true"
+			:where="where"
+			:manual="true"
+			ref="detail"
+			foreignKey="opendb-news-articles.user_id"
+			@load="loadData">
 			<template v-if="!loading && data">
 				<uni-list :border="false">
 					<uni-list-item thumbSize="lg" :thumb="data.image">
 						<!-- 通过body插槽定义作者信息内容 -->
 						<template v-slot:body>
 							<view class="header-content">
-								<view class="uni-title">{{data.user_id && data.user_id[0] && data.user_id[0].nickname || '未知'}}</view>
+								<view class="uni-title">{{ (data.user_id && data.user_id[0] && data.user_id[0].nickname) || '未知' }}</view>
 							</view>
 						</template>
 						<template v-slot:footer>
 							<view class="footer">
-								<view class="uni-note">更新于
-									<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm"
-										:threshold="[60000, 2592000000]" />
+								<view class="uni-note"
+									>更新于
+									<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm" :threshold="[60000, 2592000000]" />
 								</view>
 							</view>
 						</template>
@@ -38,7 +46,7 @@
 					<image class="banner-img" :src="data.avatar" mode="widthFix"></image>
 					<!-- 文章摘要 -->
 					<view class="banner-title">
-						<text class="uni-ellipsis">{{data.excerpt}}</text>
+						<text class="uni-ellipsis">{{ data.excerpt }}</text>
 					</view>
 				</view>
 				<view class="article-content">
@@ -51,33 +59,33 @@
 
 <script>
 	// #ifdef APP
-	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
-	import uniNavBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue';
+	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js'
+	import uniNavBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue'
 	const uniShare = new UniShare()
 	// #endif
-	const db = uniCloud.database();
+	const db = uniCloud.database()
 	const readNewsLog = db.collection('read-news-log')
 	export default {
 		// #ifdef APP
-		components:{
-			"uni-nav-bar":uniNavBar
+		components: {
+			'uni-nav-bar': uniNavBar
 		},
-		onBackPress({from}) {
-			if(from == 'backbutton'){
-				if(uniShare.isShow){
-					this.$nextTick(function(){
-						console.log(uniShare);
+		onBackPress({ from }) {
+			if (from == 'backbutton') {
+				if (uniShare.isShow) {
+					this.$nextTick(function () {
+						console.log(uniShare)
 						uniShare.hide()
 					})
 				}
-				return uniShare.isShow;
+				return uniShare.isShow
 			}
 		},
 		// #endif
 		data() {
 			return {
 				// 当前显示 _id
-				id: "",
+				id: '',
 				title: 'title',
 				// 数据表名
 				// 查询字段，多个字段用 , 分割
@@ -91,7 +99,7 @@
 			uniStarterConfig() {
 				return getApp().globalData.config
 			},
-			where(){
+			where() {
 				//拼接where条件 查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
 				return `_id =="${this.id}"`
 			}
@@ -111,65 +119,71 @@
 		},
 		onReady() {
 			// 开始加载数据，修改 where 条件后才开始去加载 clinetDB 的数据 ，需要等组件渲染完毕后才开始执行 loadData，所以不能再 onLoad 中执行
-			if (this.id) { // ID 不为空，则发起查询
+			if (this.id) {
+				// ID 不为空，则发起查询
 				this.$refs.detail.loadData()
 			} else {
 				uni.showToast({
 					icon: 'none',
-					title: this.$t('listDetail.newsErr')
+					title: '出错了，新闻ID为空'
 				})
 			}
 		},
 		onNavigationBarButtonTap(event) {
 			if (event.type == 'share') {
-				this.shareClick();
+				this.shareClick()
 			}
 		},
 		methods: {
-			$log(...args){
-				console.log('args',...args,this.id)
+			$log(...args) {
+				console.log('args', ...args, this.id)
 			},
-			setReadNewsLog(){
+			setReadNewsLog() {
 				let item = {
-					"article_id":this.id,
-					"last_time":Date.now()
-				},
-				readNewsLog = uni.getStorageSync('readNewsLog')||[],
-				index = -1;
-				readNewsLog.forEach(({article_id},i)=>{
-					if(article_id == item.article_id){
+						article_id: this.id,
+						last_time: Date.now()
+					},
+					readNewsLog = uni.getStorageSync('readNewsLog') || [],
+					index = -1
+				readNewsLog.forEach(({ article_id }, i) => {
+					if (article_id == item.article_id) {
 						index = i
 					}
 				})
-				if(index === -1){
+				if (index === -1) {
 					readNewsLog.push(item)
-				}else{
-					readNewsLog.splice(index,1,item)
+				} else {
+					readNewsLog.splice(index, 1, item)
 				}
-				uni.setStorageSync('readNewsLog',readNewsLog)
-				console.log(readNewsLog);
+				uni.setStorageSync('readNewsLog', readNewsLog)
+				console.log(readNewsLog)
 			},
 			setFavorite() {
-				if ( uniCloud.getCurrentUserInfo().tokenExpired < Date.now() ){
-					return console.log('未登录用户');
+				if (uniCloud.getCurrentUserInfo().tokenExpired < Date.now()) {
+					return console.log('未登录用户')
 				}
 				let article_id = this.id,
-					last_time = Date.now();
-					console.log({article_id,last_time});
-					readNewsLog.where(`"article_id" == "${article_id}" && "user_id"==$env.uid`)
-						.update({last_time})
-						.then(({result:{updated}}) => {
-							console.log('updated',updated);
-							if (!updated) {
-								readNewsLog.add({article_id}).then(e=>{
-									console.log(e);
-								}).catch(err => {
-									console.log(err);
+					last_time = Date.now()
+				console.log({ article_id, last_time })
+				readNewsLog
+					.where(`"article_id" == "${article_id}" && "user_id"==$env.uid`)
+					.update({ last_time })
+					.then(({ result: { updated } }) => {
+						console.log('updated', updated)
+						if (!updated) {
+							readNewsLog
+								.add({ article_id })
+								.then(e => {
+									console.log(e)
 								})
-							}
-						}).catch(err => {
-							console.log(err);
-						})
+								.catch(err => {
+									console.log(err)
+								})
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
 			},
 			loadData(data) {
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题
@@ -177,10 +191,9 @@
 					this.title = data[0].title
 					uni.setNavigationBarTitle({
 						title: data[0].title
-					});
-
+					})
 				}
-				this.setReadNewsLog();
+				this.setReadNewsLog()
 			},
 			/**
 			 * followClick
@@ -188,96 +201,98 @@
 			 */
 			followClick() {
 				uni.showToast({
-					title:this.$t('listDetail.follow'),
+					title: '点击关注',
 					icon: 'none'
-				});
+				})
 			},
 			/**
 			 * 分享该文章
 			 */
 			// #ifdef APP
 			shareClick() {
-				let {
-					_id,
-					title,
-					excerpt,
-					avatar
-				} = this.$refs.detail.dataList
-				console.log( JSON.stringify({
-					_id,
-					title,
-					excerpt,
-					avatar
-				}) );
-				uniShare.show({
-					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
-						type: 0,
-						href: this.uniStarterConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
-						title: this.title,
-						summary: excerpt,
-						imageUrl: avatar + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
+				let { _id, title, excerpt, avatar } = this.$refs.detail.dataList
+				console.log(
+					JSON.stringify({
+						_id,
+						title,
+						excerpt,
+						avatar
+					})
+				)
+				uniShare.show(
+					{
+						content: {
+							//公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
+							type: 0,
+							href: this.uniStarterConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
+							title: this.title,
+							summary: excerpt,
+							imageUrl: avatar + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
+						},
+						menus: [
+							{
+								img: '/static/app-plus/sharemenu/wechatfriend.png',
+								text: '微信好友',
+								share: {
+									provider: 'weixin',
+									scene: 'WXSceneSession'
+								}
+							},
+							{
+								img: '/static/app-plus/sharemenu/wechatmoments.png',
+								text: '微信朋友圈',
+								share: {
+									provider: 'weixin',
+									scene: 'WXSceneTimeline'
+								}
+							},
+							{
+								img: '/static/app-plus/sharemenu/mp_weixin.png',
+								text: '微信小程序',
+								share: {
+									provider: 'weixin',
+									scene: 'WXSceneSession',
+									type: 5,
+									miniProgram: {
+										id: this.uniStarterConfig.mp.weixin.id,
+										path: `/pages/list/detail?id=${_id}&title=${title}`,
+										webUrl: this.uniStarterConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
+										type: 0
+									}
+								}
+							},
+							{
+								img: '/static/app-plus/sharemenu/weibo.png',
+								text: '微博',
+								share: {
+									provider: 'sinaweibo'
+								}
+							},
+							{
+								img: '/static/app-plus/sharemenu/qq.png',
+								text: 'QQ',
+								share: {
+									provider: 'qq'
+								}
+							},
+							{
+								img: '/static/app-plus/sharemenu/copyurl.png',
+								text: '复制',
+								share: 'copyurl'
+							},
+							{
+								img: '/static/app-plus/sharemenu/more.png',
+								text: '更多',
+								share: 'shareSystem'
+							}
+						],
+						cancelText: '取消分享'
 					},
-					menus: [{
-							"img": "/static/app-plus/sharemenu/wechatfriend.png",
-							"text": this.$t('common.wechatFriends'),
-							"share": {
-								"provider": "weixin",
-								"scene": "WXSceneSession"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/wechatmoments.png",
-							"text": this.$t('common.wechatBbs'),
-							"share": {
-								"provider": "weixin",
-								"scene": "WXSceneTimeline"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/mp_weixin.png",
-							"text": this.$t('common.wechatApplet'),
-							"share": {
-								provider: "weixin",
-								scene: "WXSceneSession",
-								type: 5,
-								miniProgram: {
-									id: this.uniStarterConfig.mp.weixin.id,
-									path: `/pages/list/detail?id=${_id}&title=${title}`,
-									webUrl: this.uniStarterConfig.h5.url +
-										`/#/pages/list/detail?id=${_id}&title=${title}`,
-									type: 0
-								},
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/weibo.png",
-							"text": this.$t('common.weibo'),
-							"share": {
-								"provider": "sinaweibo"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/qq.png",
-							"text": "QQ",
-							"share": {
-								"provider": "qq"
-							}
-						},
-						{
-							"img": "/static/app-plus/sharemenu/copyurl.png",
-							"text": this.$t('common.copy'),
-							"share": "copyurl"
-						},
-						{
-							"img": "/static/app-plus/sharemenu/more.png",
-							"text": this.$t('common.more'),
-							"share": "shareSystem"
-						}
-					],
-					cancelText: this.$t('common.cancelShare'),
-				}, e => { //callback
-					console.log(e);
-				})
+					e => {
+						//callback
+						console.log(e)
+					}
+				)
 			}
 			// #endif
 		}
