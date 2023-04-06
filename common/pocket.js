@@ -39,7 +39,7 @@ export const throttle = (fn, delay = 300) => {
 // 跳转页面
 export const goPage = (url, data = {}, config = {}) => {
 	uni.navigateTo({
-		url: '/pages/list/search/search',
+		url,
 		animationType: 'slide-in-left',
 		animationDuration: 2000,
 		success: function (res) {

@@ -1,6 +1,16 @@
 {
 	"pages": [
 		{
+			"path": "pages/tools/lgmj/lgmj",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
 			"path": "pages/test/test",
 			"style": {
 				"enablePullDownRefresh": false,

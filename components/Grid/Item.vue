@@ -24,11 +24,22 @@
 	})
 	// 点击事件
 	const click = () => {
-		const { type, url } = props.config
+		const { type, url, title, path } = props.config
+		console.log('>>>', props.config)
 		if (type === 0) {
-			if (url) {
-				proxy.pocket.goPage()
+			if (path) {
+				proxy.pocket.goPage(path)
 				return
+			}
+		}
+		if (type === 1) {
+			if (url) {
+				uni.navigateTo({
+					url: '/uni_modules/uni-id-pages/pages/common/webview/webview?url=' + url + '&title=' + title,
+					success: res => {},
+					fail: () => {},
+					complete: () => {}
+				})
 			}
 		}
 	}
