@@ -25,7 +25,6 @@
 	// 点击事件
 	const click = () => {
 		const { type, url, title, path } = props.config
-		console.log('>>>', props.config)
 		if (type === 0) {
 			if (path) {
 				proxy.pocket.goPage(path)
