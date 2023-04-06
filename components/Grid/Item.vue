@@ -30,6 +30,7 @@
 				proxy.pocket.goPage(path)
 				return
 			}
+			// 提示 todo
 		}
 		if (type === 1) {
 			if (url) {
@@ -39,6 +40,7 @@
 					fail: () => {},
 					complete: () => {}
 				})
+				return
 			}
 		}
 	}
