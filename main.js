@@ -1,4 +1,6 @@
 import App from './App'
+// import MintUI from 'mint-ui'
+// import 'mint-ui/lib/style.css'
 import * as pocket from './common/pocket'
 
 const config = {

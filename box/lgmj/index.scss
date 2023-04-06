@@ -1,3 +1,6 @@
+.page {
+	font-size: 28rpx;
+}
 .info-panel {
 	position: fixed !important;
 	width: 100%;
@@ -20,8 +23,13 @@
 .content.win {
 	padding-top: 150px;
 }
+.popup ::v-deep .uni-popup__wrapper {
+	height: 800rpx;
+	padding: 30rpx 30rpx 100rpx 30rpx;
+}
 .header {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	padding: 5px;
@@ -38,7 +46,17 @@
 	color: #666;
 	padding-left: 5px;
 }
-
+.op_list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.switch_name {
+	position: relative;
+	right: -20rpx;
+	font-size: 24rpx;
+	color: #2979ff;
+}
 .item {
 	display: inline-flex;
 	flex-direction: row;
@@ -63,6 +81,9 @@
 	justify-content: center;
 	align-items: center;
 	padding: 5px;
+	::v-deep .uni-select{
+		height: 50rpx;
+	}
 }
 
 .select-title {
@@ -80,12 +101,19 @@
 }
 .switch {
 	padding-left: 10px;
+	transform: scale(0.5);
 }
 
 .button-box {
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	width: 100%;
+	padding-top: 10rpx;
+}
+.button {
+	margin-left: 20rpx;
+	margin-right: 0;
 }
 
 .line {

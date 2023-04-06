@@ -1,6 +1,16 @@
 {
 	"pages": [
 		{
+			"path": "pages/test/test",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"scrollIndicator": "none"
+				}
+			}
+		},
+		{
 			"path": "pages/list/list",
 			"style": {
 				"enablePullDownRefresh": true,
@@ -59,8 +69,7 @@
 				"navigationBarTitleText": "阅读记录",
 				"enablePullDownRefresh": true
 			}
-		}
-		,
+		},
 		{
 			"path": "pages/ucenter/about/about",
 			"style": {
@@ -208,7 +217,7 @@
 				"path": "pages/list/detail"
 			},
 			{
-				"path": "pages/list/list"
+				"path": "pages/test/test"
 			},
 			{
 				"path": "pages/ucenter/settings/settings"
@@ -223,7 +232,7 @@
 		"backgroundColor": "#FFFFFF",
 		"list": [
 			{
-				"pagePath": "pages/list/list",
+				"pagePath": "pages/test/test",
 				"iconPath": "static/tabbar/list.png",
 				"selectedIconPath": "static/tabbar/list_active.png",
 				"text": "文章"
