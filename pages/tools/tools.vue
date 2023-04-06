@@ -18,7 +18,7 @@
 		</unicloud-db>
 		<!-- 宫格 -->
 		<Title title="我的工具" />
-		<unicloud-db ref="toolsdb" v-slot:default="{ data, loading, error, options }" collection="tool-list" @load="onqueryload">
+		<unicloud-db ref="toolsdb" v-slot:default="{ data, loading, error, options }" :where="toolsWhere" collection="tool-list" @load="onqueryload">
 			<Grid :list="data" />
 		</unicloud-db>
 	</view>
@@ -42,10 +42,17 @@
 			return {
 				current: 0,
 				hasLogin: false,
+				toolsWhere: ''
 			}
 		},
 		onShow() {
 			this.hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+		},
+		onLoad() {
+			// this.toolsWhere = 'permissionType==0 || (permissionType==1&&permission in )'
+			// this.$nextTick(() => {
+			// 	this.$refs.toolsdb.loadData()
+			// })
 		},
 		methods: {
 			/**
@@ -65,12 +72,12 @@
 						url: '/uni_modules/uni-id-pages/pages/common/webview/webview?url=' + item.open_url + '&title=' + item.title,
 						success: res => {},
 						fail: () => {},
-						complete: () => {},
+						complete: () => {}
 					})
 				}
 				// 其余业务处理
-			},
-		},
+			}
+		}
 	}
 </script>
 
@@ -107,5 +114,4 @@
 	.swiper-box {
 		height: 400rpx;
 	}
-
 </style>
