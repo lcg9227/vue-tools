@@ -64,7 +64,7 @@
 			onqueryload(data) {
 				// const _data = uni.getStorageSync('tools_list')
 			},
-			onqueryError(error) {
+			async onqueryError(error) {
 				this.pocket.checkError(error)
 			},
 			changeSwiper(e) {
