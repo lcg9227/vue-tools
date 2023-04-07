@@ -47,7 +47,9 @@
 		onLoad() {
 			this.toolsWhere = 'permissionType==0'
 			if (hasLogin) {
-				const { permission } = getUserInfo()
+				const userInfo = getUserInfo()
+				console.log('当前登录信息>>>', userInfo)
+				const { permission } = userInfo
 				const _where = ` || (permissionType==1 && permission in ${JSON.stringify(permission)})`
 				this.toolsWhere = `${this.toolsWhere}${_where}`
 			}
