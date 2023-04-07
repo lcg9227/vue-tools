@@ -29,7 +29,6 @@
 	// #endif
 	import Title from '@/components/Title/Title.vue'
 	import Grid from '@/components/Grid/Grid.vue'
-	import { getUserInfo, hasLogin } from '@/common/pocket'
 	export default {
 		components: {
 			// #ifdef APP-PLUS
@@ -46,8 +45,9 @@
 		},
 		onLoad() {
 			this.toolsWhere = 'permissionType==0'
-			if (hasLogin) {
-				const userInfo = getUserInfo()
+			console.log('是否登录>>>', this.pocket.hasLogin())
+			if (this.pocket.hasLogin()) {
+				const userInfo = this.pocket.getUserInfo()
 				console.log('当前登录信息>>>', userInfo)
 				const { permission } = userInfo
 				const _where = ` || (permissionType==1 && permission in ${JSON.stringify(permission)})`

@@ -162,9 +162,13 @@
 				}
 			},
 			toUserInfo() {
-				uni.navigateTo({
-					url: '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
-				})
+				if (!this.hasLogin) {
+					uni.navigateTo({
+						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
+					})
+					return
+				}
+				console.log('已登录>>>')
 			},
 			tapGrid(index) {
 				uni.showToast({
