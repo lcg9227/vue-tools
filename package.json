@@ -82,6 +82,7 @@
 		}
 	},
 	"dependencies": {
+		"count-to": "^1.2.0",
 		"mint-ui": "^2.2.13",
 		"qrcodejs2": "^0.0.2"
 	}

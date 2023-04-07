@@ -1,6 +1,20 @@
 {
 	"pages": [
 		{
+			"path": "pages/tools/tools",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/list/list",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/tools/lgmj/lgmj",
 			"style": {
 				"enablePullDownRefresh": false,
@@ -18,20 +32,6 @@
 				"app-plus": {
 					"scrollIndicator": "none"
 				}
-			}
-		},
-		{
-			"path": "pages/list/list",
-			"style": {
-				"enablePullDownRefresh": true,
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/tools/tools",
-			"style": {
-				"enablePullDownRefresh": true,
-				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -227,7 +227,7 @@
 				"path": "pages/list/detail"
 			},
 			{
-				"path": "pages/test/test"
+				"path": "pages/list/list"
 			},
 			{
 				"path": "pages/ucenter/settings/settings"
@@ -242,16 +242,16 @@
 		"backgroundColor": "#FFFFFF",
 		"list": [
 			{
-				"pagePath": "pages/test/test",
-				"iconPath": "static/tabbar/list.png",
-				"selectedIconPath": "static/tabbar/list_active.png",
-				"text": "文章"
-			},
-			{
 				"pagePath": "pages/tools/tools",
 				"iconPath": "static/tabbar/grid.png",
 				"selectedIconPath": "static/tabbar/grid_active.png",
 				"text": "工具"
+			},
+			{
+				"pagePath": "pages/list/list",
+				"iconPath": "static/tabbar/list.png",
+				"selectedIconPath": "static/tabbar/list_active.png",
+				"text": "文章"
 			},
 			{
 				"pagePath": "pages/ucenter/ucenter",

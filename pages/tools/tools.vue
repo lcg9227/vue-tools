@@ -4,8 +4,7 @@
 		<statusBar></statusBar>
 		<!-- #endif -->
 		<!-- banner -->
-		<unicloud-db ref="bannerdb" v-slot:default="{ data, loading, error, options }" collection="opendb-banner" field="_id,bannerfile,open_url,title" @load="onqueryload">
-			<!-- 当无banner数据时显示占位图 -->
+		<!-- <unicloud-db ref="bannerdb" v-slot:default="{ data, loading, error, options }" collection="opendb-banner" field="_id,bannerfile,open_url,title" @load="onqueryload">
 			<image v-if="!(loading || data.length)" class="banner-image" src="/static/uni-center/headers.png" mode="aspectFill" :draggable="false" />
 
 			<swiper v-else class="swiper-box" @change="changeSwiper" :current="current" indicator-dots>
@@ -15,7 +14,7 @@
 					</view>
 				</swiper-item>
 			</swiper>
-		</unicloud-db>
+		</unicloud-db> -->
 		<!-- 宫格 -->
 		<Title title="我的工具" />
 		<unicloud-db ref="toolsdb" v-slot:default="{ data, loading, error, options }" :where="toolsWhere" collection="tool-list" @load="onqueryload">

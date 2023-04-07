@@ -94,6 +94,7 @@
 
 <script setup>
 	import { reactive, computed, getCurrentInstance } from 'vue'
+	// import CountTo from 'count-to
 	import data from './data'
 	const { proxy } = getCurrentInstance()
 	const ctConfig = {

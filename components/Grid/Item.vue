@@ -65,9 +65,10 @@
 		width: 100%;
 		padding-top: 10rpx;
 		font-size: $uni-font-size-sm;
+		white-space: pre-wrap;
 		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		font-size: 28rpx;
+		height: 64rpx;
+		// text-overflow: ellipsis;
+		// white-space: nowrap;
 	}
 </style>
