@@ -29,6 +29,7 @@
 	// #endif
 	import Title from '@/components/Title/Title.vue'
 	import Grid from '@/components/Grid/Grid.vue'
+	import { getUserInfo, hasLogin } from '@/common/pocket'
 	export default {
 		components: {
 			// #ifdef APP-PLUS
@@ -40,18 +41,19 @@
 		data() {
 			return {
 				current: 0,
-				hasLogin: false,
 				toolsWhere: ''
 			}
 		},
-		onShow() {
-			this.hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
-		},
 		onLoad() {
-			// this.toolsWhere = 'permissionType==0 || (permissionType==1&&permission in )'
-			// this.$nextTick(() => {
-			// 	this.$refs.toolsdb.loadData()
-			// })
+			this.toolsWhere = 'permissionType==0'
+			if (hasLogin) {
+				const { permission } = getUserInfo()
+				const _where = ` || (permissionType==1 && permission in ${JSON.stringify(permission)})`
+				this.toolsWhere = `${this.toolsWhere}${_where}`
+			}
+			this.$nextTick(() => {
+				this.$refs.toolsdb.loadData()
+			})
 		},
 		methods: {
 			/**
