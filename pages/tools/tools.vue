@@ -17,7 +17,7 @@
 		</unicloud-db> -->
 		<!-- 宫格 -->
 		<Title title="我的工具" />
-		<unicloud-db ref="toolsdb" v-slot:default="{ data, loading, error, options }" :where="toolsWhere" collection="tool-list" @load="onqueryload">
+		<unicloud-db ref="toolsdb" v-slot:default="{ data, loading, error, options }" :where="toolsWhere" collection="tool-list" @load="onqueryload" @error="onqueryError">
 			<Grid :list="data" />
 		</unicloud-db>
 	</view>
@@ -61,7 +61,12 @@
 			/**
 			 * banner加载后触发的回调
 			 */
-			onqueryload(data) {},
+			onqueryload(data) {
+				// const _data = uni.getStorageSync('tools_list')
+			},
+			onqueryError(error) {
+				this.pocket.checkError(error)
+			},
 			changeSwiper(e) {
 				this.current = e.detail.current
 			},

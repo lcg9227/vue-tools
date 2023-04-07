@@ -61,3 +61,12 @@ export const goPage = (url, data = {}, config = {}) => {
 		...config
 	})
 }
+// 检查异常
+export const checkError = error => {
+	const { errcode } = error
+	// 服务器拒绝访问
+	if (errcode === 'PrePayResourceExhausted') {
+		console.log('error >>>', error);
+	}
+	return true
+}
