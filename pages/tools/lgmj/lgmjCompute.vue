@@ -81,7 +81,7 @@
 
 							<view class="select-box">
 								<view class="select-title" v-if="!v.hidden && v.type === 'select'">{{ v.name }}</view>
-								<uni-data-select style="width: 66px" v-model="v.value" :clear="false" :localdata="v.data" v-if="v.type === 'select'" size="small"></uni-data-select>
+								<uni-data-select style="width: 66px" v-model="v.value" :clear="false" :localdata="v.data" v-if="v.type === 'select'"></uni-data-select>
 								<view class="select-tip" v-if="v.tip">{{ v.tip }}</view>
 							</view>
 						</view>
