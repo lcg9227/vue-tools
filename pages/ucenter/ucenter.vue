@@ -164,7 +164,7 @@
 			toUserInfo() {
 				if (!this.hasLogin) {
 					uni.navigateTo({
-						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
+						url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
 					})
 					return
 				}

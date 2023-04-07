@@ -76,7 +76,7 @@
 					await mutations.logout()
 				} else {
 					uni.redirectTo({
-						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
+						url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
 					})
 				}
 			},
