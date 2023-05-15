@@ -12,7 +12,7 @@
 			initApp()
 			uniIdPageInit()
 			// #ifdef APP-PLUS
-			//idfa有需要的用户在应用首次启动时自己获取存储到storage中
+			//idfa有需要的用户在应用首次启动时自己获取存储到storage中 
 			/*var idfa = '';
 			var manager = plus.ios.invoke('ASIdentifierManager', 'sharedManager');
 			if(plus.ios.invoke(manager, 'isAdvertisingTrackingEnabled')){
