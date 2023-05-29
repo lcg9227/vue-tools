@@ -2,7 +2,7 @@
 	<lgmjCompute />
 </template>
 <script>
-	import lgmjCompute from '../../box/lgmj/lgmjCompute.vue'
+	import lgmjCompute from '../tools/lgmj/lgmjCompute.vue'
 	export default {
 		components: { lgmjCompute }
 	}
