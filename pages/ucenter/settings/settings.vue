@@ -16,7 +16,6 @@
 			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>
 			<uni-list-item v-show="pushIsOn != 'wait'" title="推送功能" @click.native="pushIsOn ? pushServer.off() : pushServer.on()" showSwitch :switchChecked="pushIsOn"></uni-list-item>
 			<!-- #endif -->
-			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
 			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial')" link></uni-list-item>
 			<!-- #endif -->
 		</uni-list>
@@ -83,52 +82,6 @@
 			/**
 			 * 开始生物认证
 			 */
-			startSoterAuthentication(checkAuthMode) {
-				console.log(checkAuthMode)
-				let title = { fingerPrint: '指纹解锁', facial: '人脸解锁' }[checkAuthMode]
-				// 检查是否开启认证
-				this.checkIsSoterEnrolledInDevice({ checkAuthMode, title }).then(() => {
-					console.log(checkAuthMode, title)
-					// 开始认证
-					uni.startSoterAuthentication({
-						requestAuthModes: [checkAuthMode],
-						challenge: '123456', // 微信端挑战因子
-						authContent: '请用' + ' ' + `${title}`,
-						complete: res => {
-							console.log(res)
-						},
-						success: res => {
-							console.log(res)
-							if (res.errCode == 0) {
-								/**
-								 * 验证成功后开启自己的业务逻辑
-								 *
-								 * app端以此为依据 验证成功
-								 *
-								 * 微信小程序需要再次通过后台验证resultJSON与resultJSONSignature获取最终结果
-								 */
-								return uni.showToast({
-									title: `${title}` + '成功',
-									icon: 'none'
-								})
-							}
-							uni.showToast({
-								title: '认证失败请重试',
-								icon: 'none'
-							})
-						},
-						fail: err => {
-							console.log(err)
-							console.log(`认证失败:${err.errCode}`)
-							uni.showToast({
-								title: '认证失败',
-								// title: `认证失败`,
-								icon: 'none'
-							})
-						}
-					})
-				})
-			},
 			checkIsSoterEnrolledInDevice({ checkAuthMode, title }) {
 				return new Promise((resolve, reject) => {
 					uni.checkIsSoterEnrolledInDevice({
