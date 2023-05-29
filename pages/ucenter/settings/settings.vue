@@ -50,16 +50,6 @@
 			uni.setNavigationBarTitle({
 				title: '设置'
 			})
-			// #ifdef APP-PLUS || MP-WEIXIN
-			uni.checkIsSupportSoterAuthentication({
-				success: res => {
-					this.supportMode = res.supportMode
-				},
-				fail: err => {
-					console.log(err)
-				}
-			})
-			// #endif
 		},
 		onShow() {
 			// 检查手机端获取推送是否开启
@@ -78,35 +68,6 @@
 						url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
 					})
 				}
-			},
-			/**
-			 * 开始生物认证
-			 */
-			checkIsSoterEnrolledInDevice({ checkAuthMode, title }) {
-				return new Promise((resolve, reject) => {
-					uni.checkIsSoterEnrolledInDevice({
-						checkAuthMode,
-						success: res => {
-							console.log(res)
-							if (res.isEnrolled) {
-								return resolve(res)
-							}
-							uni.showToast({
-								title: '设备未开启' + `${title}`,
-								icon: 'none'
-							})
-							reject(res)
-						},
-						fail: err => {
-							console.log(err)
-							uni.showToast({
-								title: `${title}` + '失败',
-								icon: 'none'
-							})
-							reject(err)
-						}
-					})
-				})
 			},
 			clearTmp() {
 				uni.showLoading({

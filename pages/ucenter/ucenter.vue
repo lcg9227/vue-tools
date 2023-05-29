@@ -85,13 +85,13 @@
 						}
 					],
 					// #ifdef APP-PLUS
-					[
-						{
-							title: '关于',
-							to: '/pages/ucenter/about/about',
-							icon: 'info'
-						}
-					]
+					// [
+					// 	{
+					// 		title: '关于',
+					// 		to: '/pages/ucenter/about/about',
+					// 		icon: 'info'
+					// 	}
+					// ]
 					// #endif
 				],
 				listStyles: {
