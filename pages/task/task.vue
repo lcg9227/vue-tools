@@ -3,9 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<statusBar></statusBar>
 		<!-- #endif -->
-		<!-- <Header :userInfo="userInfo"></Header> -->
-    
-    <u--image src="https://cdn.uviewui.com/uview/album/1.jpg" width="80rpx" height="80rpx" shape="circle"></u--image>
+    任务
 	</view>
 </template>
 
