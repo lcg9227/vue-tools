@@ -38,8 +38,12 @@ export const mutations = {
 
 		} else {
 			try {
+				let fieldStr = 'mobile,nickname,username,email,avatar_filem'
+				if(pagesJson.userInfoFields){
+					fieldStr = `${fieldStr},${pagesJson.userInfoFields}`
+				}
 				let res = await usersTable.where("'_id' == $cloudEnv_uid")
-						.field('mobile,nickname,username,email,avatar_filem,score')
+						.field(fieldStr)
 						.get()
 				// console.log('fromDbData',res.result.data);
 				this.setUserInfo(res.result.data[0])

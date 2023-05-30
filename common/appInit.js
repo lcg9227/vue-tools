@@ -53,7 +53,7 @@ export default async function() {
 			// 	params // 参数列表
 			// });
 			if(objectName == "uni-id-co" && (methodName.includes('loginBy') ||  ['login','registerUser'].includes(methodName) )){
-				console.log('执行登录相关云对象');
+				// console.log('执行登录相关云对象');
 				params[0].inviteCode = await new Promise((callBack) => {
 					uni.getClipboardData({
 						success: function(res) {
