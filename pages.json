@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+			"path": "pages/score/score",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/tools/tools",
 			"style": {
 				"enablePullDownRefresh": true,
@@ -223,20 +230,6 @@
 		"rpxCalcMaxDeviceWidth": 375,
 		"rpxCalcBaseDeviceWidth": 375
 	},
-	"condition": {
-		"list": [
-			{
-				"path": "pages/list/detail"
-			},
-			{
-				"path": "pages/list/list"
-			},
-			{
-				"path": "pages/ucenter/settings/settings"
-			}
-		],
-		"current": 1
-	},
 	"tabBar": {
 		"color": "#CEF2DA",
 		"selectedColor": "#69C98B",
@@ -246,7 +239,7 @@
 		"iconWidth": "24px",
 		"list": [
 			{
-				"pagePath": "pages/tools/tools",
+				"pagePath": "pages/score/score",
 				"iconPath": "static/tabbar/1-1.png",
 				"selectedIconPath": "static/tabbar/1-2.png",
 				"text": "积分兑换"
@@ -271,6 +264,9 @@
 			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 		],
 		"resToLogin": true
+	},
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"userInfoFields": "score"
 }
