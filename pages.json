@@ -272,5 +272,5 @@
 		],
 		"resToLogin": true
 	},
-	"userInfoFields": "score,mobile,role,status"
+	"userInfoFields": "score"
 }
