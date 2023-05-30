@@ -54,13 +54,13 @@ export default {
 		return {
 			gridList: [],
 			ucenterList: [
-				[
-					{
-						title: '阅读过的文章',
-						to: '/pages/ucenter/read-news-log/read-news-log',
-						icon: 'flag'
-					}
-				],
+				// [
+				// 	{
+				// 		title: '阅读过的文章',
+				// 		to: '/pages/ucenter/read-news-log/read-news-log',
+				// 		icon: 'flag'
+				// 	}
+				// ],
 				[
 					{
 						title: '问题与反馈',
@@ -125,31 +125,6 @@ export default {
 		}
 	},
 	methods: {
-		/**
-		 * 获取积分信息
-		 */
-		getScore() {
-			uni.showLoading({
-				mask: true
-			})
-			db.collection("uni-id-scores")
-				.where('"user_id" == $env.uid')
-				.field('score,balance')
-				.orderBy("create_date", "desc")
-				.limit(1)
-				.get()
-				.then((res) => {
-					const data = res.result.data[0];
-					let msg = '';
-					msg = data ? ('当前积分' + data.balance) : '没有查询到积分';
-					uni.showToast({
-						title: msg,
-						icon: 'none'
-					});
-				}).finally(() => {
-					uni.hideLoading()
-				})
-		},
 		toSettings() {
 			uni.navigateTo({
 				url: '/pages/ucenter/settings/settings'
