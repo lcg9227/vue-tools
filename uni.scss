@@ -21,7 +21,7 @@ $uni-color-warning: #f0ad4e;
 $uni-color-error: #dd524d;
 
 /* 文字基本颜色 */
-$uni-text-color: #333; //基本色
+$uni-text-color: #303133; //基本色
 $uni-text-color-inverse: #fff; //反色
 $uni-text-color-grey: #999; //辅助灰色，如加载更多的提示信息
 $uni-text-color-placeholder: #808080;
@@ -75,8 +75,18 @@ $uni-font-size-subtitle: 36rpx;
 $uni-color-paragraph: #3f536e; // 文章段落颜色
 $uni-font-size-paragraph: 30rpx;
 
+/* 公共样式 */
+body, uni-page-body {
+	font-size: $uni-font-size-base;
+  color: $uni-text-color;
+}
+
+view {
+	box-sizing: border-box;
+}
+
 .b-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }

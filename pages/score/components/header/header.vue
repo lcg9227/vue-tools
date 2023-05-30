@@ -1,10 +1,10 @@
 <template>
-	<view class="header">
+	<div class="header">
     <div class="b-between">
-      <div class="info"></div>
-      <u--image src="https://cdn.uviewui.com/uview/album/1.jpg" width="80rpx" height="80rpx" shape="circle"></u--image>
+      <div class="info">111</div>
+      <div class="image">12212</div>
     </div>
-  </view>
+  </div>
 </template>
 
 <script>
@@ -30,8 +30,9 @@
 <style lang="scss" scoped>
 	.header {
 		position: relative;
-    height: 370px;
+    height: 370rpx;
     background-color: #69C98B;
-    color: #fff;
+    color: $uni-text-color-inverse; 
+    padding: 20rpx 40rpx 0 40rpx;
 	}
 </style>

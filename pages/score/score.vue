@@ -3,9 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<statusBar></statusBar>
 		<!-- #endif -->
-		<!-- <Header :userInfo="userInfo"></Header> -->
-    
-    <u--image src="https://cdn.uviewui.com/uview/album/1.jpg" width="80rpx" height="80rpx" shape="circle"></u--image>
+		<Header :userInfo="userInfo"></Header>
 	</view>
 </template>
 
@@ -13,11 +11,13 @@
 	// #ifdef APP-PLUS
 	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar'
 	// #endif
+	import Header from './components/header/header.vue'
 	export default {
 		components: {
 			// #ifdef APP-PLUS
 			statusBar,
 			// #endif
+			Header
 		},
 		data() {
 			return {
@@ -39,18 +39,6 @@
 </script>
 
 <style>
-	page {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		background-color: #fff;
-		min-height: 100%;
-		height: auto;
-	}
-	view {
-		font-size: 14px;
-		line-height: inherit;
-	}
 	.warp {
 		position: relative;
 	}
