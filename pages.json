@@ -215,7 +215,8 @@
 						"enablePullDownRefresh": false,
 						"navigationBarTitleText": "设置密码"
 					}
-				},{
+				},
+				{
 					"path": "/userinfo/cropImage/cropImage"
 				}
 			]
@@ -264,6 +265,9 @@
 			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 		],
 		"resToLogin": true
+	},
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"userInfoFields": "score"
 }
