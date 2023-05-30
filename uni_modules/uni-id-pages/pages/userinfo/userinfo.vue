@@ -233,6 +233,8 @@
 		justify-content: center;
 		margin: 22px 0;
 		width: 100%;
+		border-radius: 100%;
+		overflow: hidden;
 	}
 
 	.item {

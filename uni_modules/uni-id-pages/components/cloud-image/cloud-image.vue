@@ -1,5 +1,5 @@
 <template>
-	<view @click="onClick" :style="{width,height}" style="justify-content: center;">
+	<view @click="onClick" :style="{width,height}" style="justify-content: center;" class="chooseImage">
 		<image v-if="cSrc" :style="{width,height}" :src="cSrc" :mode="mode"></image>
 	</view>
 </template>
@@ -71,3 +71,10 @@
 		}
 	}
 </script>
+
+<style>
+.chooseImage {
+		border-radius: 100%;
+		overflow: hidden;
+	}
+</style>
