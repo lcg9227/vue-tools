@@ -45,8 +45,9 @@
 		},
 		onLoad() {
 			this.toolsWhere = 'permissionType==0'
-			console.log('是否登录>>>', this.pocket.hasLogin())
-			if (this.pocket.hasLogin()) {
+			const _hasLogin = this.pocket.hasLogin()
+			console.log('是否登录>>>', _hasLogin)
+			if (_hasLogin) {
 				const userInfo = this.pocket.getUserInfo()
 				console.log('当前登录信息>>>', userInfo)
 				const { permission } = userInfo
