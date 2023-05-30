@@ -46,9 +46,9 @@ export const mutations = {
 						.field(fieldStr)
 						.get()
 				// console.log('fromDbData',res.result.data);
-				this.setUserInfo(res.result.data[0])
+				await this.setUserInfo(res.result.data[0])
 			} catch (e) {
-				this.setUserInfo({},{cover:true})
+				await this.setUserInfo({},{cover:true})
 				console.error(e.message, e.errCode);
 			}
 		}
@@ -129,22 +129,24 @@ export const mutations = {
 				duration: 3000
 			});
 		}
-		this.updateUserInfo()
+		this.updateUserInfo().then(()=>{
 
-		uni.$emit('uni-id-pages-login-success')
+			uni.$emit('uni-id-pages-login-success')
 
-		if (config.setPasswordAfterLogin && !passwordConfirmed) {
-			return uni.redirectTo({
-				url: uniIdRedirectUrl ? `/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?uniIdRedirectUrl=${uniIdRedirectUrl}&loginType=${e.loginType}`: `/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?loginType=${e.loginType}`,
-				fail: (err) => {
-					console.log(err)
-				}
-			})
-		}
+			if (config.setPasswordAfterLogin && !passwordConfirmed) {
+				return uni.redirectTo({
+					url: uniIdRedirectUrl ? `/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?uniIdRedirectUrl=${uniIdRedirectUrl}&loginType=${e.loginType}`: `/uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd?loginType=${e.loginType}`,
+					fail: (err) => {
+						console.log(err)
+					}
+				})
+			}
+	
+			if (autoBack) {
+				this.loginBack(uniIdRedirectUrl)
+			}
+		})
 
-		if (autoBack) {
-			this.loginBack(uniIdRedirectUrl)
-		}
 	}
 
 }

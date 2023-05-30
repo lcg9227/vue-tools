@@ -139,7 +139,6 @@ export default {
 				.limit(1)
 				.get()
 				.then((res) => {
-					console.log('>>>>>>>>>', res);
 					const data = res.result.data[0];
 					let msg = '';
 					msg = data ? ('当前积分' + data.balance) : '没有查询到积分';
@@ -166,7 +165,6 @@ export default {
 		},
 		async checkVersion() {
 			let res = await callCheckVersion()
-			console.log(res)
 			if (res.result.code > 0) {
 				checkUpdate()
 			} else {

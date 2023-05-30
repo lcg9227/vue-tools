@@ -72,7 +72,7 @@ export default async function() {
 							}
 						},
 						fail() {
-							console.log('error--');
+							// console.log('error--');
 							callBack()
 						},
 						complete() {
@@ -87,13 +87,13 @@ export default async function() {
 			// console.log(params);
 		},
 		success(e) {
-			console.log(e);
+			// console.log(e);
 		},
 		complete() {
 
 		},
 		fail(e){
-			console.error(e);
+			// console.error(e);
 			// if (debug) {
 			// 	uni.showModal({
 			// 		content: JSON.stringify(e),
@@ -112,8 +112,8 @@ export default async function() {
 	// #ifdef APP-PLUS
 	// 监听并提示设备网络状态变化
 	uni.onNetworkStatusChange(res => {
-		console.log(res.isConnected);
-		console.log(res.networkType);
+		console.log('onNetworkStatusChange isConnected', res.isConnected);
+		console.log('onNetworkStatusChange networkType', res.networkType);
 		if (res.networkType != 'none') {
 			uni.showToast({
 				title: '当前网络类型：' + res.networkType,
