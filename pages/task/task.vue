@@ -37,18 +37,6 @@
 </script>
 
 <style>
-	page {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		background-color: #fff;
-		min-height: 100%;
-		height: auto;
-	}
-	view {
-		font-size: 14px;
-		line-height: inherit;
-	}
 	.warp {
 		position: relative;
 	}
