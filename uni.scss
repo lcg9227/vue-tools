@@ -23,14 +23,21 @@ $uni-color-error: #dd524d;
 $uni-text-color: #303133; //基本色
 $uni-text-color-inverse: #fff; //反色
 $uni-text-color-grey: #999; //辅助灰色，如加载更多的提示信息
+$uni-text-color-label: #848496; // 标签
 $uni-text-color-placeholder: #808080;
 $uni-text-color-disable: #c0c0c0;
+
+$lcg-text-color-important: #09230F;
+$lcg-text-color-main: #69c98b; // 文字主色
+$lcg-text-color-inverse: #fff; //反色
 
 /* 背景颜色 */
 $uni-bg-color: #ffffff;
 $uni-bg-color-grey: #f8f8f8;
 $uni-bg-color-hover: #f1f1f1; //点击状态颜色
 $uni-bg-color-mask: rgba(0, 0, 0, 0.4); //遮罩颜色
+
+$lcg-bg-color-main: #69c98b; // 主背景色
 
 /* 边框颜色 */
 $uni-border-color: #c8c7cc;
@@ -76,9 +83,10 @@ $uni-color-paragraph: #3f536e; // 文章段落颜色
 $uni-font-size-paragraph: 30rpx;
 
 /* 公共样式 */
-body, uni-page-body {
+body,
+uni-page-body {
 	font-size: $uni-font-size-base;
-  color: $uni-text-color;
+	color: $uni-text-color;
 }
 
 view {
@@ -88,5 +96,13 @@ view {
 .b-between {
 	display: flex;
 	justify-content: space-between;
+}
+.b-between-c {
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
+}
+.b-label {
+	font-size: $uni-font-size-base;
+	color: $uni-text-color-label;
 }

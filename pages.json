@@ -274,7 +274,7 @@
 		"resToLogin": true
 	},
 	"easycom": {
-		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+		"^lcg-(.*)": "@/uni_modules/lcg-$1/lcg-$1.vue"
 	},
-	"userInfoFields": "score"
+	"userInfoFields": "score,avatar_file"
 }

@@ -4,6 +4,7 @@
 		<statusBar></statusBar>
 		<!-- #endif -->
 		<lcg-header :userInfo="userInfo"></lcg-header>
+		<lcg-header :userInfo="userInfo"></lcg-header>
 	</view>
 </template>
 
