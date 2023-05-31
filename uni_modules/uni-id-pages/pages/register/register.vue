@@ -28,6 +28,10 @@
 					class="input-box" placeholder="再次输入密码" maxlength="20" type="password" v-model="formData.password2"
 					trim="both" />
 			</uni-forms-item>
+			<!-- 角色选择 -->
+			<uni-forms-item name="role" v-model="formData.role" required>
+				<uni-data-checkbox selectedColor="#69c98b" v-model="formData.role" :localdata="roleData"></uni-data-checkbox>
+			</uni-forms-item>
 			<uni-forms-item>
 				<uni-captcha ref="captcha" scene="register" v-model="formData.captcha" />
 			</uni-forms-item>
@@ -36,7 +40,7 @@
 			<button @click="navigateBack" class="register-back">返回</button>
 			<match-media :min-width="690">
 				<view class="link-box">
-					<text class="link" @click="registerByEmail">邮箱验证码注册</text>
+					<!-- <text class="link" @click="registerByEmail">邮箱验证码注册</text> -->
 					<text class="link" @click="toLogin">已有账号？点此登录</text>
 				</view>
 			</match-media>
@@ -63,14 +67,16 @@
 					nickname: "",
 					password: "",
 					password2: "",
-					captcha: ""
+					role: "parent",
+					captcha: "",
 				},
 				rules,
 				focusUsername: false,
 				focusNickname: false,
 				focusPassword: false,
 				focusPassword2: false,
-				logo: "/static/logo.png"
+				logo: "/static/logo.png",
+				roleData: [{ text: '家长', value: 'parent'},{ text: '孩子', value: 'child'}]
 			}
 		},
 		onReady() {

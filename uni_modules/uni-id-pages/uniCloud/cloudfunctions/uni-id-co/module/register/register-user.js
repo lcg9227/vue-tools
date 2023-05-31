@@ -32,7 +32,8 @@ module.exports = async function (params = {}) {
     inviteCode: {
       required: false,
       type: 'string'
-    }
+    },
+    role: 'string'
   }
   this.middleware.validate(params, schema)
   const {
@@ -40,7 +41,8 @@ module.exports = async function (params = {}) {
     password,
     nickname,
     captcha,
-    inviteCode
+    inviteCode,
+    role
   } = params
 
   await verifyCaptcha.call(this, {
@@ -61,8 +63,9 @@ module.exports = async function (params = {}) {
     user,
     extraData: {
       ...extraData,
-      nickname
+      nickname,
+      role: [role]
     },
-    inviteCode
+    inviteCode,
   })
 }

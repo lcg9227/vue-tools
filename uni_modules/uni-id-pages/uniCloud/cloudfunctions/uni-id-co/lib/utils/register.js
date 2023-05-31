@@ -89,7 +89,8 @@ async function postRegister (params = {}) {
     user,
     extraData = {},
     isThirdParty = false,
-    inviteCode
+    inviteCode,
+    role
   } = params
   const {
     appId,
