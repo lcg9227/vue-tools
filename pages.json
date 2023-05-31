@@ -8,6 +8,13 @@
 			}
 		},
 		{
+			"path": "pages/task/task",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/tools/tools",
 			"style": {
 				"enablePullDownRefresh": true,
@@ -246,7 +253,7 @@
 				"text": "积分兑换"
 			},
 			{
-				"pagePath": "pages/list/list",
+				"pagePath": "pages/task/task",
 				"iconPath": "static/tabbar/2-1.png",
 				"selectedIconPath": "static/tabbar/2-2.png",
 				"text": "任务榜"
@@ -265,9 +272,6 @@
 			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 		],
 		"resToLogin": true
-	},
-	"easycom": {
-		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"userInfoFields": "score"
 }
