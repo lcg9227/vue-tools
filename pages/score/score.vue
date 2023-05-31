@@ -3,7 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<statusBar></statusBar>
 		<!-- #endif -->
-		<Header :userInfo="userInfo"></Header>
+		<lcg-header :userInfo="userInfo"></lcg-header>
 	</view>
 </template>
 
@@ -11,13 +11,11 @@
 	// #ifdef APP-PLUS
 	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar'
 	// #endif
-	import Header from './components/header/header.vue'
 	export default {
 		components: {
 			// #ifdef APP-PLUS
 			statusBar,
 			// #endif
-			Header
 		},
 		data() {
 			return {

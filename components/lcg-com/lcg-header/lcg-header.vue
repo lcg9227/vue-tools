@@ -6,7 +6,6 @@
 				<div class="tip">让我们一起学习吧！</div>
 			</div>
 			<div class="image">
-        <u--image src="https://cdn.uviewui.com/uview/album/1.jpg" shape="circle"></u--image>
       </div>
 		</div>
 	</div>
