@@ -43,7 +43,7 @@
 					fields: { child: '' },
 					items: [{ field: 'child', label: '子账号', type: 'input', placeholder: '请输入子账号用户名' }]
 				}
-				this.$refs.easyForm.open('1212', form, data => {
+				this.$refs.easyForm.open('', form, data => {
 					console.log('easyForm >>>', data);
 				})
 			}
