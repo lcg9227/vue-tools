@@ -38,8 +38,10 @@
 					items: [{ field: 'child', label: '子账号', type: 'input', placeholder: '请输入子账号用户名', required: true, rules: [{ required: true, errorMessage: '请输入子账号用户名' }] }]
 				}
 				this.$refs.easyForm.open('添加子账号', form, data => {
-					this.$refs.easyForm.onClose()
-					console.log('easyForm >>>', data)
+					this.api.add_child(data.child).then(res => {
+						console.log('easyForm res>>>>', res)
+						this.$refs.easyForm.onClose()
+					})
 				})
 			}
 		}
