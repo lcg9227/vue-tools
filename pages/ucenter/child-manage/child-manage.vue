@@ -41,10 +41,10 @@
 			testClick() {
 				const form = {
 					fields: { child: '' },
-					items: [{ field: 'child', label: '子账号', type: 'input', placeholder: '请输入子账号用户名' }]
+					items: [{ field: 'child', label: '子账号', type: 'input', placeholder: '请输入子账号用户名', required: true, rules: [{ required: true, errorMessage: '请输入子账号用户名' }] }]
 				}
-				this.$refs.easyForm.open('', form, data => {
-					console.log('easyForm >>>', data);
+				this.$refs.easyForm.open('添加子账号', form, data => {
+					console.log('easyForm >>>', data)
 				})
 			}
 		}

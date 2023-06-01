@@ -1,9 +1,9 @@
 <template>
 	<uni-popup ref="popup" type="dialog" v-if="visible">
-		<uni-popup-dialog mode="base" :title="title" :before-close="true" @close="onClose" @confirm="onSubmit">
+		<uni-popup-dialog mode="base" type="info" :title="title" :before-close="true" @close="onClose" @confirm="onSubmit">
 			<uni-forms :model="fields" ref="form">
 				<template v-for="(item, index) in items" :key="index">
-					<uni-forms-item :label="item.label" :name="item.field">
+					<uni-forms-item :label="item.label" :name="item.field" :required="item.required" :rules="item.rules">
 						<uni-easyinput v-model="fields[item.field]" :type="item.inputType || 'text'" :placeholder="item.placeholder" trim clearSize="16" v-if="item.type === 'input'" />
 					</uni-forms-item>
 				</template>
@@ -30,8 +30,14 @@
 				visible.value = false
 			}
 			const onSubmit = () => {
-				submit(toRaw(fields.value))
-				onClose()
+				proxy.$refs.form.validate((err, formData) => {
+					// 如果校验成功 ，err 返回 null
+					if (!err) {
+						console.log('success', formData)
+						return
+					}
+					console.log('error', err)
+				})
 			}
 			const open = (_title, _form, _submit) => {
 				title.value = _title || '表单'
