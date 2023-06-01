@@ -33,10 +33,9 @@
 				proxy.$refs.form.validate((err, formData) => {
 					// 如果校验成功 ，err 返回 null
 					if (!err) {
-						console.log('success', formData)
+						submit(formData)
 						return
 					}
-					console.log('error', err)
 				})
 			}
 			const open = (_title, _form, _submit) => {
