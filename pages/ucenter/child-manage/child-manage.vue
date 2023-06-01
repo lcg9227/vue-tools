@@ -3,9 +3,9 @@
 		<!-- #ifdef APP-PLUS -->
 		<statusBar></statusBar>
 		<!-- #endif -->
-		<uni-nav-bar shadow left-icon="left" title="开启阴影" @clickLeft="back" />
-		<lcg-header :userInfo="userInfo"></lcg-header>
-		<lcg-header :userInfo="userInfo"></lcg-header>
+		<uni-nav-bar shadow left-icon="left" title="子账号管理" @clickLeft="back" />
+		<button @click="testClick">按钮</button>
+		<lcg-easy-form ref="easyForm"></lcg-easy-form>
 	</view>
 </template>
 
@@ -16,7 +16,7 @@
 	export default {
 		components: {
 			// #ifdef APP-PLUS
-			statusBar,
+			statusBar
 			// #endif
 		},
 		data() {
@@ -34,7 +34,20 @@
 				console.log('当前登录信息>>>', userInfo)
 			}
 		},
-		methods: {}
+		methods: {
+			back() {
+				uni.navigateBack(1, 'pop-out')
+			},
+			testClick() {
+				const form = {
+					fields: { child: '' },
+					items: [{ field: 'child', label: '子账号', type: 'input', placeholder: '请输入子账号用户名' }]
+				}
+				this.$refs.easyForm.open('1212', form, data => {
+					console.log('easyForm >>>', data);
+				})
+			}
+		}
 	}
 </script>
 

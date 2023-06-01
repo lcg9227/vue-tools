@@ -57,7 +57,7 @@ export default {
 				[
 					{
 						title: '子账号管理',
-						to: 'pages/ucenter/child-manage/child-manage',
+						to: '/pages/ucenter/child-manage/child-manage',
 						icon: 'flag'
 					}
 				],
