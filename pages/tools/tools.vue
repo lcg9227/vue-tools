@@ -45,12 +45,9 @@
 		},
 		onLoad() {
 			this.toolsWhere = 'permissionType==0'
-			const _hasLogin = this.pocket.hasLogin()
-			console.log('是否登录>>>', _hasLogin)
-			if (_hasLogin) {
-				const userInfo = this.pocket.getUserInfo()
-				console.log('当前登录信息>>>', userInfo)
-				const { permission } = userInfo
+			this.userInfo = this.api.getUserInfo()
+			const { permission, hasLogin } = this.userInfo
+			if (hasLogin) {
 				const _where = ` || (permissionType==1 && permission in ${JSON.stringify(permission)})`
 				this.toolsWhere = `${this.toolsWhere}${_where}`
 			}

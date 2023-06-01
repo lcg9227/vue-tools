@@ -4,7 +4,7 @@
 		<statusBar></statusBar>
 		<!-- #endif -->
 		<uni-nav-bar shadow left-icon="left" title="子账号管理" @clickLeft="back" />
-		<button @click="testClick">按钮</button>
+		<button @click="testClick">添加子账号</button>
 		<lcg-easy-form ref="easyForm"></lcg-easy-form>
 	</view>
 </template>
@@ -26,13 +26,7 @@
 			}
 		},
 		onLoad() {
-			const _hasLogin = this.pocket.hasLogin()
-			console.log('是否登录>>>', _hasLogin)
-			if (_hasLogin) {
-				const userInfo = this.pocket.getUserInfo()
-				this.userInfo = userInfo
-				console.log('当前登录信息>>>', userInfo)
-			}
+			this.userInfo = this.api.getUserInfo()
 		},
 		methods: {
 			back() {

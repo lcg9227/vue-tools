@@ -1,15 +1,4 @@
-import { store } from '@/uni_modules/uni-id-pages/common/store.js'
 
-// 获取用户信息
-export const getUserInfo = () => {
-	const _userInfo = uniCloud.getCurrentUserInfo()
-	const userInfo = { ...store.userInfo, ..._userInfo, hasLogin: store.hasLogin }
-	return userInfo
-}
-// 判断是否登录
-export const hasLogin = () => {
-	return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
-}
 // 深拷贝
 export const deepCopy = obj => {
 	if (typeof obj !== 'object') return console.error(new Error('第一个参数不是引用类型！'))
