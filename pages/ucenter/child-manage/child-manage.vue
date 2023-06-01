@@ -39,8 +39,10 @@
 				}
 				this.$refs.easyForm.open('添加子账号', form, data => {
 					this.api.add_child(data.child).then(res => {
-						console.log('easyForm res>>>>', res)
-						this.$refs.easyForm.onClose()
+						const { success } = res
+						if (success) {
+							this.$refs.easyForm.onClose()
+						}
 					})
 				})
 			}

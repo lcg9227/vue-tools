@@ -1,3 +1,8 @@
+// 提示
+export const toast = {
+	success: title => uni.showToast({ title, icon: 'success', duration: 3000 }),
+	error: title => uni.showToast({ title, icon: 'error', duration: 3000 })
+}
 
 // 深拷贝
 export const deepCopy = obj => {

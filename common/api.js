@@ -1,6 +1,7 @@
 import { store } from '@/uni_modules/uni-id-pages/common/store.js'
+import { toast } from './pocket'
 
-const childObj = uniCloud.importObject('lcg-user-childs')
+const childObj = uniCloud.importObject('lcg-user-children')
 
 // 判断是否登录
 export const hasLogin = () => {
@@ -18,10 +19,8 @@ export const add_child = childName => {
 	const userInfo = getUserInfo()
 	return childObj.add(userInfo, childName).then(res => {
 		const { success, errMsg } = res
-		console.log('add_child >>>', res)
-		if (!success) {
-			console.error('err >>>', errMsg)
-		}
-		return success
+		if (success) toast.success('添加成功！')
+		if (!success) toast.error(errMsg)
+		return res
 	})
 }

@@ -40,5 +40,5 @@ module.exports = {
 			return ret
 		}
 		return ret
-	}
+	},
 }
