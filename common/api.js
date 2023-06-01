@@ -5,7 +5,8 @@ const childrenObj = uniCloud.importObject('lcg-user-children')
 
 // 判断是否登录
 export const hasLogin = () => {
-	return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+	const _hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+	return _hasLogin
 }
 // 获取用户信息
 export const getUserInfo = () => {
@@ -27,8 +28,5 @@ export const add_child = childName => {
 // 获取子账号信息
 export const get_children = () => {
 	const userInfo = getUserInfo()
-	return childrenObj.get(userInfo).then(res => {
-		console.log('get_children >>>>', res)
-		return res
-	})
+	return childrenObj.get(userInfo)
 }
