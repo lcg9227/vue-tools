@@ -1,4 +1,4 @@
-import { store } from '@/uni_modules/uni-id-pages/common/store.js'
+import { store, mutations } from '@/uni_modules/uni-id-pages/common/store.js'
 import { toast } from './pocket'
 
 const childrenObj = uniCloud.importObject('lcg-user-children')
@@ -6,6 +6,10 @@ const childrenObj = uniCloud.importObject('lcg-user-children')
 // 判断是否登录
 export const hasLogin = () => {
 	const _hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+	if (!_hasLogin) {
+    mutations.logout()
+		return _hasLogin
+	}
 	return _hasLogin
 }
 // 获取用户信息
