@@ -54,13 +54,13 @@ export default {
 		return {
 			gridList: [],
 			ucenterList: [
-				// [
-				// 	{
-				// 		title: '阅读过的文章',
-				// 		to: '/pages/ucenter/read-news-log/read-news-log',
-				// 		icon: 'flag'
-				// 	}
-				// ],
+				[
+					{
+						title: '子账号管理',
+						to: 'pages/ucenter/child-manage/child-manage',
+						icon: 'flag'
+					}
+				],
 				[
 					{
 						title: '问题与反馈',

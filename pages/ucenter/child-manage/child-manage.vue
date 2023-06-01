@@ -1,8 +1,9 @@
 <template>
 	<view class="warp">
 		<!-- #ifdef APP-PLUS -->
-		<statusBar style="background-color: #69c98b;"></statusBar>
+		<statusBar></statusBar>
 		<!-- #endif -->
+		<uni-nav-bar shadow left-icon="left" title="开启阴影" @clickLeft="back" />
 		<lcg-header :userInfo="userInfo"></lcg-header>
 		<lcg-header :userInfo="userInfo"></lcg-header>
 	</view>

@@ -15,6 +15,13 @@
 			}
 		},
 		{
+			"path": "pages/ucenter/child-manage/child-manage",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/tools/tools",
 			"style": {
 				"enablePullDownRefresh": true,
@@ -85,13 +92,6 @@
 			"path": "pages/ucenter/settings/settings",
 			"style": {
 				"navigationBarTitleText": "设置"
-			}
-		},
-		{
-			"path": "pages/ucenter/read-news-log/read-news-log",
-			"style": {
-				"navigationBarTitleText": "阅读记录",
-				"enablePullDownRefresh": true
 			}
 		},
 		{
