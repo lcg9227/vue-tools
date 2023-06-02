@@ -144,6 +144,9 @@ const del_score_level = async function (userInfo, index) {
 	let score_level = JSON.parse(JSON.stringify(data.score_level))
 	// 修改配置
 	score_level.splice(index, 1)
+	score_level.forEach((v, i) => {
+		v.text = `lv:${i + 1}`
+	})
 	// 写入数据库
 	const { updated } = await userConfigTable.update({ score_level })
 	if (updated === 0) {
