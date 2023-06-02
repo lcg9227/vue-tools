@@ -92,6 +92,11 @@
 						title: '子账号管理',
 						to: '/pages/ucenter/child-manage/child-manage',
 						icon: 'flag'
+					},
+					{
+						title: '兑换配置',
+						to: '/pages/ucenter/child-manage/child-manage',
+						icon: 'flag'
 					}
 				])
 			}

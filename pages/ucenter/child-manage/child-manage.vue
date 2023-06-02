@@ -1,9 +1,6 @@
 <template>
 	<view class="warp">
-		<!-- #ifdef APP-PLUS -->
-		<statusBar></statusBar>
-		<!-- #endif -->
-		<uni-nav-bar shadow left-icon="left" title="子账号管理" @clickLeft="back" />
+		<lcg-nav-bar title="子账号管理"></lcg-nav-bar>
 		<button @click="testClick">添加子账号</button>
 		<lcg-easy-form ref="easyForm"></lcg-easy-form>
 
@@ -16,14 +13,8 @@
 </template>
 
 <script>
-	// #ifdef APP-PLUS
-	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar'
-	// #endif
 	export default {
 		components: {
-			// #ifdef APP-PLUS
-			statusBar
-			// #endif
 		},
 		data() {
 			return {
@@ -37,9 +28,6 @@
 			this.getChildren()
 		},
 		methods: {
-			back() {
-				uni.navigateBack(1, 'pop-out')
-			},
 			getChildren() {
 				this.api.get_children().then(({ success, data }) => success && (this.children = data))
 			},

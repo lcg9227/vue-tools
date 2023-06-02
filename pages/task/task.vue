@@ -1,21 +1,13 @@
 <template>
 	<view class="warp">
-		<!-- #ifdef APP-PLUS -->
-		<statusBar></statusBar>
-		<!-- #endif -->
+		<lcg-nav-bar></lcg-nav-bar>
 		任务
 	</view>
 </template>
 
 <script>
-	// #ifdef APP-PLUS
-	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar'
-	// #endif
 	export default {
 		components: {
-			// #ifdef APP-PLUS
-			statusBar
-			// #endif
 		},
 		data() {
 			return {
