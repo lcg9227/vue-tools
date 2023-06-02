@@ -40,7 +40,37 @@ export const get_children = () => {
 export const get_config = () => {
 	const userInfo = getUserInfo()
 	return configObj.get(userInfo).then(res => {
-		console.log('config >>>', res)
 		return res.data
+	})
+}
+
+// 添加积分等级
+export const add_score_level = params => {
+	const userInfo = getUserInfo()
+	return configObj.add_score_level(userInfo, params).then(res => {
+		const { success, errMsg } = res
+		if (success) toast.success('添加成功！')
+		if (!success) toast.error(errMsg)
+		return res
+	})
+}
+// 修改积分等级
+export const edit_score_level = (params, index) => {
+	const userInfo = getUserInfo()
+	return configObj.edit_score_level(userInfo, params, index).then(res => {
+		const { success, errMsg } = res
+		if (success) toast.success('修改成功！')
+		if (!success) toast.error(errMsg)
+		return res
+	})
+}
+// 删除积分等级
+export const del_score_level = index => {
+	const userInfo = getUserInfo()
+	return configObj.edit_score_level(userInfo, index).then(res => {
+		const { success, errMsg } = res
+		if (success) toast.success('删除成功！')
+		if (!success) toast.error(errMsg)
+		return res
 	})
 }

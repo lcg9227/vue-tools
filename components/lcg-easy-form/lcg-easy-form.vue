@@ -41,7 +41,12 @@
 			const open = (_title, _form, _submit) => {
 				title.value = _title || '表单'
 				fields.value = _form.fields
-				items.value = _form.items
+				items.value = _form.items.map(v => {
+					if (v.required === true) {
+						v.rules = [{ required: true, errorMessage: `${v.label}不可为空!` }, ...(v.rules || [])]
+					}
+					return v
+				})
 				if (typeof _submit === 'function') {
 					submit = _submit
 				}

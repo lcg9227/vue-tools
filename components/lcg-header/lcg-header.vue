@@ -16,7 +16,7 @@
 					<div class="score">{{ userInfo.score }} / 10000000</div>
 				</div>
 				<div class="card-right">
-					<div class="gotask" @click="gotask">去做任务</div>
+					<div class="b-link" @click="gotask">去做任务</div>
 					<div class="b-label">lv:10</div>
 				</div>
 			</div>
@@ -109,10 +109,5 @@
 	}
 	.card-progress {
 		margin-top: 10rpx;
-	}
-	.gotask {
-		font-size: $uni-font-size-base;
-		color: #69c98b;
-		cursor: pointer;
 	}
 </style>
