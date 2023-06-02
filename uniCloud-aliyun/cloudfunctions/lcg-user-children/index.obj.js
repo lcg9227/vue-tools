@@ -1,6 +1,7 @@
 const db = uniCloud.database()
 const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
+const { isParent } = require('lcg-common') // todo
 
 module.exports = {
 	/* 添加子账号 */
