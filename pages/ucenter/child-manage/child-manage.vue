@@ -14,8 +14,7 @@
 
 <script>
 	export default {
-		components: {
-		},
+		components: {},
 		data() {
 			return {
 				current: 0,
@@ -23,10 +22,11 @@
 				children: []
 			}
 		},
-		onLoad() {
+		created() {
 			this.userInfo = this.api.getUserInfo()
 			this.getChildren()
 		},
+
 		methods: {
 			getChildren() {
 				this.api.get_children().then(({ success, data }) => success && (this.children = data))

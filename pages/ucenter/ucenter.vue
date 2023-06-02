@@ -60,24 +60,8 @@
 		// #endif
 		data() {
 			return {
-				gridList: []
-			}
-		},
-		onLoad() {},
-		onShow() {},
-		computed: {
-			userInfo() {
-				return store.userInfo
-			},
-			hasLogin() {
-				return store.hasLogin
-			},
-			isParent() {
-				return store.hasLogin && store.userInfo.role.includes('parent')
-			},
-			ucenterList() {
-				const isParent = store.hasLogin && store.userInfo.role.includes('parent')
-				const ucenterList = [
+				gridList: [],
+				ucenterList: [
 					[
 						{
 							title: '问题与反馈',
@@ -91,21 +75,33 @@
 						}
 					]
 				]
-				if (isParent) {
-					ucenterList.unshift([
-						{
-							title: '子账号管理',
-							to: '/pages/ucenter/child-manage/child-manage',
-							icon: 'flag'
-						},
-						{
-							title: '兑换配置',
-							to: '/pages/ucenter/exchange-manage/exchange-manage',
-							icon: 'flag'
-						}
-					])
-				}
-				return ucenterList
+			}
+		},
+		created() {
+			if (this.isParent) {
+				this.ucenterList.unshift([
+					{
+						title: '子账号管理',
+						to: '/pages/ucenter/child-manage/child-manage',
+						icon: 'flag'
+					},
+					{
+						title: '兑换配置',
+						to: '/pages/ucenter/exchange-manage/exchange-manage',
+						icon: 'flag'
+					}
+				])
+			}
+		},
+		computed: {
+			userInfo() {
+				return store.userInfo
+			},
+			hasLogin() {
+				return store.hasLogin
+			},
+			isParent() {
+				return store.hasLogin && store.userInfo.role.includes('parent')
 			},
 			// #ifdef APP-PLUS
 			appVersion() {
