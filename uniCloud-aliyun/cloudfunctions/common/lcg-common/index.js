@@ -2,23 +2,23 @@ const db = uniCloud.database()
 const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
 
-/* 判断是否是家长账号 */
-const isParent = async function (userInfo) {
+/* 获取账号信息 */
+const getUserInfo = async function (userInfo) {
 	const ret = {
 		success: true,
 		errMsg: ''
 	}
-	// 查询家长账号
-	const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
-	const { data: parents } = await parentTable.get()
-	const parent = parents[0]
-	let { role } = parent
-	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
-	ret.data = parent
-	ret.parentTable = parentTable
+	// 查询账号信息
+	const userTable = usersTable.where({ _id: userInfo._id }).limit(1)
+	const { data: users } = await userTable.get()
+	const user = users[0]
+	let { role } = user
+	ret.user = user
+	ret.userTable = userTable
+	ret.isParent = role.includes('parent')
 	return ret
 }
 
 module.exports = {
-	isParent
+	getUserInfo
 }

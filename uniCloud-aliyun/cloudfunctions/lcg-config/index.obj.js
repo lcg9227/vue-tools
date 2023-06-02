@@ -2,7 +2,7 @@ const db = uniCloud.database()
 const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
 const configTable = db.collection('lcg-users-config')
-const { isParent } = require('lcg-common') // todo
+const { getUserInfo } = require('lcg-common') // todo
 
 /* 获取配置 */
 const get = async function (userInfo, type) {
