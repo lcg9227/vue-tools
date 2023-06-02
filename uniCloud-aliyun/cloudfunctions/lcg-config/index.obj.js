@@ -50,18 +50,10 @@ const add_score_level = async function (userInfo, params) {
 	const { data: parents } = await parentTable.get()
 	const parent = parents[0]
 	let { role } = parent
-	if (!role.includes('parent')) {
-		ret.success = false
-		ret.errMsg = '不是家长账号！'
-		return ret
-	}
+	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	// limit 校验
 	const isInt = /^(?:0|(?:-?[1-9]\d*))$/.test(params.limit)
-	if (!params.limit || !isInt) {
-		ret.success = false
-		ret.errMsg = '积分只能输入整数！'
-		return ret
-	}
+	if (!params.limit || !isInt) return Object.assign(ret, { success: false, errMsg: '积分只能输入整数！' })
 	// 获取配置
 	const { data, userConfigTable } = await get(userInfo, 'self')
 	let score_level = JSON.parse(JSON.stringify(data.score_level))
@@ -74,11 +66,7 @@ const add_score_level = async function (userInfo, params) {
 	})
 	// 写入数据库
 	const { updated } = await userConfigTable.update({ score_level })
-	if (updated === 0) {
-		ret.success = false
-		ret.errMsg = '添加失败！'
-		return ret
-	}
+	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '添加失败！' })
 	return ret
 }
 /* 修改积分配置 */
@@ -92,18 +80,10 @@ const edit_score_level = async function (userInfo, params, index) {
 	const { data: parents } = await parentTable.get()
 	const parent = parents[0]
 	let { role } = parent
-	if (!role.includes('parent')) {
-		ret.success = false
-		ret.errMsg = '不是家长账号！'
-		return ret
-	}
+	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	// limit 校验
 	const isInt = /^(?:0|(?:-?[1-9]\d*))$/.test(params.limit)
-	if (!params.limit || !isInt) {
-		ret.success = false
-		ret.errMsg = '积分只能输入整数！'
-		return ret
-	}
+	if (!params.limit || !isInt) return Object.assign(ret, { success: false, errMsg: '积分只能输入整数！' })
 	// 获取配置
 	const { data, userConfigTable } = await get(userInfo, 'self')
 	let score_level = JSON.parse(JSON.stringify(data.score_level))
@@ -116,11 +96,7 @@ const edit_score_level = async function (userInfo, params, index) {
 	})
 	// 写入数据库
 	const { updated } = await userConfigTable.update({ score_level })
-	if (updated === 0) {
-		ret.success = false
-		ret.errMsg = '修改失败！'
-		return ret
-	}
+	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '修改失败！' })
 	return ret
 }
 /* 删除积分配置 */
@@ -134,11 +110,7 @@ const del_score_level = async function (userInfo, index) {
 	const { data: parents } = await parentTable.get()
 	const parent = parents[0]
 	let { role } = parent
-	if (!role.includes('parent')) {
-		ret.success = false
-		ret.errMsg = '不是家长账号！'
-		return ret
-	}
+	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	// 获取配置
 	const { data, userConfigTable } = await get(userInfo, 'self')
 	let score_level = JSON.parse(JSON.stringify(data.score_level))
@@ -149,11 +121,7 @@ const del_score_level = async function (userInfo, index) {
 	})
 	// 写入数据库
 	const { updated } = await userConfigTable.update({ score_level })
-	if (updated === 0) {
-		ret.success = false
-		ret.errMsg = '删除失败！'
-		return ret
-	}
+	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '删除失败！' })
 	return ret
 }
 

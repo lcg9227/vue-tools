@@ -13,11 +13,7 @@ const isParent = async function (userInfo) {
 	const { data: parents } = await parentTable.get()
 	const parent = parents[0]
 	let { role } = parent
-	if (!role.includes('parent')) {
-		ret.success = false
-		ret.errMsg = '不是家长账号！'
-		return ret
-	}
+	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	ret.data = parent
 	ret.parentTable = parentTable
 	return ret
