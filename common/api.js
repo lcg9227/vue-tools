@@ -2,12 +2,13 @@ import { store, mutations } from '@/uni_modules/uni-id-pages/common/store.js'
 import { toast } from './pocket'
 
 const childrenObj = uniCloud.importObject('lcg-user-children')
+const configObj = uniCloud.importObject('lcg-config')
 
 // 判断是否登录
 export const hasLogin = () => {
 	const _hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
 	if (!_hasLogin) {
-    mutations.logout()
+		mutations.logout()
 		return _hasLogin
 	}
 	return _hasLogin
@@ -33,4 +34,13 @@ export const add_child = childName => {
 export const get_children = () => {
 	const userInfo = getUserInfo()
 	return childrenObj.get(userInfo)
+}
+
+// 获取配置
+export const get_config = () => {
+	const userInfo = getUserInfo()
+	return configObj.get(userInfo).then(res => {
+		console.log('config >>>', res)
+		return res.data
+	})
 }
