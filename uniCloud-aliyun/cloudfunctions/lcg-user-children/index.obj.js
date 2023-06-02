@@ -1,8 +1,9 @@
 const db = uniCloud.database()
 const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
+
 module.exports = {
-	// 添加子账号
+	/* 添加子账号 */
 	add: async function (userInfo, childName) {
 		const ret = {
 			success: true,
@@ -53,12 +54,13 @@ module.exports = {
 		}
 		return ret
 	},
-	// 获取子账号信息
+	/* 获取全部子账号 */
 	get: async function (userInfo) {
 		const ret = {
 			success: true,
 			errMsg: ''
 		}
+		// 查询家长账号
 		const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
 		const { data: parents } = await parentTable.get()
 		const parent = parents[0]
