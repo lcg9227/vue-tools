@@ -2,7 +2,7 @@
 	<!-- #ifdef APP-PLUS -->
 	<statusBar :style="statusBarStyle"></statusBar>
 	<!-- #endif -->
-	<uni-nav-bar shadow left-icon="left" :title="title" @clickLeft="back" v-if="title" />
+	<uni-nav-bar left-icon="left" :title="title" @clickLeft="back" v-if="title" />
 </template>
 
 <script>

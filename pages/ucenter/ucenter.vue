@@ -18,26 +18,28 @@
 				<text class="text">{{ item.text }}</text>
 			</uni-grid-item>
 		</uni-grid>
-		<uni-list class="center-list" v-for="(sublist, index) in ucenterList" :key="index">
-			<uni-list-item
-				v-for="(item, i) in sublist"
-				:title="item.title"
-				link
-				:rightText="item.rightText"
-				:key="i"
-				:clickable="true"
-				:to="item.to"
-				@click="ucenterListClick(item)"
-				:show-extra-icon="true"
-				:extraIcon="{ type: item.icon, color: '#999' }">
-				<template v-slot:footer>
-					<view v-if="item.showBadge" class="item-footer">
-						<text class="item-footer-text">{{ item.rightText }}</text>
-						<view class="item-footer-badge"></view>
-					</view>
+		<template v-if="ucenterList">
+			<uni-list class="center-list" v-for="(sublist, index) in ucenterList" :key="index">
+				<template v-for="(item, i) in sublist" :key="i">
+					<uni-list-item
+						:title="item.title"
+						link
+						:rightText="item.rightText"
+						:clickable="true"
+						:to="item.to"
+						@click="ucenterListClick(item)"
+						:show-extra-icon="true"
+						:extraIcon="{ type: item.icon, color: '#999' }">
+						<template v-slot:footer>
+							<view v-if="item.showBadge" class="item-footer">
+								<text class="item-footer-text">{{ item.rightText }}</text>
+								<view class="item-footer-badge"></view>
+							</view>
+						</template>
+					</uni-list-item>
 				</template>
-			</uni-list-item>
-		</uni-list>
+			</uni-list>
+		</template>
 	</view>
 </template>
 
@@ -45,7 +47,6 @@
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update'
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version'
 	import { store, mutations } from '@/uni_modules/uni-id-pages/common/store.js'
-	const db = uniCloud.database()
 	export default {
 		// #ifdef APP
 		onBackPress({ from }) {
@@ -59,8 +60,24 @@
 		// #endif
 		data() {
 			return {
-				gridList: [],
-				ucenterList: [
+				gridList: []
+			}
+		},
+		onLoad() {},
+		onShow() {},
+		computed: {
+			userInfo() {
+				return store.userInfo
+			},
+			hasLogin() {
+				return store.hasLogin
+			},
+			isParent() {
+				return store.hasLogin && store.userInfo.role.includes('parent')
+			},
+			ucenterList() {
+				const isParent = store.hasLogin && store.userInfo.role.includes('parent')
+				const ucenterList = [
 					[
 						{
 							title: '问题与反馈',
@@ -73,44 +90,22 @@
 							icon: 'gear'
 						}
 					]
-					// #ifdef APP-PLUS
-					// [
-					// 	{
-					// 		title: '关于',
-					// 		to: '/pages/ucenter/about/about',
-					// 		icon: 'info'
-					// 	}
-					// ]
-					// #endif
 				]
-			}
-		},
-		onLoad() {
-			if (this.isParent) {
-				this.ucenterList.unshift([
-					{
-						title: '子账号管理',
-						to: '/pages/ucenter/child-manage/child-manage',
-						icon: 'flag'
-					},
-					{
-						title: '兑换配置',
-						to: '/pages/ucenter/child-manage/child-manage',
-						icon: 'flag'
-					}
-				])
-			}
-		},
-		onShow() {},
-		computed: {
-			userInfo() {
-				return store.userInfo
-			},
-			hasLogin() {
-				return store.hasLogin
-			},
-			isParent() {
-				return store.hasLogin && store.userInfo.role.includes('parent')
+				if (isParent) {
+					ucenterList.unshift([
+						{
+							title: '子账号管理',
+							to: '/pages/ucenter/child-manage/child-manage',
+							icon: 'flag'
+						},
+						{
+							title: '兑换配置',
+							to: '/pages/ucenter/exchange-manage/exchange-manage',
+							icon: 'flag'
+						}
+					])
+				}
+				return ucenterList
 			},
 			// #ifdef APP-PLUS
 			appVersion() {
