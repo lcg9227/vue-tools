@@ -70,10 +70,10 @@ export const cacheApiData = (userInfo, name, api) => {
 	if (!cacheData[userInfo._id]) {
 		cacheData[userInfo._id] = {}
 	}
-	// const cur = cacheData[userInfo._id][name]
-	// if (cur && cur.expirationTime - Date.now() > 0) {
-	// 	return new Promise(resolve => resolve(cur.data))
-	// }
+	const cur = cacheData[userInfo._id][name]
+	if (cur && cur.expirationTime - Date.now() > 0) {
+		return new Promise(resolve => resolve(cur.data))
+	}
 	return api().then(res => {
 		// console.log('重新请求数据 >>>', name, res)
 		cacheData[userInfo._id][name] = deepCopy({ data: res, expirationTime: Date.now() + 24 * 60 * 60 * 1000 })
