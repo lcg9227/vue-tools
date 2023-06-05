@@ -10,12 +10,10 @@ module.exports = {
 			success: true,
 			errMsg: ''
 		}
-		// 查询家长账号
-		const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
-		const { data: parents } = await parentTable.get()
-		const parent = parents[0]
-		let { role, children } = parent
-		if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
+		// 查询账号信息
+		const { isParent, user: parent, userTable: parentTable } = await getUserInfo(userInfo._id)
+		let { children } = parent
+		if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 		if (Array.isArray(children)) {
 			if (children.includes(childName)) return Object.assign(ret, { success: false, errMsg: '已存在子账号！' })
 		} else {
@@ -41,12 +39,10 @@ module.exports = {
 			success: true,
 			errMsg: ''
 		}
-		// 查询家长账号
-		const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
-		const { data: parents } = await parentTable.get()
-		const parent = parents[0]
-		let { role, children } = parent
-		if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
+		// 查询账号信息
+		const { isParent, user } = await getUserInfo(userInfo._id)
+		let { children } = user
+		if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 		if (!Array.isArray(children)) {
 			ret.data = []
 			return ret

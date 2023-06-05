@@ -12,12 +12,10 @@ const get = async function (userInfo, type) {
 	}
 	let __uid = userInfo._id
 	// 查询账号信息
-	const userTable = usersTable.where({ _id: userInfo._id }).limit(1)
-	const { data: users } = await userTable.get()
-	const user = users[0]
+	const { isParent, user } = await getUserInfo(userInfo._id)
 	let { role, parent_id } = user
 	// 子账号，查询的是家长账号的配置
-	if (!role.includes('parent')) {
+	if (!isParent) {
 		__uid = parent_id
 	}
 	// 查询配置
@@ -45,12 +43,9 @@ const add_score_level = async function (userInfo, params) {
 		success: true,
 		errMsg: ''
 	}
-	// 查询家长账号
-	const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
-	const { data: parents } = await parentTable.get()
-	const parent = parents[0]
-	let { role } = parent
-	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
+	// 查询账号信息
+	const { isParent } = await getUserInfo(userInfo._id)
+	if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	// limit 校验
 	const isInt = /^(?:0|(?:-?[1-9]\d*))$/.test(params.limit)
 	if (!params.limit || !isInt) return Object.assign(ret, { success: false, errMsg: '积分只能输入整数！' })
@@ -75,12 +70,9 @@ const edit_score_level = async function (userInfo, params, index) {
 		success: true,
 		errMsg: ''
 	}
-	// 查询家长账号
-	const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
-	const { data: parents } = await parentTable.get()
-	const parent = parents[0]
-	let { role } = parent
-	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
+	// 查询账号信息
+	const { isParent } = await getUserInfo(userInfo._id)
+	if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	// limit 校验
 	const isInt = /^(?:0|(?:-?[1-9]\d*))$/.test(params.limit)
 	if (!params.limit || !isInt) return Object.assign(ret, { success: false, errMsg: '积分只能输入整数！' })
@@ -105,12 +97,9 @@ const del_score_level = async function (userInfo, index) {
 		success: true,
 		errMsg: ''
 	}
-	// 查询家长账号
-	const parentTable = usersTable.where({ _id: userInfo._id }).limit(1)
-	const { data: parents } = await parentTable.get()
-	const parent = parents[0]
-	let { role } = parent
-	if (!role.includes('parent')) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
+	// 查询账号信息
+	const { isParent } = await getUserInfo(userInfo._id)
+	if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
 	// 获取配置
 	const { data, userConfigTable } = await get(userInfo, 'self')
 	let score_level = JSON.parse(JSON.stringify(data.score_level))
