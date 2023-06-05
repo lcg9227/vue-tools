@@ -1,11 +1,22 @@
 const db = uniCloud.database()
 const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
-const { getUserInfo } = require('lcg-common') // todo
+const { getUserInfo } = require('lcg-common')
 
 module.exports = {
+	/* 获取账号详细信息 */
+	getDetail: async function (userInfo) {
+		const ret = {
+			success: true,
+			errMsg: ''
+		}
+		const { user } = await getUserInfo(userInfo._id)
+		const { nickname, avatar_file, score } = user
+		ret.data = { nickname, avatar_file, score }
+		return ret
+	},
 	/* 添加子账号 */
-	add: async function (userInfo, childName) {
+	addChlid: async function (userInfo, childName) {
 		const ret = {
 			success: true,
 			errMsg: ''
@@ -34,7 +45,7 @@ module.exports = {
 		return ret
 	},
 	/* 获取全部子账号 */
-	get: async function (userInfo) {
+	getAllChildren: async function (userInfo) {
 		const ret = {
 			success: true,
 			errMsg: ''

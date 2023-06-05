@@ -1,5 +1,5 @@
 {
-  "name": "lcg-user-children",
+  "name": "lcg-config",
   "dependencies": {
     "lcg-common": "file:../common/lcg-common"
   },

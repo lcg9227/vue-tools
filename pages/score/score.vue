@@ -1,8 +1,7 @@
 <template>
-	<view class="warp">
+	<view class="warp" v-if="!loading">
 		<lcg-nav-bar :statusBarStyle="{ backgroundColor: '#69c98b' }"></lcg-nav-bar>
-		<lcg-header :userInfo="userInfo"></lcg-header>
-		<lcg-header :userInfo="userInfo"></lcg-header>
+		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
 	</view>
 </template>
 
@@ -14,6 +13,7 @@
 				loading: true,
 				current: 0,
 				userInfo: {},
+				userDetail: {},
 				config: {}
 			}
 		},
@@ -23,10 +23,13 @@
 		},
 		methods: {
 			getData() {
-				this.api.get_config().then(config => {
-					console.log('config >>>', config)
-					this.loading = false
-					this.config = config
+				this.api.get_user_detail().then(({ data: userDetail }) => {
+					this.userDetail = userDetail
+					this.api.get_config().then(config => {
+						console.log('getData >>>', userDetail, config)
+						this.loading = false
+						this.config = config
+					})
 				})
 			}
 		}

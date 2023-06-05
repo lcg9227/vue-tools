@@ -74,8 +74,8 @@ export const cacheApiData = (userInfo, name, api) => {
 	if (cur && cur.expirationTime - Date.now() > 0) {
 		return new Promise(resolve => resolve(cur.data))
 	}
-	console.log('重新请求数据 >>>', name)
 	return api().then(res => {
+		// console.log('重新请求数据 >>>', name, res)
 		cacheData[userInfo._id][name] = deepCopy({ data: res, expirationTime: Date.now() + 24 * 60 * 60 * 1000 })
 		uni.setStorage({ key: 'cacheApiData', data: cacheData })
 		return res
@@ -87,8 +87,11 @@ export const cacheReset = (userInfo, name, api) => {
 	if (!cacheData[userInfo._id]) {
 		cacheData[userInfo._id] = {}
 	}
+	if (!cacheData[userInfo._id][name]) {
+		cacheData[userInfo._id][name] = {}
+	}
 	return api().then(res => {
-		cacheData[userInfo._id][name] = deepCopy({ data: res, expirationTime: Date.now() - 1000 })
+		cacheData[userInfo._id][name].expirationTime = Date.now() - 1000
 		uni.setStorage({ key: 'cacheApiData', data: cacheData })
 		return res
 	})

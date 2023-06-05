@@ -2,26 +2,26 @@
 	<div class="header">
 		<div class="b-between-c">
 			<div class="info">
-				<div class="nickname">hi，梨子</div>
+				<div class="nickname">hi，{{ userDetail.nickname }}</div>
 				<div class="tip">让我们一起学习吧！</div>
 			</div>
-			<div class="image-box" v-if="userInfo.hasLogin && userInfo.avatar_file && userInfo.avatar_file.url">
-				<image class="img" mode="aspectFill" :src="userInfo.avatar_file.url"></image>
+			<div class="image-box" v-if="userDetail.avatar_file && userDetail.avatar_file.url">
+				<image class="img" mode="aspectFill" :src="userDetail.avatar_file.url"></image>
 			</div>
 		</div>
 		<div class="card">
 			<div class="b-between">
 				<div class="score-box">
 					<div class="b-label">我的积分</div>
-					<div class="score">{{ userInfo.score }} / 10000000</div>
+					<div class="score">{{ userDetail.score }} / {{ scoreConfig.limit }}</div>
 				</div>
 				<div class="card-right">
 					<div class="b-link" @click="gotask">去做任务</div>
-					<div class="b-label">lv:10</div>
+					<div class="b-label">{{ scoreConfig.text }}</div>
 				</div>
 			</div>
 			<div class="card-progress">
-				<lcg-progress :percent="68" stroke-color="linear-gradient(to right, #AFEDC5, #0BDE55)" :showInfo="false"></lcg-progress>
+				<lcg-progress :percent="scoreConfig.percent" stroke-color="linear-gradient(to right, #AFEDC5, #0BDE55)" :showInfo="false"></lcg-progress>
 			</div>
 		</div>
 	</div>
@@ -33,9 +33,34 @@
 			userInfo: {
 				type: Object,
 				default: {}
+			},
+			userDetail: {
+				type: Object,
+				default: {}
+			},
+			config: {
+				type: Object,
+				default: {}
 			}
 		},
 		components: {},
+		computed: {
+			scoreConfig() {
+				const { score } = this.userDetail
+				const { score_level } = this.config
+				let ret = score_level[score_level.length]
+				let isFind = false
+				score_level.forEach(v => {
+					if (score < v.limit && !isFind) {
+						isFind = true
+						ret = v
+					}
+				})
+				console.log('>>>>', ret)
+				ret.percent = Math.floor((score / ret.limit) * 100)
+				return ret
+			}
+		},
 		data() {
 			return {}
 		},
