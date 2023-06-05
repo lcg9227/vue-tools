@@ -67,7 +67,7 @@ export const edit_score_level = (params, index) => {
 // 删除积分等级
 export const del_score_level = index => {
 	const userInfo = getUserInfo()
-	return configObj.edit_score_level(userInfo, index).then(res => {
+	return configObj.del_score_level(userInfo, index).then(res => {
 		const { success, errMsg } = res
 		if (success) toast.success('删除成功！')
 		if (!success) toast.error(errMsg)
