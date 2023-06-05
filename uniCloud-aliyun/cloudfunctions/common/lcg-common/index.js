@@ -18,7 +18,23 @@ const getUserInfo = async function (_id) {
 	ret.isParent = role.includes('parent')
 	return ret
 }
-
+/* 通过username 查询账号信息 */
+const getUserInfoByName = async function (username) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userTable = usersTable.where({ username }).limit(1)
+	const { data: users } = await userTable.get()
+	const user = users[0]
+	const { role } = user || {}
+	ret.user = user
+	ret.userTable = userTable
+	ret.isParent = role.includes('parent')
+	return ret
+}
 module.exports = {
-	getUserInfo
+	getUserInfo,
+	getUserInfoByName
 }

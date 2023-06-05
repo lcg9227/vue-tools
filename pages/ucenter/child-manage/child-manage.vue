@@ -38,6 +38,8 @@
 
 		methods: {
 			getChildren() {
+				const { hasLogin } = this.userInfo
+				if (!hasLogin) return
 				this.api.get_children().then(({ success, data }) => success && (this.children = data))
 			},
 			testClick() {
@@ -51,7 +53,6 @@
 				)
 			},
 			goChildPage(username) {
-				console.log('>>>', username)
 				this.pocket.goPage('/pages/ucenter/child-manage/child-page/child-page', { username })
 			}
 		}

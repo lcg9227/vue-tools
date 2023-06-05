@@ -46,12 +46,12 @@
 		},
 		created() {
 			this.userInfo = this.api.getUserInfo()
-			if (this.userInfo.hasLogin) {
-				this.getConfig()
-			}
+			this.getConfig()
 		},
 		methods: {
 			getConfig() {
+				const { hasLogin } = this.userInfo
+				if (!hasLogin) return
 				this.api.get_config().then(config => (this.config = config))
 			},
 			onLvAdd() {

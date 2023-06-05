@@ -22,8 +22,7 @@ export const getUserInfo = () => {
 }
 // 获取账号详情
 export const get_user_detail = username => {
-	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, username, () => userObj.getDetail(username))
+	return cacheApiData({ _id: username }, username, () => userObj.getDetail(username))
 }
 // 添加子账号
 export const add_child = childName => {
@@ -83,6 +82,20 @@ export const del_score_level = index => {
 		configObj.del_score_level(userInfo, index).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('删除成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
+}
+
+// 子账号 修改积分
+export const edit_child_score = params => {
+	const userInfo = getUserInfo()
+	const { username } = params
+	return cacheReset({ _id: username }, username, () =>
+		userObj.editChildScore(userInfo, params).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('修改积分成功！')
 			if (!success) toast.error(errMsg)
 			return res
 		})

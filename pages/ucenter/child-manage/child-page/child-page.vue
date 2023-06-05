@@ -2,10 +2,20 @@
 	<view class="warp" v-if="!loading">
 		<lcg-nav-bar title="子账号"></lcg-nav-bar>
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
+		<button class="mini-btn button" type="primary" size="mini" @click="editChildScore('add')">增加积分</button>
+		<button class="mini-btn button" type="primary" size="mini" @click="editChildScore('lower')">消费积分</button>
 	</view>
+	<lcg-easy-form ref="score_easyForm"></lcg-easy-form>
 </template>
 
 <script>
+	const score_form = {
+		fields: { score: '', notes: '' },
+		items: [
+			{ field: 'score', label: '积分', type: 'input', placeholder: '请输入变化的积分', required: true },
+			{ field: 'notes', label: '备注', type: 'input', placeholder: '请输入备注信息', required: true }
+		]
+	}
 	export default {
 		components: {},
 		data() {
@@ -37,6 +47,8 @@
 		},
 		methods: {
 			getData() {
+				const { hasLogin } = this.userInfo
+				if (!hasLogin) return
 				this.getConfig()
 					.then(() => this.getDetail())
 					.then(() => (this.loading = false))
@@ -50,13 +62,28 @@
 					this.userDetail = userDetail
 					console.log('userDetail  >>>', this.chlidName, this.config, userDetail)
 				})
+			},
+			// 添加孩子账号的积分
+			editChildScore(type) {
+				this.$refs.score_easyForm.open(type === 'add' ? '添加积分' : '消费积分', this.pocket.deepCopy(score_form), data => {
+					const params = { ...data, type, username: this.chlidName }
+					this.api.edit_child_score(params).then(({ success }) => {
+						if (success) {
+							this.getDetail()
+							this.$refs.score_easyForm.onClose()
+						}
+					})
+				})
 			}
 		}
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.warp {
 		position: relative;
+		.button {
+			margin-left: 40rpx;
+		}
 	}
 </style>

@@ -9,5 +9,7 @@
     "timeout": 60,
     "triggers": []
   },
-  "extensions": {}
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
 }

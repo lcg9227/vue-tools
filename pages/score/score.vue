@@ -23,6 +23,8 @@
 		},
 		methods: {
 			getData() {
+				const { hasLogin } = this.userInfo
+				if (!hasLogin) return
 				this.getConfig()
 					.then(() => this.getDetail())
 					.then(() => (this.loading = false))
