@@ -3,28 +3,30 @@
 		{
 			"path": "pages/score/score",
 			"style": {
-				"enablePullDownRefresh": true,
 				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/task/task",
 			"style": {
-				"enablePullDownRefresh": true,
 				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/ucenter/child-manage/child-manage",
 			"style": {
-				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/ucenter/child-manage/child-page/child-page",
+			"style": {
 				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/ucenter/exchange-manage/exchange-manage",
 			"style": {
-				"enablePullDownRefresh": true,
 				"navigationStyle": "custom"
 			}
 		},

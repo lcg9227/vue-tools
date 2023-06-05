@@ -17,11 +17,11 @@ export const hasLogin = () => {
 export const getUserInfo = () => {
 	const _hasLogin = hasLogin()
 	const userInfo = { ...store.userInfo, hasLogin: _hasLogin }
-	console.log('当前登录信息>>>', _hasLogin, userInfo)
+	// console.log('当前登录信息>>>', _hasLogin, userInfo)
 	return userInfo
 }
 // 获取账号详情
-export const get_user_detail = (username) => {
+export const get_user_detail = username => {
 	const userInfo = getUserInfo()
 	return cacheApiData(userInfo, username, () => userObj.getDetail(username))
 }
@@ -40,7 +40,10 @@ export const add_child = childName => {
 // 获取子账号信息
 export const get_children = () => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'children', () => userObj.getAllChildren(userInfo))
+	return cacheApiData(userInfo, 'children', () => userObj.getAllChildren(userInfo)).then(res => {
+		console.log('get_children >>>', res)
+		return res
+	})
 }
 
 // 获取配置

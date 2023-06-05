@@ -6,7 +6,12 @@
 
 		<uni-list title="子账号" :border="true">
 			<template v-for="(child, index) in children" :key="index">
-				<uni-list-chat :title="child.nickname" :note="child.username" avatar="https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"></uni-list-chat>
+				<uni-list-chat
+					clickable
+					@click="goChildPage(child.username)"
+					:title="child.nickname"
+					:note="`当前积分：${child.score || 0}`"
+					:avatar="child.avatar_file && child.avatar_file.url ? child.avatar_file.url : '/static/logo.png'"></uni-list-chat>
 			</template>
 		</uni-list>
 	</view>
@@ -44,6 +49,10 @@
 						}
 					})
 				)
+			},
+			goChildPage(username) {
+				console.log('>>>', username)
+				this.pocket.goPage('/pages/ucenter/child-manage/child-page/child-page', { username })
 			}
 		}
 	}

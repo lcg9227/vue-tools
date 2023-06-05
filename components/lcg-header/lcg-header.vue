@@ -7,7 +7,7 @@
 			</div>
 			<div class="image-box">
 				<image class="img" mode="aspectFill" :src="userDetail.avatar_file.url" v-if="userDetail.avatar_file && userDetail.avatar_file.url"></image>
-				<image class="img" mode="aspectFill" src="~@/static/logo.png" v-else></image>
+				<image class="img" mode="aspectFill" src="/static/logo.png" v-else></image>
 			</div>
 		</div>
 		<div class="card" v-if="!userDetail.isParent">
