@@ -1,5 +1,5 @@
 import { store, mutations } from '@/uni_modules/uni-id-pages/common/store.js'
-import { toast } from './pocket'
+import { toast, cacheApiData, cacheReset } from './pocket'
 
 const childrenObj = uniCloud.importObject('lcg-user-children')
 const configObj = uniCloud.importObject('lcg-config')
@@ -33,44 +33,48 @@ export const add_child = childName => {
 // 获取子账号信息
 export const get_children = () => {
 	const userInfo = getUserInfo()
-	return childrenObj.get(userInfo)
+	return cacheApiData(userInfo, 'children', () => childrenObj.get(userInfo))
 }
 
 // 获取配置
 export const get_config = () => {
 	const userInfo = getUserInfo()
-	return configObj.get(userInfo).then(res => {
-		return res.data
-	})
+	return cacheApiData(userInfo, 'config', () => configObj.get(userInfo).then(res => res.data))
 }
 
 // 添加积分等级
 export const add_score_level = params => {
 	const userInfo = getUserInfo()
-	return configObj.add_score_level(userInfo, params).then(res => {
-		const { success, errMsg } = res
-		if (success) toast.success('添加成功！')
-		if (!success) toast.error(errMsg)
-		return res
-	})
+	return cacheReset(userInfo, 'config', () =>
+		configObj.add_score_level(userInfo, params).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('添加成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
 }
 // 修改积分等级
 export const edit_score_level = (params, index) => {
 	const userInfo = getUserInfo()
-	return configObj.edit_score_level(userInfo, params, index).then(res => {
-		const { success, errMsg } = res
-		if (success) toast.success('修改成功！')
-		if (!success) toast.error(errMsg)
-		return res
-	})
+	return cacheReset(userInfo, 'config', () =>
+		configObj.edit_score_level(userInfo, params, index).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('修改成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
 }
 // 删除积分等级
 export const del_score_level = index => {
 	const userInfo = getUserInfo()
-	return configObj.del_score_level(userInfo, index).then(res => {
-		const { success, errMsg } = res
-		if (success) toast.success('删除成功！')
-		if (!success) toast.error(errMsg)
-		return res
-	})
+	return cacheReset(userInfo, 'config', () =>
+		configObj.del_score_level(userInfo, index).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('删除成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
 }

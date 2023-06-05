@@ -63,3 +63,33 @@ export const checkError = error => {
 	}
 	return true
 }
+
+// get接口缓存
+export const cacheApiData = (userInfo, name, api) => {
+	const cacheData = uni.getStorageSync('cacheApiData') || {}
+	if (!cacheData[userInfo._id]) {
+		cacheData[userInfo._id] = {}
+	}
+	const cur = cacheData[userInfo._id][name]
+	if (cur && cur.expirationTime - Date.now() > 0) {
+		return new Promise(resolve => resolve(cur.data))
+	}
+	console.log('重新请求数据 >>>', name)
+	return api().then(res => {
+		cacheData[userInfo._id][name] = deepCopy({ data: res, expirationTime: Date.now() + 24 * 60 * 60 * 1000 })
+		uni.setStorage({ key: 'cacheApiData', data: cacheData })
+		return res
+	})
+}
+// set接口重置缓存，让下一次get请求能够重新请求到新的值
+export const cacheReset = (userInfo, name, api) => {
+	const cacheData = uni.getStorageSync('cacheApiData') || {}
+	if (!cacheData[userInfo._id]) {
+		cacheData[userInfo._id] = {}
+	}
+	return api().then(res => {
+		cacheData[userInfo._id][name] = deepCopy({ data: res, expirationTime: Date.now() - 1000 })
+		uni.setStorage({ key: 'cacheApiData', data: cacheData })
+		return res
+	})
+}

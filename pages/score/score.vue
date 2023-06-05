@@ -11,14 +11,25 @@
 		components: {},
 		data() {
 			return {
+				loading: true,
 				current: 0,
-				userInfo: {}
+				userInfo: {},
+				config: {}
 			}
 		},
-		onLoad() {
+		created() {
 			this.userInfo = this.api.getUserInfo()
+			this.getData()
 		},
-		methods: {}
+		methods: {
+			getData() {
+				this.api.get_config().then(config => {
+					console.log('config >>>', config)
+					this.loading = false
+					this.config = config
+				})
+			}
+		}
 	}
 </script>
 
