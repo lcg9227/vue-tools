@@ -1,13 +1,12 @@
 {
-	"name": "lcg-user-children",
-	"dependencies": {},
-	"cloudfunction-config": {
-		"concurrency": 1,
-		"memorySize": 128,
-		"timeout": 60,
-		"triggers": []
+	"name": "lcg-common",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"extensions": {
-		"uni-cloud-jql": {}
-	}
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
 }
