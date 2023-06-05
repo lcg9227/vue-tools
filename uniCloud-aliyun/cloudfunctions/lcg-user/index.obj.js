@@ -5,14 +5,16 @@ const { getUserInfo } = require('lcg-common')
 
 module.exports = {
 	/* 获取账号详细信息 */
-	getDetail: async function (userInfo) {
+	getDetail: async function (username) {
 		const ret = {
 			success: true,
 			errMsg: ''
 		}
-		const { user } = await getUserInfo(userInfo._id)
-		const { nickname, avatar_file, score } = user
-		ret.data = { nickname, avatar_file, score }
+		// 查询账号信息
+		let userTable = usersTable.where({ username }).limit(1)
+		const { data: users } = await userTable.get()
+		const { nickname, avatar_file, score, role } = users[0]
+		ret.data = { nickname, avatar_file, score: score || 0, isParent: role.includes('parent') }
 		return ret
 	},
 	/* 添加子账号 */

@@ -23,13 +23,18 @@
 		},
 		methods: {
 			getData() {
-				this.api.get_user_detail().then(({ data: userDetail }) => {
+				this.getConfig()
+					.then(() => this.getDetail())
+					.then(() => (this.loading = false))
+			},
+			getConfig() {
+				return this.api.get_config().then(config => (this.config = config))
+			},
+			getDetail() {
+				const { username } = this.userInfo
+				return this.api.get_user_detail(username).then(({ data: userDetail }) => {
 					this.userDetail = userDetail
-					this.api.get_config().then(config => {
-						console.log('getData >>>', userDetail, config)
-						this.loading = false
-						this.config = config
-					})
+					console.log('userDetail >>>', username, this.config, userDetail)
 				})
 			}
 		}

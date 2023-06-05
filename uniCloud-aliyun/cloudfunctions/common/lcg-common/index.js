@@ -9,10 +9,10 @@ const getUserInfo = async function (_id) {
 		errMsg: ''
 	}
 	// 查询账号信息
-	let userTable = usersTable.where({ _id }).limit(1)
+	const userTable = usersTable.where({ _id }).limit(1)
 	const { data: users } = await userTable.get()
 	const user = users[0]
-	let { role } = user || {}
+	const { role } = user || {}
 	ret.user = user
 	ret.userTable = userTable
 	ret.isParent = role.includes('parent')

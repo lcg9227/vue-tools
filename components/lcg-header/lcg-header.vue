@@ -1,15 +1,16 @@
 <template>
-	<div class="header">
+	<div class="header" :style="{ marginBottom: userDetail.isParent ? '40rpx' : '120rpx' }">
 		<div class="b-between-c">
 			<div class="info">
 				<div class="nickname">hi，{{ userDetail.nickname }}</div>
 				<div class="tip">让我们一起学习吧！</div>
 			</div>
-			<div class="image-box" v-if="userDetail.avatar_file && userDetail.avatar_file.url">
-				<image class="img" mode="aspectFill" :src="userDetail.avatar_file.url"></image>
+			<div class="image-box">
+				<image class="img" mode="aspectFill" :src="userDetail.avatar_file.url" v-if="userDetail.avatar_file && userDetail.avatar_file.url"></image>
+				<image class="img" mode="aspectFill" src="~@/static/logo.png" v-else></image>
 			</div>
 		</div>
-		<div class="card">
+		<div class="card" v-if="!userDetail.isParent">
 			<div class="b-between">
 				<div class="score-box">
 					<div class="b-label">我的积分</div>
@@ -30,10 +31,6 @@
 <script>
 	export default {
 		props: {
-			userInfo: {
-				type: Object,
-				default: {}
-			},
 			userDetail: {
 				type: Object,
 				default: {}
@@ -46,7 +43,8 @@
 		components: {},
 		computed: {
 			scoreConfig() {
-				const { score } = this.userDetail
+				const { score, isParent } = this.userDetail
+				if (isParent) return {}
 				const { score_level } = this.config
 				let ret = score_level[score_level.length]
 				let isFind = false
@@ -56,7 +54,6 @@
 						ret = v
 					}
 				})
-				console.log('>>>>', ret)
 				ret.percent = Math.floor((score / ret.limit) * 100)
 				return ret
 			}
@@ -82,7 +79,6 @@
 		background-color: $lcg-bg-color-main;
 		color: $lcg-text-color-inverse;
 		padding: 20rpx 40rpx 0 40rpx;
-		margin-bottom: 120rpx;
 	}
 	.info {
 		display: flex;

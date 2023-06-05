@@ -21,9 +21,9 @@ export const getUserInfo = () => {
 	return userInfo
 }
 // 获取账号详情
-export const get_user_detail = () => {
+export const get_user_detail = (username) => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'userDetail', () => userObj.getDetail(userInfo))
+	return cacheApiData(userInfo, username, () => userObj.getDetail(username))
 }
 // 添加子账号
 export const add_child = childName => {

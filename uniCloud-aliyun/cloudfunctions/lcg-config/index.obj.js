@@ -13,7 +13,7 @@ const get = async function (userInfo, type) {
 	let __uid = userInfo._id
 	// 查询账号信息
 	const { isParent, user } = await getUserInfo(userInfo._id)
-	let { role, parent_id } = user
+	let { parent_id } = user
 	// 子账号，查询的是家长账号的配置
 	if (!isParent) {
 		__uid = parent_id
