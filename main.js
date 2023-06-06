@@ -1,9 +1,10 @@
 import App from './App'
 import * as pocket from './common/pocket'
 import * as api from './common/api'
+import * as dataConfig from './common/dataConfig'
 
 const config = {
-	globalProperties: { pocket, api },
+	globalProperties: { pocket, api, dataConfig },
 	errorHandler: (err, vm, info) => console.error(err)
 }
 // #ifndef VUE3
