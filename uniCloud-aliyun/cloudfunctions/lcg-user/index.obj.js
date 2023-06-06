@@ -16,7 +16,7 @@ module.exports = {
 		ret.data = { nickname, avatar_file, score: score || 0, isParent }
 		return ret
 	},
-	/* 修改子账号信息 */
+	/* 修改子账号积分 */
 	editChildScore: async function (userInfo, params) {
 		const ret = {
 			success: true,
@@ -36,6 +36,7 @@ module.exports = {
 		// 积分校验
 		const isInt = /^(?:0|(?:-?[1-9]\d*))$/.test(_score)
 		if (!_score || !isInt) return Object.assign(ret, { success: false, errMsg: '积分只能输入整数！' })
+		const preScore = user.score || 0
 		const score = Number(_score)
 		const info = {
 			operate_user_id: userInfo._id,
@@ -43,7 +44,7 @@ module.exports = {
 			type: type === 'add' ? 1 : 2,
 			score,
 			comment: notes,
-			balance: type === 'add' ? user.score + score : user.score - score
+			balance: type === 'add' ? preScore + score : preScore - score
 		}
 		if (info.balance < 0) return Object.assign(ret, { success: false, errMsg: '积分不足！' })
 		await dbJQL.collection('uni-id-scores').add(info)
