@@ -3,6 +3,7 @@
 	<view class="warp" v-if="!loading">
 		<button class="button" type="primary" size="mini" @click="openTaskFrom">添加任务</button>
 	</view>
+	<lcg-task-form ref="taskForm"></lcg-task-form>
 </template>
 
 <script>
@@ -24,9 +25,12 @@
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
+				this.loading = false
 			},
 			openTaskFrom() {
-				
+				this.$refs.taskForm.open(null, data => {
+					console.log('111 >>>', data)
+				})
 			}
 		}
 	}
