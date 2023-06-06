@@ -11,7 +11,6 @@
 		data() {
 			return {
 				loading: true,
-				current: 0,
 				userInfo: {},
 				userDetail: {},
 				config: {}
