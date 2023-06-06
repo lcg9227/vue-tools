@@ -1,6 +1,8 @@
 <template>
 	<lcg-nav-bar></lcg-nav-bar>
-	<view class="warp" v-if="!loading"> </view>
+	<view class="warp" v-if="!loading">
+		
+	</view>
 </template>
 
 <script>

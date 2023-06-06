@@ -22,7 +22,7 @@ export const getUserInfo = () => {
 }
 // 获取账号详情
 export const get_user_detail = username => {
-	return cacheApiData({ _id: username }, username, () => userObj.getDetail(username))
+	return cacheApiData({ _id: username }, 'user_detail', () => userObj.getDetail(username))
 }
 // 添加子账号
 export const add_child = childName => {
@@ -92,7 +92,7 @@ export const del_score_level = index => {
 export const edit_child_score = params => {
 	const userInfo = getUserInfo()
 	const { username } = params
-	return cacheReset({ _id: username }, username, () =>
+	return cacheReset({ _id: username }, 'user_detail', () =>
 		userObj.editChildScore(userInfo, params).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('修改积分成功！')
