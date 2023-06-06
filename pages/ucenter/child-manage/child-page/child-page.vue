@@ -2,8 +2,8 @@
 	<view class="warp" v-if="!loading">
 		<lcg-nav-bar title="子账号"></lcg-nav-bar>
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
-		<button class="mini-btn button" type="primary" size="mini" @click="editChildScore('add')">增加积分</button>
-		<button class="mini-btn button" type="primary" size="mini" @click="editChildScore('lower')">消费积分</button>
+		<button class="button" type="primary" size="mini" @click="editChildScore('add')">增加积分</button>
+		<button class="button" type="primary" size="mini" @click="editChildScore('lower')">消费积分</button>
 	</view>
 	<lcg-easy-form ref="score_easyForm"></lcg-easy-form>
 </template>

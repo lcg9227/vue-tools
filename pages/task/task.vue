@@ -1,7 +1,7 @@
 <template>
 	<lcg-nav-bar></lcg-nav-bar>
 	<view class="warp" v-if="!loading">
-		
+		<button class="button" type="primary" size="mini" @click="openTaskFrom">添加任务</button>
 	</view>
 </template>
 
@@ -24,19 +24,9 @@
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.getConfig()
-					.then(() => this.getDetail())
-					.then(() => (this.loading = false))
 			},
-			getConfig() {
-				return this.api.get_config().then(config => (this.config = config))
-			},
-			getDetail() {
-				const { username } = this.userInfo
-				return this.api.get_user_detail(username).then(({ data: userDetail }) => {
-					this.userDetail = userDetail
-					console.log('userDetail >>>', username, this.config, userDetail)
-				})
+			openTaskFrom() {
+				
 			}
 		}
 	}
