@@ -1,6 +1,12 @@
 {
 	"pages": [
 		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/score/score",
 			"style": {
 				"navigationStyle": "custom"
@@ -229,10 +235,10 @@
 		"iconWidth": "24px",
 		"list": [
 			{
-				"pagePath": "pages/score/score",
+				"pagePath": "pages/home/home",
 				"iconPath": "static/tabbar/1-1.png",
 				"selectedIconPath": "static/tabbar/1-2.png",
-				"text": "积分兑换"
+				"text": "首页"
 			},
 			{
 				"pagePath": "pages/task/task",
@@ -241,9 +247,15 @@
 				"text": "任务榜"
 			},
 			{
-				"pagePath": "pages/ucenter/ucenter",
+				"pagePath": "pages/score/score",
 				"iconPath": "static/tabbar/3-1.png",
 				"selectedIconPath": "static/tabbar/3-2.png",
+				"text": "积分兑换"
+			},
+			{
+				"pagePath": "pages/ucenter/ucenter",
+				"iconPath": "static/tabbar/7-1.png",
+				"selectedIconPath": "static/tabbar/7-2.png",
 				"text": "我的"
 			}
 		]
