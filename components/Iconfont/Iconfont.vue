@@ -9,16 +9,16 @@
 		type: {
 			type: String,
 			default: '',
-			required: true,
+			required: true
 		},
 		fontSize: {
 			type: Number,
-			default: 36,
+			default: 36
 		},
 		color: {
 			type: String,
-			default: '',
-		},
+			default: ''
+		}
 	})
 	const iconClass = computed(() => {
 		let _class = props.type.includes('c_') ? 'ciconfont' : 'ticonfont'
@@ -29,7 +29,7 @@
 	})
 	const iconStyle = computed(() => {
 		const _style = {
-			fontSize: `${props.fontSize}rpx`,
+			fontSize: `${props.fontSize}rpx`
 		}
 		if (props.color) {
 			_style.color = props.color
@@ -39,6 +39,6 @@
 </script>
 
 <style scoped>
-	@import './ticonfont.scss';
-	@import './ciconfont.scss';
+	@import './ticonfont/ticonfont.scss';
+	@import './ciconfont/ciconfont.scss';
 </style>
