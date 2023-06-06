@@ -1,5 +1,5 @@
 <template>
-	<uni-popup ref="popup" type="dialog" v-if="visible">
+	<uni-popup ref="popup" type="dialog">
 		<uni-popup-dialog mode="base" type="info" :title="title" :before-close="true" @close="onClose" @confirm="onSubmit">
 			<uni-forms :model="fields" ref="form">
 				<template v-for="(item, index) in items" :key="index">
@@ -21,13 +21,11 @@
 		setup(props) {
 			const { proxy } = getCurrentInstance()
 			const title = ref('')
-			const visible = ref(false)
 			const fields = ref({})
 			const items = ref([])
 			let submit = () => {}
 			const onClose = () => {
 				proxy.$refs.popup.close()
-				visible.value = false
 			}
 			const onSubmit = () => {
 				proxy.$refs.form.validate((err, formData) => {
@@ -50,12 +48,11 @@
 				if (typeof _submit === 'function') {
 					submit = _submit
 				}
-				visible.value = true
 				nextTick(() => {
 					proxy.$refs.popup.open()
 				})
 			}
-			return { fields, items, title, visible, onSubmit, onClose, open }
+			return { fields, items, title, onSubmit, onClose, open }
 		}
 	}
 </script>
