@@ -77,10 +77,9 @@
 			}
 			const onSubmit = () => {
 				proxy.$refs.form.validate((err, formData) => {
-					console.log('err >>>', err, formData)
 					// 如果校验成功 ，err 返回 null
 					if (!err) {
-						// submit(formData)
+						submit(formData)
 						return
 					}
 				})
