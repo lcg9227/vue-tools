@@ -12,6 +12,9 @@
 					<uni-forms-item label="图标选择" name="icon" required>
 						<lcg-select v-model="fields.icon" :localdata="localdata.icon"></lcg-select>
 					</uni-forms-item>
+					<uni-forms-item label="图标颜色选择" name="icon_color" required>
+						<lcg-select v-model="fields.icon_color" :localdata="localdata.icon_color"></lcg-select>
+					</uni-forms-item>
 				</uni-forms>
 			</div>
 			<div class="footer">

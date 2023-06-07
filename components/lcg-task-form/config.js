@@ -15,13 +15,34 @@ const RULES = {
 	}
 }
 
+const getIconColorData = COLOR => {
+	return COLOR.map(color => {
+		return {
+			render: h =>
+				h(
+					'div',
+					{
+						style: {
+							display: 'flex',
+							'flex-direction': 'row',
+							'align-items': 'center'
+						}
+					},
+					[h('div', { style: { width: '20rpx', height: '20rpx', 'border-radius': '20rpx', 'background-color': color } }, ''), h('span', { style: { 'margin-left': '20rpx' } }, color)]
+				),
+			value: color
+		}
+	})
+}
+
 export const useFormConfig = async proxy => {
-	const { TASK_TYPE } = proxy.dataConfig
+	const { TASK_TYPE, COLOR } = proxy.dataConfig
 	const fields = { task_type: 1, name: '', describe: '', icon: '', icon_color: '', execute_type: 1, execute_days: 1, execute_weeks: [], reward: 10 }
 	const rules = RULES
 	const localdata = {
 		task_type: TASK_TYPE,
-		icon: getAllIcons('iconselect')
+		icon: getAllIcons('iconselect'),
+		icon_color: getIconColorData(COLOR)
 	}
 	return { fields, rules, localdata }
 }
