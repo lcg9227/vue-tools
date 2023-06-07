@@ -3,12 +3,15 @@
 	<view class="warp" v-if="!loading">
 		<button class="button" type="primary" size="mini" @click="openTaskFrom">创建任务</button>
 	</view>
-	<lcg-task-form ref="taskForm"></lcg-task-form>
+	<TaskList :list="userTaskList"></TaskList>
+	<TaskForm ref="taskForm"></TaskForm>
 </template>
 
 <script>
+	import TaskForm from './components/task-form/task-form.vue'
+	import TaskList from './components/task-list/task-list.vue'
 	export default {
-		components: {},
+		components: { TaskForm, TaskList },
 		data() {
 			return {
 				loading: true,
@@ -33,6 +36,7 @@
 				return this.api.get_task_list().then(({ data }) => {
 					console.log('get_task_list >>>', data)
 					const { userTaskList } = data
+					this.userTaskList = userTaskList
 				})
 			},
 			// 打开任务表单

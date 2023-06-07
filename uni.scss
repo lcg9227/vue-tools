@@ -43,7 +43,7 @@ $lcg-main-button-bg: #3fa162;
 $lcg-cancel-button-bg: #6FB086;
 
 /* 边框颜色 */
-$uni-border-color: #c8c7cc;
+$uni-border-color: #F7F7F7;
 
 /* 尺寸变量 */
 
@@ -112,4 +112,10 @@ view {
 	font-size: $uni-font-size-base;
 	color: $lcg-bg-color-main;
 	cursor: pointer;
+}
+
+.b-ellipsis {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }

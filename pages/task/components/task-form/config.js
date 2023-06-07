@@ -1,4 +1,4 @@
-import { getAllIcons } from '../lcg-iconfont'
+import { getAllIcons } from '@/components/lcg-iconfont'
 import { positiveIntegerCheck, arrayLengthCheck } from '@/common/formValidate'
 const RULES = {
 	name: {

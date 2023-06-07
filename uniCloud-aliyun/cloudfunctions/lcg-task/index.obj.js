@@ -15,7 +15,7 @@ const create_task = async function (userInfo, params) {
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
 
 	if (!/^\+?[1-9]\d*$/.test(params.reward)) return Object.assign(ret, { success: false, errMsg: '积分只能是正整数！' })
-	if (!/^\+?[1-9]\d*$/.test(params.execute_days)) return Object.assign(ret, { success: false, errMsg: '执行天数只能是正整数！' })
+	if (params.execute_type === 1 && !/^\+?[1-9]\d*$/.test(params.execute_days)) return Object.assign(ret, { success: false, errMsg: '执行天数只能是正整数！' })
 
 	const data = {
 		...params,
@@ -42,7 +42,7 @@ const get = async function (userInfo) {
 		creator = parent.username
 	}
 	// 查询任务列表
-	const taskListTable = taskTable.where({ creator }).limit(1)
+	const taskListTable = taskTable.where({ creator })
 	let { data: userTaskList } = await taskListTable.get()
 	ret.data = { userTaskList }
 	return ret
