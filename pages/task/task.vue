@@ -1,7 +1,7 @@
 <template>
 	<lcg-nav-bar></lcg-nav-bar>
 	<view class="warp" v-if="!loading">
-		<button class="button" type="primary" size="mini" @click="openTaskFrom">添加任务</button>
+		<button class="button" type="primary" size="mini" @click="openTaskFrom">创建任务</button>
 	</view>
 	<lcg-task-form ref="taskForm"></lcg-task-form>
 </template>
@@ -13,8 +13,8 @@
 			return {
 				loading: true,
 				userInfo: {},
-				userDetail: {},
-				config: {}
+				userTaskList: [],
+				systemTaskList: []
 			}
 		},
 		created() {
@@ -25,11 +25,22 @@
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.loading = false
+				this.getTaskList().then(() => (this.loading = false))
+			},
+			getTaskList() {
+				return this.api.get_task_list().then(({ data }) => {
+					console.log('get_task_list >>>', data)
+					const { userTaskList } = data
+				})
 			},
 			openTaskFrom() {
 				this.$refs.taskForm.open(null, data => {
-					console.log('111 >>>', data)
+					this.api.create_task(data).then(({ success }) => {
+						if (success) {
+							this.getData()
+							this.$refs.taskForm.onClose()
+						}
+					})
 				})
 			}
 		}

@@ -3,6 +3,7 @@ import { toast, cacheApiData, cacheReset } from './pocket'
 
 const userObj = uniCloud.importObject('lcg-user')
 const configObj = uniCloud.importObject('lcg-config')
+const taskObj = uniCloud.importObject('lcg-task')
 
 // 判断是否登录
 export const hasLogin = () => {
@@ -100,4 +101,24 @@ export const edit_child_score = params => {
 			return res
 		})
 	)
+}
+
+// 创建任务
+export const create_task = params => {
+	const userInfo = getUserInfo()
+	console.log('create_task >>>', params)
+	return cacheReset(userInfo, 'task_list', () =>
+		taskObj.create_task(userInfo, params).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('创建任务成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
+}
+// 获取任务列表
+
+export const get_task_list = () => {
+	const userInfo = getUserInfo()
+	return cacheApiData(userInfo, 'task_list', () => taskObj.get(userInfo))
 }

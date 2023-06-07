@@ -3,12 +3,6 @@
   "dependencies": {
     "lcg-common": "file:../common/lcg-common"
   },
-  "cloudfunction-config": {
-    "concurrency": 1,
-    "memorySize": 128,
-    "timeout": 60,
-    "triggers": []
-  },
   "extensions": {
     "uni-cloud-jql": {}
   }

@@ -1,8 +1,8 @@
 {
-  "name": "lcg-config",
+  "name": "lcg-task",
   "dependencies": {
     "lcg-common": "file:../common/lcg-common"
-  },
+	},
   "extensions": {
     "uni-cloud-jql": {}
   }
