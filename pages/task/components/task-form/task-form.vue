@@ -28,7 +28,7 @@
 						<uni-forms-item label="奖励积分" name="reward" required>
 							<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
 						</uni-forms-item>
-						<uni-forms-item label="任务说明" name="describe" required>
+						<uni-forms-item label="任务说明" name="describe">
 							<uni-easyinput type="textarea" v-model="fields.describe" placeholder="请输入任务说明" :maxlength="200" />
 						</uni-forms-item>
 					</uni-forms>

@@ -3,11 +3,13 @@
 		<template v-for="(item, index) in list" :key="index">
 			<div class="item">
 				<div class="left">
+					<!-- <uni-tag class="tag" :text="item.reward" :mark="true" type="warning" /> -->
 					<lcg-iconfont :type="item.icon" :color="item.icon_color || ''" :fontSize="60"></lcg-iconfont>
 				</div>
 				<div class="center">
 					<div class="name b-ellipsis">{{ item.name }}</div>
-					<div class="describe b-ellipsis">{{ item.describe }}</div>
+					<div class="sub-info b-ellipsis">{{ getSubText(item) }}</div>
+					<div class="reward">奖励积分：{{ item.reward }}</div>
 				</div>
 				<div class="right">
 					<button class="button" type="primary" size="mini">分发</button>
@@ -30,8 +32,27 @@
 		},
 		setup(props) {
 			const { proxy } = getCurrentInstance()
+			const { EXECUTE_WEEKS } = proxy.dataConfig
+			const getSubText = item => {
+				const { execute_type, execute_weeks, execute_days } = item
+				let text = ''
+				if (execute_type === 1) {
+					text = `任务时间：${execute_days}天`
+				}
+				if (execute_type === 2) {
+					let weekText = ''
+					if (execute_weeks.length === 2 && execute_weeks.includes(0) && execute_weeks.includes(6)) {
+						weekText = '周末'
+					} else {
+						const curs = EXECUTE_WEEKS.filter(v => execute_weeks.includes(v.value)).map(v => v.text)
+						weekText = curs.join(',')
+					}
+					text = `每${weekText}执行`
+				}
+				return text
+			}
 			console.log('props >>>', props)
-			return {}
+			return { getSubText }
 		}
 	}
 </script>
@@ -53,7 +74,7 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
-      margin-bottom: 20rpx;
+			margin-bottom: 20rpx;
 			.left {
 				width: 120rpx;
 				height: 120rpx;
@@ -62,20 +83,32 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				.tag {
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
 			}
 			.center {
-        width: calc(100% - 220rpx);
+				width: calc(100% - 220rpx);
 				padding-left: 20rpx;
 				padding-right: 20rpx;
-        box-sizing: border-box;
+				box-sizing: border-box;
+				padding-top: 10rpx;
 				.name {
 					font-size: $uni-font-size-base;
 					color: $uni-text-color;
 					font-weight: bold;
 				}
-				.describe {
+				.sub-info {
 					font-size: $uni-font-size-sm;
 					color: $uni-text-color-grey;
+					margin-top: 4rpx;
+				}
+				.reward {
+					font-size: $uni-font-size-sm;
+					color: $uni-color-warning;
+					font-weight: bold;
 					margin-top: 4rpx;
 				}
 			}

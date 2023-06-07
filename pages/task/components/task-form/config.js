@@ -42,14 +42,6 @@ const RULES = {
 				validateFunction: (...ages) => positiveIntegerCheck(...ages)
 			}
 		]
-	},
-	describe: {
-		rules: [
-			{
-				required: true,
-				errorMessage: '请输入天数'
-			}
-		]
 	}
 }
 
