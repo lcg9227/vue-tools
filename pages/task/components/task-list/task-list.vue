@@ -12,14 +12,15 @@
 					<div class="reward">奖励积分：{{ item.reward }}</div>
 				</div>
 				<div class="right">
-					<div class="setting" @click="openSetting">
+					<div class="setting" @click="openSetting" v-if="userDetail.isParent">
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
-					<uni-transition mode-class="slide-right" class="setting-box" :show="setOpen">
+					<uni-transition mode-class="slide-right" class="setting-box" :show="setOpen" v-if="userDetail.isParent">
 						<button class="btn" type="primary" size="mini">编辑</button>
 						<button class="btn" type="warn" size="mini">删除</button>
 					</uni-transition>
-					<button class="button" size="mini">分发</button>
+					<button class="button" size="mini" v-if="userDetail.isParent">分发</button>
+					<button class="button" size="mini" v-else>领取</button>
 				</div>
 			</div>
 		</template>
@@ -29,6 +30,10 @@
 	import { ref, getCurrentInstance } from 'vue'
 	export default {
 		props: {
+			userDetail: {
+				type: Object,
+				default: {}
+			},
 			list: {
 				type: Array,
 				default: []
