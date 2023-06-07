@@ -2,6 +2,7 @@ import App from './App'
 import * as pocket from './common/pocket'
 import * as api from './common/api'
 import * as dataConfig from './common/dataConfig'
+import './components/lcg-iconfont/index.css'
 
 const config = {
 	globalProperties: { pocket, api, dataConfig },

@@ -2,7 +2,7 @@
 <template>
 	<div class="item-box">
 		<div class="item" @click="click">
-			<Iconfont :type="config.icon || 'xiaoxi1'" :font-size="config.iconFontSize || 50" :color="config.iconColor || '#007aff'" />
+			<lcg-iconfont :type="config.icon || 'xiaoxi1'" :font-size="config.iconFontSize || 50" :color="config.iconColor || '#007aff'" />
 			<div class="title">{{ title }}</div>
 		</div>
 	</div>
@@ -10,7 +10,6 @@
 
 <script setup>
 	import { defineProps, getCurrentInstance } from 'vue'
-	import Iconfont from '../Iconfont/Iconfont.vue'
 	const { proxy } = getCurrentInstance()
 	const props = defineProps({
 		title: {

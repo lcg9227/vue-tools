@@ -21,9 +21,9 @@
 		}
 	})
 	const iconClass = computed(() => {
-		let _class = props.type.includes('c_') ? 'ciconfont' : 'ticonfont'
+		let _class = ''
 		if (props.type) {
-			_class = `${_class} ${props.type}`
+			_class = `${props.type.includes('c-icon-') || props.type.includes('t-icon-') ? props.type : 't-icon-' + props.type}`
 		}
 		return _class
 	})
@@ -38,7 +38,4 @@
 	})
 </script>
 
-<style scoped>
-	@import './ticonfont/ticonfont.scss';
-	@import './ciconfont/ciconfont.scss';
-</style>
+<style scoped></style>

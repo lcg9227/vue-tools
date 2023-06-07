@@ -1,0 +1,65 @@
+{
+  "id": "3989185",
+  "name": "tools-c",
+  "font_family": "ciconfont",
+  "css_prefix_text": "c-icon-",
+  "description": "彩色图标",
+  "glyphs": [
+    {
+      "icon_id": "34681680",
+      "name": "首页1",
+      "font_class": "shouye1",
+      "unicode": "e671",
+      "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "34681852",
+      "name": "消息1",
+      "font_class": "xiaoxi1",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "34681894",
+      "name": "我的1",
+      "font_class": "wode1",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "34682058",
+      "name": "应用产品1",
+      "font_class": "yingyongchanpin1",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "34682306",
+      "name": "政策1",
+      "font_class": "zhengce1",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "34682877",
+      "name": "项目1",
+      "font_class": "xiangmu1",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "34683248",
+      "name": "项目1",
+      "font_class": "xiangmu11",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "34685025",
+      "name": "订阅1",
+      "font_class": "dingyue1",
+      "unicode": "e67f",
+      "unicode_decimal": 59007
+    }
+  ]
+}

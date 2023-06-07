@@ -1,3 +1,4 @@
+import { getAllIcons } from '../lcg-iconfont'
 const RULES = {
 	name: {
 		rules: [
@@ -20,7 +21,7 @@ export const useFormConfig = async proxy => {
 	const rules = RULES
 	const localdata = {
 		task_type: TASK_TYPE,
-		icon: []
+		icon: getAllIcons()
 	}
 	return { fields, rules, localdata }
 }

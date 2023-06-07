@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "ciconfont"; /* Project id 3989185 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1686098087702') format('woff2'),
+       url('iconfont.woff?t=1686098087702') format('woff'),
+       url('iconfont.ttf?t=1686098087702') format('truetype');
+}
+
+.ciconfont {
+  font-family: "ciconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.c-icon-shouye1:before {
+  content: "\e671";
+}
+
+.c-icon-xiaoxi1:before {
+  content: "\e673";
+}
+
+.c-icon-wode1:before {
+  content: "\e675";
+}
+
+.c-icon-yingyongchanpin1:before {
+  content: "\e677";
+}
+
+.c-icon-zhengce1:before {
+  content: "\e679";
+}
+
+.c-icon-xiangmu1:before {
+  content: "\e67b";
+}
+
+.c-icon-xiangmu11:before {
+  content: "\e67d";
+}
+
+.c-icon-dingyue1:before {
+  content: "\e67f";
+}
+
