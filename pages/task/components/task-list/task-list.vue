@@ -15,11 +15,9 @@
 					<div class="setting" @click="openSetting">
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
-					<uni-transition mode-class="slide-right" class="transition" :show="setOpen">
-						<div class="setting-box">
-							<button class="btn" type="primary" size="mini">编辑</button>
-							<button class="btn" type="warn" size="mini">删除</button>
-						</div>
+					<uni-transition mode-class="slide-right" class="setting-box" :show="setOpen">
+						<button class="btn" type="primary" size="mini">编辑</button>
+						<button class="btn" type="warn" size="mini">删除</button>
 					</uni-transition>
 					<button class="button" size="mini">分发</button>
 				</div>
@@ -42,7 +40,7 @@
 		setup(props) {
 			const { proxy } = getCurrentInstance()
 			const { EXECUTE_WEEKS } = proxy.dataConfig
-			const setOpen = ref(true)
+			const setOpen = ref(false)
 			// 次信息
 			const getSubText = item => {
 				const { execute_type, execute_weeks, execute_days } = item
@@ -147,15 +145,10 @@
 					box-sizing: border-box;
 					z-index: 11;
 				}
-				.transition {
+				.setting-box {
 					position: absolute;
 					top: 0;
 					right: 0;
-					width: 200rpx;
-					height: 100%;
-					z-index: 10;
-				}
-				.setting-box {
 					width: 200rpx;
 					height: 100%;
 					display: flex;
@@ -164,6 +157,7 @@
 					background-color: #fff;
 					box-shadow: 0 0 10rpx #f2f2f2;
 					padding-left: 20rpx;
+					z-index: 10;
 					.btn {
 						width: 160rpx;
 						margin: 0;
@@ -178,6 +172,7 @@
 					border-radius: 80rpx;
 					font-size: 24rpx;
 					padding: 0;
+					color: #fff;
 					background-color: $lcg-main-button-bg;
 				}
 			}
