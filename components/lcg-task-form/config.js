@@ -1,5 +1,5 @@
 import { getAllIcons } from '../lcg-iconfont'
-import { positiveIntegerCheck } from '@/common/formValidate'
+import { positiveIntegerCheck, arrayLengthCheck } from '@/common/formValidate'
 const RULES = {
 	name: {
 		rules: [
@@ -21,7 +21,14 @@ const RULES = {
 				errorMessage: '请输入天数'
 			},
 			{
-				validateFunction: positiveIntegerCheck
+				validateFunction: (...ages) => positiveIntegerCheck(...ages)
+			}
+		]
+	},
+	execute_weeks: {
+		rules: [
+			{
+				validateFunction: (...ages) => arrayLengthCheck(...ages, 1)
 			}
 		]
 	},
@@ -32,7 +39,15 @@ const RULES = {
 				errorMessage: '请输入奖励积分'
 			},
 			{
-				validateFunction: positiveIntegerCheck
+				validateFunction: (...ages) => positiveIntegerCheck(...ages)
+			}
+		]
+	},
+	describe: {
+		rules: [
+			{
+				required: true,
+				errorMessage: '请输入天数'
 			}
 		]
 	}

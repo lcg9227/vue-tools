@@ -2,7 +2,7 @@
 	<uni-popup ref="popup" type="top">
 		<div class="popup" :style="style">
 			<div class="content" v-if="showForm">
-				<uni-forms :model="fields" ref="form" :label-width="120" :rules="rules">
+				<uni-forms :model="fields" ref="form" :label-width="100" :rules="rules">
 					<uni-forms-item label="任务类型" name="task_type" required>
 						<uni-data-checkbox v-model="fields.task_type" :localdata="localdata.task_type"></uni-data-checkbox>
 					</uni-forms-item>
@@ -22,7 +22,7 @@
 						<uni-easyinput type="number" v-model="fields.execute_days" placeholder="请输入执行天数" :maxlength="3" />
 					</uni-forms-item>
 					<uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
-						<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></lcg-select>
+						<uni-data-checkbox multiple v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></uni-data-checkbox>
 					</uni-forms-item>
 					<uni-forms-item label="奖励积分" name="reward" required>
 						<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
