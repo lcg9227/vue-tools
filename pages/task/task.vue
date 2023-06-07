@@ -22,22 +22,25 @@
 			this.getData()
 		},
 		methods: {
+			// 获取全部页面数据
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
 				this.getTaskList().then(() => (this.loading = false))
 			},
+			// 获取任务列表
 			getTaskList() {
 				return this.api.get_task_list().then(({ data }) => {
 					console.log('get_task_list >>>', data)
 					const { userTaskList } = data
 				})
 			},
+			// 打开任务表单
 			openTaskFrom() {
 				this.$refs.taskForm.open(null, data => {
 					this.api.create_task(data).then(({ success }) => {
 						if (success) {
-							this.getData()
+							this.getTaskList()
 							this.$refs.taskForm.onClose()
 						}
 					})

@@ -21,6 +21,7 @@
 			this.getData()
 		},
 		methods: {
+			// 获取全部页面数据
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
@@ -28,9 +29,11 @@
 					.then(() => this.getDetail())
 					.then(() => (this.loading = false))
 			},
+			// 获取配置
 			getConfig() {
 				return this.api.get_config().then(config => (this.config = config))
 			},
+			// 获取用户详情
 			getDetail() {
 				const { username } = this.userInfo
 				return this.api.get_user_detail(username).then(({ data: userDetail }) => {
