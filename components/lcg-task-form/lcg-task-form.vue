@@ -10,7 +10,7 @@
 						<uni-easyinput type="text" v-model="fields.name" placeholder="请输入任务名称" />
 					</uni-forms-item>
 					<uni-forms-item label="图标选择" name="icon" required>
-						<uni-data-select v-model="fields.icon" :localdata="localdata.icon"></uni-data-select>
+						<lcg-select v-model="fields.icon" :localdata="localdata.icon"></lcg-select>
 					</uni-forms-item>
 				</uni-forms>
 			</div>

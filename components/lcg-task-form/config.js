@@ -21,7 +21,7 @@ export const useFormConfig = async proxy => {
 	const rules = RULES
 	const localdata = {
 		task_type: TASK_TYPE,
-		icon: getAllIcons()
+		icon: getAllIcons('iconselect')
 	}
 	return { fields, rules, localdata }
 }
