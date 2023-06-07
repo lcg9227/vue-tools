@@ -63,7 +63,6 @@
 			// 打开设置
 			const openSetting = () => {
 				setOpen.value = !setOpen.value
-				console.log('>>>', setOpen.value)
 			}
 			return { setOpen, openSetting, getSubText }
 		}
