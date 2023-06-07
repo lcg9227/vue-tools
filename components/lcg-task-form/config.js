@@ -1,4 +1,5 @@
 import { getAllIcons } from '../lcg-iconfont'
+import { positiveIntegerCheck } from '@/common/formValidate'
 const RULES = {
 	name: {
 		rules: [
@@ -10,6 +11,28 @@ const RULES = {
 			{
 				maxLength: 20,
 				errorMessage: '{label}长度在{maxLength} 个字符以内'
+			}
+		]
+	},
+	execute_days: {
+		rules: [
+			{
+				required: true,
+				errorMessage: '请输入天数'
+			},
+			{
+				validateFunction: positiveIntegerCheck
+			}
+		]
+	},
+	reward: {
+		rules: [
+			{
+				required: true,
+				errorMessage: '请输入奖励积分'
+			},
+			{
+				validateFunction: positiveIntegerCheck
 			}
 		]
 	}
@@ -30,19 +53,22 @@ const getIconColorData = COLOR => {
 					},
 					[h('div', { style: { width: '20rpx', height: '20rpx', 'border-radius': '20rpx', 'background-color': color } }, ''), h('span', { style: { 'margin-left': '20rpx' } }, color)]
 				),
+			text: color,
 			value: color
 		}
 	})
 }
 
 export const useFormConfig = async proxy => {
-	const { TASK_TYPE, COLOR } = proxy.dataConfig
-	const fields = { task_type: 1, name: '', describe: '', icon: '', icon_color: '', execute_type: 1, execute_days: 1, execute_weeks: [], reward: 10 }
+	const { TASK_TYPE, COLOR, EXECUTE_TYPE, EXECUTE_WEEKS } = proxy.dataConfig
 	const rules = RULES
 	const localdata = {
 		task_type: TASK_TYPE,
+		execute_type: EXECUTE_TYPE,
+		execute_weeks: EXECUTE_WEEKS,
 		icon: getAllIcons('iconselect'),
 		icon_color: getIconColorData(COLOR)
 	}
+	const fields = { task_type: 1, name: '', describe: '', icon: localdata.icon[0].value, icon_color: localdata.icon_color[0].value, execute_type: 1, execute_days: 1, execute_weeks: [], reward: 10 }
 	return { fields, rules, localdata }
 }

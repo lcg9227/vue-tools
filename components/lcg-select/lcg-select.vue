@@ -84,7 +84,7 @@
 			},
 			clear: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			defItem: {
 				type: Number,

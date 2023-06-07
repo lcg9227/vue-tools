@@ -7,13 +7,28 @@
 						<uni-data-checkbox v-model="fields.task_type" :localdata="localdata.task_type"></uni-data-checkbox>
 					</uni-forms-item>
 					<uni-forms-item label="任务名称" name="name" required>
-						<uni-easyinput type="text" v-model="fields.name" placeholder="请输入任务名称" />
+						<uni-easyinput type="text" v-model="fields.name" placeholder="请输入任务名称" :maxlength="20" />
 					</uni-forms-item>
 					<uni-forms-item label="图标选择" name="icon" required>
 						<lcg-select v-model="fields.icon" :localdata="localdata.icon"></lcg-select>
 					</uni-forms-item>
-					<uni-forms-item label="图标颜色选择" name="icon_color" required>
+					<uni-forms-item label="图标颜色选择" name="icon_color" required v-if="fields.icon.includes('t-icon-')">
 						<lcg-select v-model="fields.icon_color" :localdata="localdata.icon_color"></lcg-select>
+					</uni-forms-item>
+					<uni-forms-item label="执行类型" name="execute_type" required>
+						<uni-data-checkbox v-model="fields.execute_type" :localdata="localdata.execute_type"></uni-data-checkbox>
+					</uni-forms-item>
+					<uni-forms-item label="执行天数" name="execute_days" required v-if="fields.execute_type === 1">
+						<uni-easyinput type="number" v-model="fields.execute_days" placeholder="请输入执行天数" :maxlength="3" />
+					</uni-forms-item>
+					<uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
+						<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></lcg-select>
+					</uni-forms-item>
+					<uni-forms-item label="奖励积分" name="reward" required>
+						<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
+					</uni-forms-item>
+					<uni-forms-item label="任务说明" name="describe" required>
+						<uni-easyinput type="textarea" v-model="fields.describe" placeholder="请输入任务说明" :maxlength="200" />
 					</uni-forms-item>
 				</uni-forms>
 			</div>
@@ -61,13 +76,14 @@
 				proxy.$refs.popup.close()
 			}
 			const onSubmit = () => {
-				// proxy.$refs.form.validate((err, formData) => {
-				// 	// 如果校验成功 ，err 返回 null
-				// 	if (!err) {
-				// 		submit(formData)
-				// 		return
-				// 	}
-				// })
+				proxy.$refs.form.validate((err, formData) => {
+					console.log('err >>>', err, formData)
+					// 如果校验成功 ，err 返回 null
+					if (!err) {
+						// submit(formData)
+						return
+					}
+				})
 			}
 			const open = async (id, _submit) => {
 				title.value = id ? '修改任务' : '添加任务'
