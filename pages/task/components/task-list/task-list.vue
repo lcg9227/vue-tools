@@ -12,14 +12,23 @@
 					<div class="reward">奖励积分：{{ item.reward }}</div>
 				</div>
 				<div class="right">
-					<button class="button" type="primary" size="mini">分发</button>
+					<div class="setting" @click="openSetting">
+						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
+					</div>
+					<uni-transition mode-class="slide-right" class="transition" :show="setOpen">
+						<div class="setting-box">
+							<button class="btn" type="primary" size="mini">编辑</button>
+							<button class="btn" type="warn" size="mini">删除</button>
+						</div>
+					</uni-transition>
+					<button class="button" size="mini">分发</button>
 				</div>
 			</div>
 		</template>
 	</div>
 </template>
 <script>
-	import { getCurrentInstance } from 'vue'
+	import { ref, getCurrentInstance } from 'vue'
 	export default {
 		props: {
 			list: {
@@ -33,6 +42,8 @@
 		setup(props) {
 			const { proxy } = getCurrentInstance()
 			const { EXECUTE_WEEKS } = proxy.dataConfig
+			const setOpen = ref(true)
+			// 次信息
 			const getSubText = item => {
 				const { execute_type, execute_weeks, execute_days } = item
 				let text = ''
@@ -51,8 +62,12 @@
 				}
 				return text
 			}
-			console.log('props >>>', props)
-			return { getSubText }
+			// 打开设置
+			const openSetting = () => {
+				setOpen.value = !setOpen.value
+				console.log('>>>', setOpen.value)
+			}
+			return { setOpen, openSetting, getSubText }
 		}
 	}
 </script>
@@ -75,6 +90,7 @@
 			flex-direction: row;
 			justify-content: space-between;
 			margin-bottom: 20rpx;
+			overflow: hidden;
 			.left {
 				width: 120rpx;
 				height: 120rpx;
@@ -117,6 +133,42 @@
 				height: 120rpx;
 				display: flex;
 				align-items: center;
+				.setting {
+					position: absolute;
+					top: 0;
+					right: 0;
+					width: 40rpx;
+					height: 40rpx;
+					border-bottom-left-radius: 60rpx;
+					background-color: $uni-color-primary;
+					display: flex;
+					justify-content: flex-end;
+					padding: 6rpx;
+					box-sizing: border-box;
+					z-index: 11;
+				}
+				.transition {
+					position: absolute;
+					top: 0;
+					right: 0;
+					width: 200rpx;
+					height: 100%;
+					z-index: 10;
+				}
+				.setting-box {
+					width: 200rpx;
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+					background-color: #fff;
+					box-shadow: 0 0 10rpx #f2f2f2;
+					padding-left: 20rpx;
+					.btn {
+						width: 160rpx;
+						margin: 0;
+					}
+				}
 				.button {
 					display: flex;
 					align-items: center;
