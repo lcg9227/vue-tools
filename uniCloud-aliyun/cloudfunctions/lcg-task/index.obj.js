@@ -48,14 +48,19 @@ const create_task = async function (userInfo, params) {
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
 	// 校验任务信息
 	const checkInfo = taskInfoCheck(params)
-	if (checkInfo.success) return Object.assign(ret, checkInfo)
+	if (!checkInfo.success) return Object.assign(ret, checkInfo)
 	const data = {
 		...params,
 		reward: Number(params.reward),
 		execute_days: Number(params.execute_days),
 		creator: userDetail.user.username
 	}
-	await taskTable.add(data)
+
+	const dbJQL = uniCloud.databaseForJQL({
+		clientInfo: this.getClientInfo()
+	})
+	const res = await dbJQL.collection('lcg-task-config').add(data)
+
 	return ret
 }
 /* 编辑任务列表 */
