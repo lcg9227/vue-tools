@@ -1,10 +1,11 @@
 <template>
 	<uni-popup ref="popup" type="dialog">
 		<uni-popup-dialog mode="base" type="info" :title="title" :before-close="true" @close="onClose" @confirm="onSubmit">
-			<uni-forms :model="fields" ref="form">
+			<uni-forms :model="fields" ref="form" :label-width="80">
 				<template v-for="(item, index) in items" :key="index">
 					<uni-forms-item :label="item.label" :name="item.field" :required="item.required" :rules="item.rules">
 						<uni-easyinput v-model="fields[item.field]" :type="item.inputType || 'text'" :placeholder="item.placeholder" trim clearSize="16" v-if="item.type === 'input'" />
+						<lcg-select v-model="fields[item.field]" :localdata="item.data" style="min-width: 320rpx;" v-if="item.type === 'select'"></lcg-select>
 					</uni-forms-item>
 				</template>
 			</uni-forms>

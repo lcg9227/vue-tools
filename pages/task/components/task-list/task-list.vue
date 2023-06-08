@@ -19,17 +19,22 @@
 						<button class="btn" type="primary" size="mini" @click="editTask(item)">编辑</button>
 						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">删除</button>
 					</uni-transition>
-					<button class="button" size="mini" v-if="userDetail.isParent">分发</button>
+					<button class="button" size="mini" v-if="userDetail.isParent" @click="dispense_task(item)">分发</button>
 					<button class="button" size="mini" v-else>领取</button>
 				</div>
 			</div>
 		</template>
 	</div>
+	<lcg-easy-form ref="easyForm"></lcg-easy-form>
 	<TaskForm ref="taskForm"></TaskForm>
 </template>
 <script>
 	import { ref, getCurrentInstance } from 'vue'
 	import TaskForm from '../task-form/task-form.vue'
+	const dispenseForm = {
+		fields: { child: '' },
+		items: [{ field: 'child', label: '子账号', type: 'select', placeholder: '请选择子账号', required: true }]
+	}
 	export default {
 		components: { TaskForm },
 		props: {
@@ -91,7 +96,28 @@
 					}
 				})
 			}
-			return { openSetting, getSubText, editTask, deleteTask }
+			// 分发任务
+			const dispense_task = item => {
+				proxy.api.get_children().then(res => {
+					if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+						const children_data = res.data.map(v => ({ text: v.nickname, value: v.username }))
+						const _form = proxy.pocket.deepCopy(dispenseForm)
+						_form.items.forEach(v => {
+							if (v.field === 'child') v.data = children_data
+						})
+						proxy.$refs.easyForm.open('分发任务', _form, data => {
+							proxy.api.dispense_task(item._id, data).then(({ success }) => {
+								if (success) {
+									proxy.$refs.easyForm.onClose()
+								}
+							})
+						})
+					} else {
+						proxy.$message.error('请先添加子账号！')
+					}
+				})
+			}
+			return { openSetting, getSubText, editTask, deleteTask, dispense_task }
 		}
 	}
 </script>

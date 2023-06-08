@@ -106,8 +106,7 @@ export const edit_child_score = params => {
 // 创建任务
 export const create_task = params => {
 	const userInfo = getUserInfo()
-	console.log('create_task >>>', params)
-	return cacheReset(userInfo, 'task_list', () =>
+	return cacheReset(userInfo, 'task_config', () =>
 		taskObj.create_task(userInfo, params).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('创建任务成功！')
@@ -119,12 +118,12 @@ export const create_task = params => {
 // 获取任务列表
 export const get_task_list = () => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'task_list', () => taskObj.get(userInfo))
+	return cacheApiData(userInfo, 'task_config', () => taskObj.get(userInfo))
 }
 // 任务编辑
 export const edit_task = (id, params) => {
 	const userInfo = getUserInfo()
-	return cacheReset(userInfo, 'task_list', () =>
+	return cacheReset(userInfo, 'task_config', () =>
 		taskObj.edit_task(userInfo, id, params).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('编辑任务成功！')
@@ -136,10 +135,23 @@ export const edit_task = (id, params) => {
 // 删除任务
 export const delete_task = id => {
 	const userInfo = getUserInfo()
-	return cacheReset(userInfo, 'task_list', () =>
+	return cacheReset(userInfo, 'task_config', () =>
 		taskObj.detele_task(userInfo, id).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('删除任务成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
+}
+
+// 分发任务
+export const dispense_task = (id, params) => {
+	const userInfo = getUserInfo()
+	return cacheReset(userInfo, 'task_list', () =>
+		taskObj.dispense_task(userInfo, id, params).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('分发任务成功！')
 			if (!success) toast.error(errMsg)
 			return res
 		})
