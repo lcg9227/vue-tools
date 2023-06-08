@@ -3,13 +3,16 @@
 		<template v-for="(item, index) in list" :key="index">
 			<div class="item">
 				<div class="left">
-					<!-- <uni-tag class="tag" :text="item.reward" :mark="true" type="warning" /> -->
+					<uni-tag class="tag" :text="item.reward" :mark="true" type="warning" />
 					<lcg-iconfont :type="item.icon" :color="item.icon_color || ''" :fontSize="60"></lcg-iconfont>
 				</div>
 				<div class="center">
 					<div class="name b-ellipsis">{{ item.task_name }}</div>
 					<div class="sub-info b-ellipsis">{{ getSubText(item) }}</div>
-					<div class="reward">奖励积分：{{ item.reward }}</div>
+					<div class="b-row">
+						<div class="dispense">分发者：{{ item.dispense_nickname }}</div>
+						<div class="reward">奖励积分：{{ item.reward }}</div>
+					</div>
 				</div>
 				<div class="right">
 					<div class="setting" @click="openSetting(item)" v-if="isParent">
@@ -54,14 +57,15 @@
 					text = `任务时间：${execute_days}天`
 				}
 				if (execute_type === 2) {
-					let weekText = ''
 					if (execute_weeks.length === 2 && execute_weeks.includes(0) && execute_weeks.includes(6)) {
-						weekText = '周末'
+						text = '每周末执行'
+					} else if (execute_weeks.length === 7) {
+						text = '每天'
 					} else {
 						const curs = EXECUTE_WEEKS.filter(v => execute_weeks.includes(v.value)).map(v => v.text)
-						weekText = curs.join(',')
+						const weekText = curs.join(',')
+						text = `每${weekText}执行`
 					}
-					text = `每${weekText}执行`
 				}
 				return text
 			}
@@ -130,6 +134,13 @@
 					color: $uni-color-warning;
 					font-weight: bold;
 					margin-top: 4rpx;
+				}
+				.dispense {
+					font-size: $uni-font-size-sm;
+					color: $lcg-text-color-main;
+					font-weight: bold;
+					margin-top: 4rpx;
+					margin-right: 20rpx;
 				}
 			}
 			.right {

@@ -27,7 +27,7 @@ $uni-text-color-label: #848496; // 标签
 $uni-text-color-placeholder: #808080;
 $uni-text-color-disable: #c0c0c0;
 
-$lcg-text-color-important: #09230F;
+$lcg-text-color-important: #09230f;
 $lcg-text-color-main: #69c98b; // 文字主色
 $lcg-text-color-inverse: #fff; //反色
 
@@ -40,10 +40,10 @@ $uni-bg-color-mask: rgba(0, 0, 0, 0.4); //遮罩颜色
 $lcg-bg-color-main: #69c98b; // 主背景色
 /* 按钮颜色 */
 $lcg-main-button-bg: #3fa162;
-$lcg-cancel-button-bg: #6FB086;
+$lcg-cancel-button-bg: #6fb086;
 
 /* 边框颜色 */
-$uni-border-color: #F7F7F7;
+$uni-border-color: #f7f7f7;
 
 /* 尺寸变量 */
 
@@ -94,7 +94,10 @@ uni-page-body {
 view {
 	box-sizing: border-box;
 }
-
+.b-row {
+	display: flex;
+	flex-direction: row;
+}
 .b-between {
 	display: flex;
 	justify-content: space-between;

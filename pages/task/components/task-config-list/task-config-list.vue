@@ -62,14 +62,15 @@
 					text = `任务时间：${execute_days}天`
 				}
 				if (execute_type === 2) {
-					let weekText = ''
 					if (execute_weeks.length === 2 && execute_weeks.includes(0) && execute_weeks.includes(6)) {
-						weekText = '周末'
+						text = '每周末执行'
+					} else if (execute_weeks.length === 7) {
+						text = '每天'
 					} else {
 						const curs = EXECUTE_WEEKS.filter(v => execute_weeks.includes(v.value)).map(v => v.text)
-						weekText = curs.join(',')
+						const weekText = curs.join(',')
+						text = `每${weekText}执行`
 					}
-					text = `每${weekText}执行`
 				}
 				return text
 			}
@@ -84,6 +85,7 @@
 						if (success) {
 							proxy.$parent.getTaskList()
 							proxy.$refs.taskForm.onClose()
+							openSetting()
 						}
 					})
 				})
