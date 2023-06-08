@@ -37,7 +37,7 @@
 			// 获取任务列表
 			getTaskList() {
 				return this.api.get_task_list().then(({ data }) => {
-					console.log('get_task_list >>>', data)
+					// console.log('get_task_list >>>', data)
 					const { userTaskList } = data
 					this.userTaskList = userTaskList
 				})
