@@ -9,7 +9,7 @@
 
 <script>
 	import TaskForm from './components/task-form/task-form.vue'
-	import TaskConfigList from './components/task-config--list/task-config-list.vue'
+	import TaskConfigList from './components/task-config-list/task-config-list.vue'
 	export default {
 		components: { TaskForm, TaskConfigList },
 		data() {

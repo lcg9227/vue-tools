@@ -6,6 +6,12 @@ export const EXECUTE_TYPE = [
 	{ text: '执行一次', value: 1 },
 	{ text: '周循环', value: 2 }
 ]
+// 任务状态
+export const TASK_STATUS = [
+	{ text: '开始', value: 1 },
+	{ text: '完成', value: 2 },
+	{ text: '过期', value: 3 }
+]
 // 颜色
 export const COLOR = ['#409EFF', '#337ecc', '#79bbff', '#67C23A', '#529b2e', '#95d475', '#E6A23C', '#b88230', '#eebe77', '#F56C6C', '#c45656', '#f89898', '#909399', '#73767a', '#b1b3b8']
 // 周选择
