@@ -103,7 +103,7 @@ export const edit_child_score = params => {
 	)
 }
 
-// 创建任务
+// 创建任务配置
 export const create_task = params => {
 	const userInfo = getUserInfo()
 	return cacheReset(userInfo, 'task_config', () =>
@@ -115,12 +115,12 @@ export const create_task = params => {
 		})
 	)
 }
-// 获取任务列表
-export const get_task_list = () => {
+// 获取任务配置列表
+export const get_task_config_list = () => {
 	const userInfo = getUserInfo()
 	return cacheApiData(userInfo, 'task_config', () => taskObj.get(userInfo))
 }
-// 任务编辑
+// 任务配置编辑
 export const edit_task = (id, params) => {
 	const userInfo = getUserInfo()
 	return cacheReset(userInfo, 'task_config', () =>
@@ -132,7 +132,7 @@ export const edit_task = (id, params) => {
 		})
 	)
 }
-// 删除任务
+// 删除任务配置
 export const delete_task = id => {
 	const userInfo = getUserInfo()
 	return cacheReset(userInfo, 'task_config', () =>
@@ -158,4 +158,14 @@ export const dispense_task = (id, params) => {
 			return res
 		})
 	)
+}
+// 获取子账号的任务列表
+export const get_user_task_list = username => {
+	const userInfo = getUserInfo()
+	return cacheApiData(userInfo, 'task_list', () => taskObj.getTaskList(userInfo, username))
+}
+// 重新获取子账号的任务列表
+export const reget_user_task_list = username => {
+	const userInfo = getUserInfo()
+	return taskObj.getTaskList(userInfo, username)
 }

@@ -4,6 +4,7 @@
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
 		<button class="button" type="primary" size="mini" @click="editChildScore('add')">增加积分</button>
 		<button class="button" type="primary" size="mini" @click="editChildScore('lower')">消费积分</button>
+		<button class="button" type="primary" size="mini" @click="getTaskList">查询任务</button>
 	</view>
 	<lcg-easy-form ref="score_easyForm"></lcg-easy-form>
 </template>
@@ -25,6 +26,7 @@
 				userInfo: {},
 				userDetail: {},
 				config: {},
+				taskList: [],
 				chlidName: ''
 			}
 		},
@@ -53,9 +55,11 @@
 					.then(() => this.getDetail())
 					.then(() => (this.loading = false))
 			},
+			// 获取配置
 			getConfig() {
 				return this.api.get_config().then(config => (this.config = config))
 			},
+			// 获取用户详情
 			getDetail() {
 				if (!this.chlidName) return
 				return this.api.get_user_detail(this.chlidName).then(({ data: userDetail }) => {
@@ -73,6 +77,14 @@
 							this.$refs.score_easyForm.onClose()
 						}
 					})
+				})
+			},
+			// 获取子账号的任务列表
+			getTaskList() {
+				if (!this.chlidName) return
+				return this.api.get_user_task_list(this.chlidName).then(({ data: taskList }) => {
+					this.taskList = taskList
+					console.log('taskList  >>>', this.chlidName, taskList)
 				})
 			}
 		}

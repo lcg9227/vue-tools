@@ -117,27 +117,45 @@ const dispense_task = async function (userInfo, id, params) {
 	} else {
 		return Object.assign(ret, { success: false, errMsg: '不是当前用户下的子账号' })
 	}
-	// 查询任务信息
-	const taskDetail = taskTable.where({ _id: id })
-	const { data: taskInfos } = await taskDetail.get()
-	const taskInfo = taskInfos[0]
-	const { _id: task_id, execute_type, execute_days, execute_weeks, reward } = taskInfo
 	const data = {
 		execute_name: child,
 		dispense_name: user.username,
-		task_id,
-		execute_type,
-		execute_days,
-		execute_weeks,
-		reward,
+		dispense_nickname: user.nickname,
+		task_id: id,
 		state: 1 // 任务开始状态
 	}
 	// 添加任务到列表
 	await taskListTable.add(data)
 	return ret
 }
+/* 获取执行任务列表 */
+const getTaskList = async function (userInfo, username) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	let __username = userInfo.username
+	// 查询账号信息
+	const { isParent, user } = await getUserInfo(userInfo._id)
+	let { parent_id } = user
+	// 子账号，查询的是家长账号的配置
+	if (!isParent) {
+		const { user } = await getUserInfo(parent_id)
+		__username = user.username
+	}
+	// 家长下的任务, 主表临时表
+	const dbJQL = uniCloud.databaseForJQL({
+		clientInfo: this.getClientInfo()
+	})
+	const taskTemp = dbJQL.collection('lcg-task-config').where({ creator: __username }).getTemp()
+	// 获取任务列表
+	const { data: taskList } = await dbJQL.collection('lcg-task-list', taskTemp).where({ execute_name: username }).get()
+	ret.data = taskList
+	return ret
+}
 module.exports = {
 	get,
+	getTaskList,
 	dispense_task,
 	create_task,
 	edit_task,

@@ -30,14 +30,14 @@
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.getTaskList()
+				this.getTaskConfigList()
 					.then(() => this.getDetail())
 					.then(() => (this.loading = false))
 			},
-			// 获取任务列表
-			getTaskList() {
-				return this.api.get_task_list().then(({ data }) => {
-					// console.log('get_task_list >>>', data)
+			// 获取任务配置列表
+			getTaskConfigList() {
+				return this.api.get_task_config_list().then(({ data }) => {
+					// console.log('get_task_config_list >>>', data)
 					const { userTaskList } = data
 					this.userTaskList = userTaskList
 				})
@@ -52,7 +52,7 @@
 				this.$refs.taskForm.open(null, data => {
 					this.api.create_task(data).then(({ success }) => {
 						if (success) {
-							this.getTaskList()
+							this.getTaskConfigList()
 							this.$refs.taskForm.onClose()
 						}
 					})
