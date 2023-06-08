@@ -2,9 +2,9 @@
   font-family: "ciconfont"; /* Project id 3989185 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1686183335528') format('woff2'),
-       url('iconfont.woff?t=1686183335528') format('woff'),
-       url('iconfont.ttf?t=1686183335528') format('truetype');
+       url('iconfont.woff2?t=1686188255998') format('woff2'),
+       url('iconfont.woff?t=1686188255998') format('woff'),
+       url('iconfont.ttf?t=1686188255998') format('truetype');
 }
 
 .ciconfont {
@@ -15,51 +15,47 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.c-icon--browsing:before {
+.c-icon-browsing:before {
   content: "\e605";
 }
 
-.c-icon--calendar:before {
+.c-icon-calendar:before {
   content: "\e606";
-}
-
-.c-icon--calendar-:before {
-  content: "\e607";
 }
 
 .c-icon--calendar-_1:before {
   content: "\e608";
 }
 
-.c-icon--classroom:before {
+.c-icon-classroom:before {
   content: "\e609";
 }
 
-.c-icon--chatting-:before {
+.c-icon-chatting:before {
   content: "\e60a";
 }
 
-.c-icon--computer:before {
+.c-icon-computer:before {
   content: "\e60b";
 }
 
-.c-icon--conversation:before {
+.c-icon-conversation:before {
   content: "\e60c";
 }
 
-.c-icon--ereader:before {
+.c-icon-ereader:before {
   content: "\e60d";
 }
 
-.c-icon--diploma:before {
+.c-icon-diploma:before {
   content: "\e60e";
 }
 
-.c-icon--collaboration:before {
+.c-icon-collaboration:before {
   content: "\e60f";
 }
 
-.c-icon--education-:before {
+.c-icon-education:before {
   content: "\e610";
 }
 
@@ -123,11 +119,11 @@
   content: "\e61f";
 }
 
-.c-icon--notepad:before {
+.c-icon-notepad:before {
   content: "\e620";
 }
 
-.c-icon--online:before {
+.c-icon-online:before {
   content: "\e621";
 }
 
@@ -159,164 +155,8 @@
   content: "\e628";
 }
 
-.c-icon--online-education-_6:before {
+.c-icon-online-education6:before {
   content: "\e629";
-}
-
-.c-icon--online-education-_4:before {
-  content: "\e62a";
-}
-
-.c-icon--professor-:before {
-  content: "\e62b";
-}
-
-.c-icon--open-book-:before {
-  content: "\e62c";
-}
-
-.c-icon--pencils:before {
-  content: "\e62d";
-}
-
-.c-icon--reading:before {
-  content: "\e62e";
-}
-
-.c-icon--puzzle:before {
-  content: "\e62f";
-}
-
-.c-icon--streaming:before {
-  content: "\e630";
-}
-
-.c-icon--smartphone:before {
-  content: "\e631";
-}
-
-.c-icon--tic-tac-toe:before {
-  content: "\e632";
-}
-
-.c-icon--student-:before {
-  content: "\e633";
-}
-
-.c-icon--reading-:before {
-  content: "\e634";
-}
-
-.c-icon--supplies:before {
-  content: "\e635";
-}
-
-.c-icon--school:before {
-  content: "\e636";
-}
-
-.c-icon--synchronization:before {
-  content: "\e637";
-}
-
-.c-icon--speed:before {
-  content: "\e638";
-}
-
-.c-icon--settings:before {
-  content: "\e639";
-}
-
-.c-icon--teaching:before {
-  content: "\e63a";
-}
-
-.c-icon--stats-:before {
-  content: "\e63b";
-}
-
-.c-icon--school-:before {
-  content: "\e63c";
-}
-
-.c-icon--search:before {
-  content: "\e63d";
-}
-
-.c-icon--to-do:before {
-  content: "\e63e";
-}
-
-.c-icon--school_1:before {
-  content: "\e63f";
-}
-
-.c-icon--teacher:before {
-  content: "\e640";
-}
-
-.c-icon--tutorial-:before {
-  content: "\e641";
-}
-
-.c-icon--teacher-:before {
-  content: "\e642";
-}
-
-.c-icon--research:before {
-  content: "\e643";
-}
-
-.c-icon--school-bag:before {
-  content: "\e644";
-}
-
-.c-icon--tutorial:before {
-  content: "\e645";
-}
-
-.c-icon--trophy:before {
-  content: "\e646";
-}
-
-.c-icon--video-:before {
-  content: "\e647";
-}
-
-.c-icon--thinking:before {
-  content: "\e648";
-}
-
-.c-icon--abc:before {
-  content: "\e649";
-}
-
-.c-icon--abc-:before {
-  content: "\e64a";
-}
-
-.c-icon--article:before {
-  content: "\e64b";
-}
-
-.c-icon--book-:before {
-  content: "\e64c";
-}
-
-.c-icon--book:before {
-  content: "\e64d";
-}
-
-.c-icon--book-_1:before {
-  content: "\e601";
-}
-
-.c-icon--briefcase:before {
-  content: "\e602";
-}
-
-.c-icon--bulb:before {
-  content: "\e603";
 }
 
 .c-icon-shouye1:before {
