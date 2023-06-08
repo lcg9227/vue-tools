@@ -16,8 +16,8 @@
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
 					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="userDetail.isParent">
-						<button class="btn" type="primary" size="mini" @click="onEditTask(item)">编辑</button>
-						<button class="btn" type="warn" size="mini">删除</button>
+						<button class="btn" type="primary" size="mini" @click="editTask(item)">编辑</button>
+						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">删除</button>
 					</uni-transition>
 					<button class="button" size="mini" v-if="userDetail.isParent">分发</button>
 					<button class="button" size="mini" v-else>领取</button>
@@ -73,7 +73,7 @@
 				item.setOpen = !item.setOpen
 			}
 			// 编辑任务
-			const onEditTask = item => {
+			const editTask = item => {
 				proxy.$refs.taskForm.open(proxy.pocket.deepCopy(item), data => {
 					proxy.api.edit_task(item._id, data).then(({ success }) => {
 						if (success) {
@@ -83,7 +83,15 @@
 					})
 				})
 			}
-			return { openSetting, getSubText, onEditTask }
+			// 删除任务
+			const deleteTask = item => {
+				proxy.api.delete_task(item._id).then(({ success }) => {
+					if (success) {
+						proxy.$parent.getTaskList()
+					}
+				})
+			}
+			return { openSetting, getSubText, editTask, deleteTask }
 		}
 	}
 </script>

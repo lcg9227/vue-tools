@@ -75,14 +75,27 @@ const edit_task = async function (userInfo, id, params) {
 		execute_days: Number(params.execute_days)
 	}
 	const taskDetail = taskTable.where({ _id: id })
-	const detail = await taskDetail.get()
-	console.log('11111111 >>>',data, detail)
 	const { updated } = await taskDetail.update(data)
 	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '修改失败！' })
+	return ret
+}
+/* 删除任务 */
+const detele_task = async function (userInfo, id) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	const taskDetail = taskTable.where({ _id: id })
+	const { deleted } = await taskDetail.remove()
+	if (deleted === 0) return Object.assign(ret, { success: false, errMsg: '删除失败！' })
 	return ret
 }
 module.exports = {
 	get,
 	create_task,
-	edit_task
+	edit_task,
+	detele_task
 }
