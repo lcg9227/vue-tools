@@ -93,8 +93,24 @@ const detele_task = async function (userInfo, id) {
 	if (deleted === 0) return Object.assign(ret, { success: false, errMsg: '删除失败！' })
 	return ret
 }
+/* 分发任务 */
+const dispense_task = async function (userInfo, id) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	const taskDetail = taskTable.where({ _id: id })
+	const { data: taskInfos } = await taskDetail.get()
+	const taskInfo = taskInfos[0] // todo
+
+	return ret
+}
 module.exports = {
 	get,
+	dispense_task,
 	create_task,
 	edit_task,
 	detele_task
