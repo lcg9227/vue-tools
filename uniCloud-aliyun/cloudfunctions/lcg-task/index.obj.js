@@ -55,12 +55,8 @@ const create_task = async function (userInfo, params) {
 		execute_days: Number(params.execute_days),
 		creator: userDetail.user.username
 	}
-
-	const dbJQL = uniCloud.databaseForJQL({
-		clientInfo: this.getClientInfo()
-	})
-	const res = await dbJQL.collection('lcg-task-config').add(data)
-
+	
+	await taskTable.add(data)
 	return ret
 }
 /* 编辑任务列表 */
