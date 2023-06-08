@@ -2,9 +2,9 @@
   font-family: "ciconfont"; /* Project id 3989185 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1686188255998') format('woff2'),
-       url('iconfont.woff?t=1686188255998') format('woff'),
-       url('iconfont.ttf?t=1686188255998') format('truetype');
+       url('iconfont.woff2?t=1686189800813') format('woff2'),
+       url('iconfont.woff?t=1686189800813') format('woff'),
+       url('iconfont.ttf?t=1686189800813') format('truetype');
 }
 
 .ciconfont {
@@ -13,10 +13,6 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.c-icon-browsing:before {
-  content: "\e605";
 }
 
 .c-icon-calendar:before {
@@ -151,23 +147,31 @@
   content: "\e627";
 }
 
-.c-icon--online-payment:before {
-  content: "\e628";
-}
-
 .c-icon-online-education6:before {
   content: "\e629";
 }
 
-.c-icon-shouye1:before {
-  content: "\e671";
+.c-icon--online-education-_4:before {
+  content: "\e62a";
 }
 
-.c-icon-wode1:before {
-  content: "\e675";
+.c-icon-pencils:before {
+  content: "\e62d";
 }
 
-.c-icon-xiangmu1:before {
-  content: "\e67b";
+.c-icon--trophy:before {
+  content: "\e646";
+}
+
+.c-icon--thinking:before {
+  content: "\e648";
+}
+
+.c-icon--abc:before {
+  content: "\e649";
+}
+
+.c-icon--book:before {
+  content: "\e64d";
 }
 
