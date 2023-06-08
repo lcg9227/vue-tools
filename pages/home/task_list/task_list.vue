@@ -46,7 +46,6 @@
 			const { proxy } = getCurrentInstance()
 			const isParent = proxy.userInfo.role.includes('parent')
 			const { EXECUTE_WEEKS } = proxy.dataConfig
-			const setOpen = ref(false)
 			// 次信息
 			const getSubText = item => {
 				const { execute_type, execute_weeks, execute_days } = item
