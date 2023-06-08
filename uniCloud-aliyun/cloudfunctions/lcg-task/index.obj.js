@@ -2,6 +2,7 @@ const db = uniCloud.database()
 const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
 const taskTable = db.collection('lcg-task-config')
+const taskListTable = db.collection('lcg-task-list')
 const { getUserInfo } = require('lcg-common')
 
 // 任务信息检查
@@ -88,24 +89,51 @@ const detele_task = async function (userInfo, id) {
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 从任务列表中删除已发布的任务
+	const taskListTableById = await taskListTable.where({ task_id: id })
+	const { deleted: del } = await taskListTableById.remove()
+	if (del === 0) return Object.assign(ret, { success: false, errMsg: '任务列表删除失败！' })
+	// 删除任务信息
 	const taskDetail = taskTable.where({ _id: id })
 	const { deleted } = await taskDetail.remove()
 	if (deleted === 0) return Object.assign(ret, { success: false, errMsg: '删除失败！' })
 	return ret
 }
 /* 分发任务 */
-const dispense_task = async function (userInfo, id) {
+const dispense_task = async function (userInfo, id, params) {
 	const ret = {
 		success: true,
 		errMsg: ''
 	}
+	const { child } = params
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 检查孩子是否是当前用户下的子账号
+	const { user } = userDetail
+	const { children } = user
+	if (Array.isArray(children)) {
+		if (!children.includes(child)) return Object.assign(ret, { success: false, errMsg: '不是当前用户下的子账号' })
+	} else {
+		return Object.assign(ret, { success: false, errMsg: '不是当前用户下的子账号' })
+	}
+	// 查询任务信息
 	const taskDetail = taskTable.where({ _id: id })
 	const { data: taskInfos } = await taskDetail.get()
-	const taskInfo = taskInfos[0] // todo
-
+	const taskInfo = taskInfos[0]
+	const { _id: task_id, execute_type, execute_days, execute_weeks, reward } = taskInfo
+	const data = {
+		execute_name: child,
+		dispense_name: user.username,
+		task_id,
+		execute_type,
+		execute_days,
+		execute_weeks,
+		reward,
+		state: 1 // 任务开始状态
+	}
+	// 添加任务到列表
+	await taskListTable.add(data)
 	return ret
 }
 module.exports = {

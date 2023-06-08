@@ -136,12 +136,14 @@ export const edit_task = (id, params) => {
 export const delete_task = id => {
 	const userInfo = getUserInfo()
 	return cacheReset(userInfo, 'task_config', () =>
-		taskObj.detele_task(userInfo, id).then(res => {
-			const { success, errMsg } = res
-			if (success) toast.success('删除任务成功！')
-			if (!success) toast.error(errMsg)
-			return res
-		})
+		cacheReset(userInfo, 'task_list', () =>
+			taskObj.detele_task(userInfo, id).then(res => {
+				const { success, errMsg } = res
+				if (success) toast.success('删除任务成功！')
+				if (!success) toast.error(errMsg)
+				return res
+			})
+		)
 	)
 }
 
