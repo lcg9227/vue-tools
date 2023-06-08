@@ -3,15 +3,15 @@
 	<view class="warp" v-if="!loading">
 		<button class="button" type="primary" size="mini" @click="openTaskFrom">创建任务</button>
 	</view>
-	<TaskList :list="userTaskList" :userDetail="userDetail"></TaskList>
+	<TaskConfigList :list="userTaskList" :userDetail="userDetail"></TaskConfigList>
 	<TaskForm ref="taskForm"></TaskForm>
 </template>
 
 <script>
 	import TaskForm from './components/task-form/task-form.vue'
-	import TaskList from './components/task-list/task-list.vue'
+	import TaskConfigList from './components/task-config--list/task-config-list.vue'
 	export default {
-		components: { TaskForm, TaskList },
+		components: { TaskForm, TaskConfigList },
 		data() {
 			return {
 				loading: true,

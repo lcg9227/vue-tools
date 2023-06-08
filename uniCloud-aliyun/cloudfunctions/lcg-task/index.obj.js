@@ -149,8 +149,18 @@ const getTaskList = async function (userInfo, username) {
 	})
 	const taskTemp = dbJQL.collection('lcg-task-config').where({ creator: __username }).getTemp()
 	// 获取任务列表
-	const { data: taskList } = await dbJQL.collection('lcg-task-list', taskTemp).where({ execute_name: username }).get()
-	ret.data = taskList
+	const { data: taskList } = await dbJQL.collection('lcg-task-list', taskTemp).where({ execute_name: username, state: 1 }).get()
+	ret.data = taskList.map(({ dispense_nickname, state, _id, task_id }) => ({
+		_id,
+		state,
+		dispense_nickname,
+		execute_days: task_id[0].execute_days,
+		execute_type: task_id[0].execute_type,
+		icon: task_id[0].icon,
+		icon_color: task_id[0].icon_color,
+		task_name: task_id[0].name,
+		task_type: task_id[0].task_type
+	}))
 	return ret
 }
 module.exports = {

@@ -82,7 +82,7 @@
 			// 获取子账号的任务列表
 			getTaskList() {
 				if (!this.chlidName) return
-				return this.api.get_user_task_list(this.chlidName).then(({ data: taskList }) => {
+				return this.api.reget_user_task_list(this.chlidName).then(({ data: taskList }) => {
 					this.taskList = taskList
 					console.log('taskList  >>>', this.chlidName, taskList)
 				})
