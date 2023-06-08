@@ -4,7 +4,7 @@
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
 		<button class="button" type="primary" size="mini" @click="editChildScore('add')">增加积分</button>
 		<button class="button" type="primary" size="mini" @click="editChildScore('lower')">消费积分</button>
-		<button class="button" type="primary" size="mini" @click="getTaskList">查询任务</button>
+		<TaskList :list="taskList" :userInfo="userInfo"></TaskList>
 	</view>
 	<lcg-easy-form ref="score_easyForm"></lcg-easy-form>
 </template>
@@ -17,8 +17,9 @@
 			{ field: 'notes', label: '备注', type: 'input', placeholder: '请输入备注信息', required: true }
 		]
 	}
+	import TaskList from '@/pages/home/task_list/task_list.vue'
 	export default {
-		components: {},
+		components: { TaskList },
 		data() {
 			return {
 				loading: true,
@@ -53,13 +54,14 @@
 				if (!hasLogin) return
 				this.getConfig()
 					.then(() => this.getDetail())
+					.then(() => this.getTaskList())
 					.then(() => (this.loading = false))
 			},
 			// 获取配置
 			getConfig() {
 				return this.api.get_config().then(config => (this.config = config))
 			},
-			// 获取用户详情
+			// 获取子账号详情
 			getDetail() {
 				if (!this.chlidName) return
 				return this.api.get_user_detail(this.chlidName).then(({ data: userDetail }) => {

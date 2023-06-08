@@ -3,7 +3,7 @@
 	<view class="warp" v-if="!loading">
 		<button class="button" type="primary" size="mini" @click="openTaskFrom">创建任务</button>
 	</view>
-	<TaskConfigList :list="userTaskList" :userDetail="userDetail"></TaskConfigList>
+	<TaskConfigList :list="userTaskList" :userInfo="userInfo"></TaskConfigList>
 	<TaskForm ref="taskForm"></TaskForm>
 </template>
 
@@ -16,7 +16,6 @@
 			return {
 				loading: true,
 				userInfo: {},
-				userDetail: {},
 				userTaskList: [],
 				systemTaskList: []
 			}
@@ -30,9 +29,7 @@
 			getData() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.getTaskConfigList()
-					.then(() => this.getDetail())
-					.then(() => (this.loading = false))
+				this.getTaskConfigList().then(() => (this.loading = false))
 			},
 			// 获取任务配置列表
 			getTaskConfigList() {
@@ -41,11 +38,6 @@
 					const { userTaskList } = data
 					this.userTaskList = userTaskList
 				})
-			},
-			// 获取用户详情
-			getDetail() {
-				const { username } = this.userInfo
-				return this.api.get_user_detail(username).then(({ data: userDetail }) => (this.userDetail = userDetail))
 			},
 			// 打开任务表单
 			openTaskFrom() {

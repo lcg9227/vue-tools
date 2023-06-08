@@ -154,12 +154,14 @@ const getTaskList = async function (userInfo, username) {
 		_id,
 		state,
 		dispense_nickname,
-		execute_days: task_id[0].execute_days,
-		execute_type: task_id[0].execute_type,
+		task_name: task_id[0].name,
+		reward: task_id[0].reward,
 		icon: task_id[0].icon,
 		icon_color: task_id[0].icon_color,
-		task_name: task_id[0].name,
-		task_type: task_id[0].task_type
+		task_type: task_id[0].task_type,
+		execute_type: task_id[0].execute_type,
+		execute_days: task_id[0].execute_days,
+		execute_weeks: task_id[0].execute_weeks
 	}))
 	return ret
 }

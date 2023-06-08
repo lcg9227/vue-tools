@@ -7,7 +7,7 @@
 					<lcg-iconfont :type="item.icon" :color="item.icon_color || ''" :fontSize="60"></lcg-iconfont>
 				</div>
 				<div class="center">
-					<div class="name b-ellipsis">{{ item.name }}</div>
+					<div class="name b-ellipsis">{{ item.task_name }}</div>
 					<div class="sub-info b-ellipsis">{{ getSubText(item) }}</div>
 					<div class="reward">奖励积分：{{ item.reward }}</div>
 				</div>
@@ -16,27 +16,19 @@
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
 					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="isParent">
-						<button class="btn" type="primary" size="mini" @click="editTask(item)">编辑</button>
-						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">删除</button>
+						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">取消</button>
 					</uni-transition>
-					<button class="button" size="mini" v-if="isParent" @click="dispense_task(item)">分发</button>
-					<button class="button" size="mini" v-else>领取</button>
+					<button class="button" size="mini" v-if="isParent" @click="deleteTask(item)">完成</button>
 				</div>
 			</div>
 		</template>
 	</div>
 	<lcg-easy-form ref="easyForm"></lcg-easy-form>
-	<TaskForm ref="taskForm"></TaskForm>
 </template>
 <script>
 	import { ref, getCurrentInstance } from 'vue'
-	import TaskForm from '../task-form/task-form.vue'
-	const dispenseForm = {
-		fields: { child: '' },
-		items: [{ field: 'child', label: '子账号', type: 'select', placeholder: '请选择子账号', required: true }]
-	}
 	export default {
-		components: { TaskForm },
+		components: {},
 		props: {
 			userInfo: {
 				type: Object,
@@ -78,47 +70,9 @@
 			const openSetting = item => {
 				item.setOpen = !item.setOpen
 			}
-			// 编辑任务
-			const editTask = item => {
-				proxy.$refs.taskForm.open(proxy.pocket.deepCopy(item), data => {
-					proxy.api.edit_task(item._id, data).then(({ success }) => {
-						if (success) {
-							proxy.$parent.getTaskList()
-							proxy.$refs.taskForm.onClose()
-						}
-					})
-				})
-			}
 			// 删除任务
-			const deleteTask = item => {
-				proxy.api.delete_task(item._id).then(({ success }) => {
-					if (success) {
-						proxy.$parent.getTaskList()
-					}
-				})
-			}
-			// 分发任务
-			const dispense_task = item => {
-				proxy.api.get_children().then(res => {
-					if (res.success && Array.isArray(res.data) && res.data.length > 0) {
-						const children_data = res.data.map(v => ({ text: v.nickname, value: v.username }))
-						const _form = proxy.pocket.deepCopy(dispenseForm)
-						_form.items.forEach(v => {
-							if (v.field === 'child') v.data = children_data
-						})
-						proxy.$refs.easyForm.open('分发任务', _form, data => {
-							proxy.api.dispense_task(item._id, data).then(({ success }) => {
-								if (success) {
-									proxy.$refs.easyForm.onClose()
-								}
-							})
-						})
-					} else {
-						proxy.$message.error('请先添加子账号！')
-					}
-				})
-			}
-			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task }
+			const deleteTask = item => {}
+			return { isParent, openSetting, getSubText, deleteTask }
 		}
 	}
 </script>
