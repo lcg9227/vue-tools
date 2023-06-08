@@ -3,7 +3,7 @@
 		<template v-for="(item, index) in list" :key="index">
 			<div class="item">
 				<div class="left">
-					<uni-tag class="tag" :text="item.reward" :mark="true" type="warning" />
+					<uni-tag class="tag" :text="getStateText(item)" :mark="true" type="success" />
 					<lcg-iconfont :type="item.icon" :color="item.icon_color || ''" :fontSize="60"></lcg-iconfont>
 				</div>
 				<div class="center">
@@ -48,7 +48,7 @@
 		setup(props) {
 			const { proxy } = getCurrentInstance()
 			const isParent = proxy.userInfo.role.includes('parent')
-			const { EXECUTE_WEEKS } = proxy.dataConfig
+			const { EXECUTE_WEEKS, TASK_STATUS } = proxy.dataConfig
 			// 次信息
 			const getSubText = item => {
 				const { execute_type, execute_weeks, execute_days } = item
@@ -69,13 +69,19 @@
 				}
 				return text
 			}
+			// 获取状态
+			const getStateText = item => {
+				const { state } = item
+				const { text } = TASK_STATUS.find(v => v.value === state)
+				return text
+			}
 			// 打开设置
 			const openSetting = item => {
 				item.setOpen = !item.setOpen
 			}
 			// 删除任务
 			const deleteTask = item => {}
-			return { isParent, openSetting, getSubText, deleteTask }
+			return { isParent, openSetting, getSubText, getStateText, deleteTask }
 		}
 	}
 </script>
@@ -111,6 +117,7 @@
 					position: absolute;
 					top: 0;
 					left: 0;
+					padding: 4rpx 8rpx;
 				}
 			}
 			.center {

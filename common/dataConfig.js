@@ -8,7 +8,7 @@ export const EXECUTE_TYPE = [
 ]
 // 任务状态
 export const TASK_STATUS = [
-	{ text: '开始', value: 1 },
+	{ text: '进行中', value: 1 },
 	{ text: '完成', value: 2 },
 	{ text: '过期', value: 3 }
 ]
