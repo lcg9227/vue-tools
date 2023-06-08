@@ -4,28 +4,17 @@ const usersTable = db.collection('uni-id-users')
 const taskTable = db.collection('lcg-task-config')
 const { getUserInfo } = require('lcg-common')
 
-/* 创建任务 */
-const create_task = async function (userInfo, params) {
+// 任务信息检查
+const taskInfoCheck = params => {
 	const ret = {
 		success: true,
 		errMsg: ''
 	}
-	// 查询账号信息
-	const userDetail = await getUserInfo(userInfo._id)
-	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
-
 	if (!/^\+?[1-9]\d*$/.test(params.reward)) return Object.assign(ret, { success: false, errMsg: '积分只能是正整数！' })
 	if (params.execute_type === 1 && !/^\+?[1-9]\d*$/.test(params.execute_days)) return Object.assign(ret, { success: false, errMsg: '执行天数只能是正整数！' })
-
-	const data = {
-		...params,
-		reward: Number(params.reward),
-		execute_days: Number(params.execute_days),
-		creator: userDetail.user.username
-	}
-	await taskTable.add(data)
 	return ret
 }
+
 /* 获取任务列表 */
 const get = async function (userInfo) {
 	const ret = {
@@ -47,7 +36,53 @@ const get = async function (userInfo) {
 	ret.data = { userTaskList }
 	return ret
 }
+/* 创建任务 */
+const create_task = async function (userInfo, params) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 校验任务信息
+	const checkInfo = taskInfoCheck(params)
+	if (checkInfo.success) return Object.assign(ret, checkInfo)
+	const data = {
+		...params,
+		reward: Number(params.reward),
+		execute_days: Number(params.execute_days),
+		creator: userDetail.user.username
+	}
+	await taskTable.add(data)
+	return ret
+}
+/* 编辑任务列表 */
+const edit_task = async function (userInfo, id, params) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 校验任务信息
+	const checkInfo = taskInfoCheck(params)
+	if (!checkInfo.success) return Object.assign(ret, checkInfo)
+	const data = {
+		...params,
+		reward: Number(params.reward),
+		execute_days: Number(params.execute_days)
+	}
+	const taskDetail = taskTable.where({ _id: id })
+	const detail = await taskDetail.get()
+	console.log('11111111 >>>',data, detail)
+	const { updated } = await taskDetail.update(data)
+	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '修改失败！' })
+	return ret
+}
 module.exports = {
 	get,
-	create_task
+	create_task,
+	edit_task
 }

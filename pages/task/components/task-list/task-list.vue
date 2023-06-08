@@ -12,11 +12,11 @@
 					<div class="reward">奖励积分：{{ item.reward }}</div>
 				</div>
 				<div class="right">
-					<div class="setting" @click="openSetting" v-if="userDetail.isParent">
+					<div class="setting" @click="openSetting(item)" v-if="userDetail.isParent">
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
-					<uni-transition mode-class="slide-right" class="setting-box" :show="setOpen" v-if="userDetail.isParent">
-						<button class="btn" type="primary" size="mini">编辑</button>
+					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="userDetail.isParent">
+						<button class="btn" type="primary" size="mini" @click="onEditTask(item)">编辑</button>
 						<button class="btn" type="warn" size="mini">删除</button>
 					</uni-transition>
 					<button class="button" size="mini" v-if="userDetail.isParent">分发</button>
@@ -25,10 +25,13 @@
 			</div>
 		</template>
 	</div>
+	<TaskForm ref="taskForm"></TaskForm>
 </template>
 <script>
 	import { ref, getCurrentInstance } from 'vue'
+	import TaskForm from '../task-form/task-form.vue'
 	export default {
+		components: { TaskForm },
 		props: {
 			userDetail: {
 				type: Object,
@@ -66,10 +69,21 @@
 				return text
 			}
 			// 打开设置
-			const openSetting = () => {
-				setOpen.value = !setOpen.value
+			const openSetting = item => {
+				item.setOpen = !item.setOpen
 			}
-			return { setOpen, openSetting, getSubText }
+			// 编辑任务
+			const onEditTask = item => {
+				proxy.$refs.taskForm.open(proxy.pocket.deepCopy(item), data => {
+					proxy.api.edit_task(item._id, data).then(({ success }) => {
+						if (success) {
+							proxy.$parent.getTaskList()
+							proxy.$refs.taskForm.onClose()
+						}
+					})
+				})
+			}
+			return { openSetting, getSubText, onEditTask }
 		}
 	}
 </script>

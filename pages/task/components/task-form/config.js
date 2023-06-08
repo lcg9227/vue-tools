@@ -66,7 +66,7 @@ const getIconColorData = COLOR => {
 	})
 }
 
-export const useFormConfig = async proxy => {
+export const useFormConfig = async (row, proxy) => {
 	const { TASK_TYPE, COLOR, EXECUTE_TYPE, EXECUTE_WEEKS } = proxy.dataConfig
 	const rules = RULES
 	const localdata = {
@@ -77,5 +77,12 @@ export const useFormConfig = async proxy => {
 		icon_color: getIconColorData(COLOR)
 	}
 	const fields = { task_type: 1, name: '', describe: '', icon: localdata.icon[0].value, icon_color: localdata.icon_color[0].value, execute_type: 1, execute_days: 1, execute_weeks: [], reward: 10 }
+	if (typeof row === 'object' && row !== null) {
+		for (const field of Object.keys(fields)) {
+			if (row[field]) {
+				fields[field] = row[field]
+			}
+		}
+	}
 	return { fields, rules, localdata }
 }

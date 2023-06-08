@@ -117,8 +117,19 @@ export const create_task = params => {
 	)
 }
 // 获取任务列表
-
 export const get_task_list = () => {
 	const userInfo = getUserInfo()
 	return cacheApiData(userInfo, 'task_list', () => taskObj.get(userInfo))
+}
+// 任务编辑
+export const edit_task = (id, params) => {
+	const userInfo = getUserInfo()
+	return cacheReset(userInfo, 'task_list', () =>
+		taskObj.edit_task(userInfo, id, params).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('编辑任务成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
 }

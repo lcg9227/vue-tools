@@ -36,7 +36,7 @@
 			</scroll-view>
 			<div class="footer">
 				<button class="closeButton" type="warn" @click="onClose">取消</button>
-				<button class="submitButton" type="primary" @click="onSubmit">添加</button>
+				<button class="submitButton" type="primary" @click="onSubmit">{{ id ? '确定' : '添加' }}</button>
 			</div>
 		</div>
 	</uni-popup>
@@ -63,13 +63,15 @@
 			})
 			// 标题
 			const title = ref('')
+			// id
+			const id = ref('')
 			// 表单
 			const fields = ref({})
 			const rules = ref([])
 			const localdata = ref({})
 			const showForm = ref(false)
-			const getDetail = async () => {
-				const form = await useFormConfig(proxy)
+			const getDetail = async row => {
+				const form = await useFormConfig(row, proxy)
 				fields.value = form.fields
 				rules.value = form.rules
 				localdata.value = form.localdata
@@ -88,18 +90,21 @@
 					}
 				})
 			}
-			const open = async (id, _submit) => {
-				title.value = id ? '修改任务' : '添加任务'
+			const open = async (row, _submit) => {
+				const { _id } = row || {}
+				id.value = _id || ''
+				title.value = _id ? '修改任务' : '添加任务'
 				if (typeof _submit === 'function') {
 					submit = _submit
 				}
-				await getDetail()
+				await getDetail(row)
+				// console.log('open > fields >>>', fields.value)
 				nextTick(() => {
 					proxy.$refs.popup.open()
 					showForm.value = true
 				})
 			}
-			return { style, scrollHeight, showForm, fields, rules, localdata, title, onSubmit, onClose, open }
+			return { id, style, scrollHeight, showForm, fields, rules, localdata, title, onSubmit, onClose, open }
 		}
 	}
 </script>
