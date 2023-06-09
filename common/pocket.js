@@ -99,3 +99,8 @@ export const cacheReset = (userInfo, name, api) => {
 		return res
 	})
 }
+// 清除所有缓存数据
+export const cacheClear = api => {
+	uni.setStorage({ key: 'cacheApiData', data: '' })
+	return api()
+}

@@ -87,11 +87,11 @@
 			const regetTaskList = regetDetail => {
 				if (typeof proxy.$parent.getTaskList === 'function') {
 					proxy.$parent.getTaskList()
-					if (regetDetail) proxy.$parent.getDetail(true)
+					if (regetDetail) proxy.$parent.getDetail()
 				}
 				if (typeof proxy.$parent.$parent.getTaskList === 'function') {
 					proxy.$parent.$parent.getTaskList()
-					if (regetDetail) proxy.$parent.$parent.getDetail(true)
+					if (regetDetail) proxy.$parent.$parent.getDetail()
 				}
 			}
 			// 完成任务
@@ -99,8 +99,7 @@
 				const { username } = props.userDetail
 				proxy.api.complete_task(item._id, username).then(({ success }) => {
 					if (success) {
-						regetTaskList()
-						openSetting()
+						regetTaskList(true)
 					}
 				})
 			}

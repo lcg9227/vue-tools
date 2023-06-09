@@ -1,5 +1,5 @@
 import { store, mutations } from '@/uni_modules/uni-id-pages/common/store.js'
-import { toast, cacheApiData, cacheReset } from './pocket'
+import { toast, cacheApiData, cacheReset, cacheClear } from './pocket'
 
 const userObj = uniCloud.importObject('lcg-user')
 const configObj = uniCloud.importObject('lcg-config')
@@ -139,22 +139,21 @@ export const edit_task = (id, params) => {
 // 删除任务配置
 export const delete_task = id => {
 	const userInfo = getUserInfo()
-	return cacheReset(userInfo, 'task_config', () =>
-		cacheReset(userInfo, 'task_list', () =>
-			taskObj.detele_task(userInfo, id).then(res => {
-				const { success, errMsg } = res
-				if (success) toast.success('删除任务成功！')
-				if (!success) toast.error(errMsg)
-				return res
-			})
-		)
+	return cacheClear(() =>
+		taskObj.detele_task(userInfo, id).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('删除任务成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
 	)
 }
 
 // 分发任务
 export const dispense_task = (id, params) => {
 	const userInfo = getUserInfo()
-	return cacheReset(userInfo, 'task_list', () =>
+	const { child } = params
+	return cacheReset({ _id: child }, 'task_list', () =>
 		taskObj.dispense_task(userInfo, id, params).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('分发任务成功！')
@@ -167,18 +166,20 @@ export const dispense_task = (id, params) => {
 export const get_user_task_list = (username, reload) => {
 	const userInfo = getUserInfo()
 	const cacheParams = { reload }
-	return cacheApiData(userInfo, 'task_list', cacheParams, () => taskObj.getTaskList(userInfo, username))
+	return cacheApiData({ _id: username }, 'task_list', cacheParams, () => taskObj.getTaskList(userInfo, username))
 }
 // 任务标记完成
 export const complete_task = (id, username) => {
 	const userInfo = getUserInfo()
-	return cacheReset(userInfo, 'task_list', () =>
-		taskObj.complete_task(userInfo, id, username).then(res => {
-			const { success, errMsg } = res
-			if (success) toast.success('任务已标记完成！')
-			if (!success) toast.error(errMsg)
-			return res
-		})
+	return cacheReset({ _id: username }, 'user_detail', () =>
+		cacheReset({ _id: username }, 'task_list', () =>
+			taskObj.complete_task(userInfo, id, username).then(res => {
+				const { success, errMsg } = res
+				if (success) toast.success('任务已标记完成！')
+				if (!success) toast.error(errMsg)
+				return res
+			})
+		)
 	)
 }
 // 取消任务
