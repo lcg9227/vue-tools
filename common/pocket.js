@@ -72,10 +72,10 @@ export const cacheApiData = (id, name, params, api) => {
 		cacheData[id] = {}
 	}
 	if (!reload) {
-		// const cur = cacheData[id][name]
-		// if (cur && cur.expirationTime - Date.now() > 0) {
-		// 	return new Promise(resolve => resolve(cur.data))
-		// }
+		const cur = cacheData[id][name]
+		if (cur && cur.expirationTime - Date.now() > 0) {
+			return new Promise(resolve => resolve(cur.data))
+		}
 	}
 	return api().then(res => {
 		// console.log('重新请求数据 >>>', name, res)

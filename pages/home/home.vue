@@ -2,17 +2,20 @@
 	<view class="warp" v-if="!loading">
 		<lcg-nav-bar :statusBarStyle="{ backgroundColor: '#69c98b' }"></lcg-nav-bar>
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
+		<TaskList :list="taskList" :userInfo="userInfo" :userDetail="userDetail"></TaskList>
 	</view>
 </template>
 
 <script>
+	import TaskList from '@/pages/home/task_list/task_list.vue'
 	export default {
-		components: {},
+		components: { TaskList },
 		data() {
 			return {
 				loading: true,
 				userInfo: {},
 				userDetail: {},
+				taskList: [],
 				config: {}
 			}
 		},
@@ -30,6 +33,7 @@
 				if (!hasLogin) return
 				return this.getConfig(reload)
 					.then(() => this.getDetail(reload))
+					.then(() => this.getTaskList(reload))
 					.then(() => (this.loading = false))
 			},
 			// 获取配置
@@ -42,6 +46,15 @@
 				return this.api.get_user_detail(username, reload).then(({ data: userDetail }) => {
 					this.userDetail = userDetail
 					console.log('userDetail >>>', username, this.config, userDetail)
+				})
+			},
+			// 获取子账号的任务列表
+			getTaskList(reload) {
+				const { isParent, username } = this.userDetail
+				if (isParent) return async () => {}
+				return this.api.get_user_task_list(username, reload).then(({ data: taskList }) => {
+					this.taskList = taskList
+					console.log('taskList  >>>', username, taskList)
 				})
 			}
 		}

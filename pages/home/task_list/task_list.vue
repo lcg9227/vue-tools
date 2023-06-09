@@ -105,7 +105,8 @@
 			}
 			// 取消任务
 			const cancelTask = item => {
-				proxy.api.cancel_task(item._id).then(({ success }) => {
+				const { username } = props.userDetail
+				proxy.api.cancel_task(item._id, username).then(({ success }) => {
 					if (success) {
 						regetTaskList()
 					}

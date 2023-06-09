@@ -20,7 +20,7 @@
 						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">删除</button>
 					</uni-transition>
 					<button class="button" size="mini" v-if="isParent" @click="dispense_task(item)">分发</button>
-					<button class="button" size="mini" v-else>领取</button>
+					<button class="button" size="mini" v-else @click="take_task(item)">领取</button>
 				</div>
 			</div>
 		</template>
@@ -52,7 +52,7 @@
 		},
 		setup(props) {
 			const { proxy } = getCurrentInstance()
-			const isParent = proxy.userInfo.role.includes('parent')
+			const isParent = props.userInfo.role.includes('parent')
 			const { EXECUTE_WEEKS } = proxy.dataConfig
 			// 次信息
 			const getSubText = item => {
@@ -119,7 +119,15 @@
 					}
 				})
 			}
-			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task }
+			// 子账号领取任务
+			const take_task = item => {
+				proxy.api.take_task(item._id).then(({ success }) => {
+					if (success) {
+						// 提示是否跳转到首页 todo
+					}
+				})
+			}
+			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task, take_task }
 		}
 	}
 </script>

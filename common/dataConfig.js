@@ -9,8 +9,9 @@ export const EXECUTE_TYPE = [
 // 任务状态
 export const TASK_STATUS = [
 	{ text: '进行中', value: 1 },
-	{ text: '完成', value: 2 },
-	{ text: '过期', value: 3 }
+	{ text: '已提交', value: 2 },
+	{ text: '已完成', value: 3 },
+	{ text: '已过期', value: 4 }
 ]
 // 颜色
 export const COLOR = ['#409EFF', '#337ecc', '#79bbff', '#67C23A', '#529b2e', '#95d475', '#E6A23C', '#b88230', '#eebe77', '#F56C6C', '#c45656', '#f89898', '#909399', '#73767a', '#b1b3b8']

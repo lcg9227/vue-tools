@@ -130,6 +130,27 @@ const dispense_task = async function (userInfo, id, params) {
 	await taskListTable.add(data)
 	return ret
 }
+/* 子账号领取任务 */
+const take_task = async function (userInfo, id) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是子账号！' })
+	const { user } = userDetail
+	const data = {
+		execute_name: user.username,
+		dispense_name: user.username,
+		dispense_nickname: user.nickname,
+		task_id: id,
+		state: 1 // 任务开始状态
+	}
+	// 添加任务到列表
+	await taskListTable.add(data)
+	return ret
+}
 /* 获取执行任务列表 */
 const getTaskList = async function (userInfo, username) {
 	const ret = {
@@ -201,7 +222,7 @@ const complete_task = async function (userInfo, id, username) {
 	const editRet = await userObj.editChildScore(userInfo, { username, score: reward, type: 'add', notes: '完成任务！' })
 	if (!editRet.success) return Object.assign(ret, editRet)
 	// 更新状态
-	const { updated } = await taskListTableById.update({ state: 2 })
+	const { updated } = await taskListTableById.update({ state: 3 })
 	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '状态修改失败！' })
 	return ret
 }
@@ -226,6 +247,7 @@ module.exports = {
 	complete_task,
 	getTaskList,
 	dispense_task,
+	take_task,
 	create_task,
 	edit_task,
 	detele_task

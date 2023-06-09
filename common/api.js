@@ -162,7 +162,7 @@ export const dispense_task = (id, params) => {
 		})
 	)
 }
-// 获取子账号的任务列表
+// 获取子账号的进行中的任务列表
 export const get_user_task_list = (username, reload) => {
 	const userInfo = getUserInfo()
 	const cacheParams = { reload }
@@ -187,6 +187,19 @@ export const cancel_task = (id, username) => {
 		taskObj.cancel_task(userInfo, id).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('任务已取消！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
+}
+// 领取任务
+export const take_task = id => {
+	const userInfo = getUserInfo()
+	const { username } = userInfo
+	return cacheReset(username, 'task_list', () =>
+		taskObj.take_task(userInfo, id).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('任务领取成功！')
 			if (!success) toast.error(errMsg)
 			return res
 		})
