@@ -65,36 +65,51 @@ export const checkError = error => {
 }
 
 // get接口缓存
-export const cacheApiData = (userInfo, name, params, api) => {
+export const cacheApiData = (id, name, params, api) => {
 	const { reload } = params
 	const cacheData = uni.getStorageSync('cacheApiData') || {}
-	if (!cacheData[userInfo._id]) {
-		cacheData[userInfo._id] = {}
+	if (!cacheData[id]) {
+		cacheData[id] = {}
 	}
 	if (!reload) {
-		const cur = cacheData[userInfo._id][name]
-		if (cur && cur.expirationTime - Date.now() > 0) {
-			return new Promise(resolve => resolve(cur.data))
-		}
+		// const cur = cacheData[id][name]
+		// if (cur && cur.expirationTime - Date.now() > 0) {
+		// 	return new Promise(resolve => resolve(cur.data))
+		// }
 	}
 	return api().then(res => {
 		// console.log('重新请求数据 >>>', name, res)
-		cacheData[userInfo._id][name] = deepCopy({ data: res, expirationTime: Date.now() + 24 * 60 * 60 * 1000 })
+		cacheData[id][name] = deepCopy({ data: res, expirationTime: Date.now() + 24 * 60 * 60 * 1000 })
 		uni.setStorage({ key: 'cacheApiData', data: cacheData })
 		return res
 	})
 }
 // set接口重置缓存，让下一次get请求能够重新请求到新的值
-export const cacheReset = (userInfo, name, api) => {
+export const cacheReset = (id, name, api) => {
 	const cacheData = uni.getStorageSync('cacheApiData') || {}
-	if (!cacheData[userInfo._id]) {
-		cacheData[userInfo._id] = {}
+	if (!cacheData[id]) {
+		cacheData[id] = {}
 	}
-	if (!cacheData[userInfo._id][name]) {
-		cacheData[userInfo._id][name] = {}
+	const isarray = Array.isArray(name)
+	if (isarray) {
+		name.forEach(_name => {
+			if (!cacheData[id][_name]) {
+				cacheData[id][_name] = {}
+			}
+		})
+	} else {
+		if (!cacheData[id][name]) {
+			cacheData[id][name] = {}
+		}
 	}
 	return api().then(res => {
-		cacheData[userInfo._id][name].expirationTime = Date.now() - 1000
+		if (isarray) {
+			name.forEach(_name => {
+				cacheData[id][_name].expirationTime = Date.now() - 1000
+			})
+		} else {
+			cacheData[id][name].expirationTime = Date.now() - 1000
+		}
 		uni.setStorage({ key: 'cacheApiData', data: cacheData })
 		return res
 	})
