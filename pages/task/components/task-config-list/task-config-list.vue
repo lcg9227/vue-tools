@@ -83,7 +83,7 @@
 				proxy.$refs.taskForm.open(proxy.pocket.deepCopy(item), data => {
 					proxy.api.edit_task(item._id, data).then(({ success }) => {
 						if (success) {
-							proxy.$parent.getTaskList()
+							proxy.$parent.getTaskConfigList()
 							proxy.$refs.taskForm.onClose()
 							openSetting()
 						}
@@ -94,7 +94,7 @@
 			const deleteTask = item => {
 				proxy.api.delete_task(item._id).then(({ success }) => {
 					if (success) {
-						proxy.$parent.getTaskList()
+						proxy.$parent.getTaskConfigList()
 					}
 				})
 			}

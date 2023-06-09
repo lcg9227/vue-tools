@@ -44,9 +44,11 @@
 				if (!hasLogin) return
 				return this.getChildren(reload).then(() => (this.loading = false))
 			},
+			// 获取子账号信息
 			getChildren(reload) {
 				return this.api.get_children(reload).then(({ success, data }) => success && (this.children = data))
 			},
+			// 添加子账号
 			testClick() {
 				this.$refs.easyForm.open('添加子账号', this.pocket.deepCopy(form), data =>
 					this.api.add_child(data.child).then(({ success }) => {
@@ -57,6 +59,7 @@
 					})
 				)
 			},
+			// 跳转到子账号页面
 			goChildPage(username) {
 				this.pocket.goPage('/pages/ucenter/child-manage/child-page/child-page', { username })
 			}

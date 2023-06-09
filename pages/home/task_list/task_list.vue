@@ -19,9 +19,9 @@
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
 					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="isParent">
-						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">取消</button>
+						<button class="btn" type="warn" size="mini" @click="cancelTask(item)">取消</button>
 					</uni-transition>
-					<button class="button" size="mini" v-if="isParent" @click="deleteTask(item)">完成</button>
+					<button class="button" size="mini" v-if="isParent" @click="completeTask(item)">完成</button>
 				</div>
 			</div>
 		</template>
@@ -79,9 +79,33 @@
 			const openSetting = item => {
 				item.setOpen = !item.setOpen
 			}
-			// 删除任务
-			const deleteTask = item => {}
-			return { isParent, openSetting, getSubText, getStateText, deleteTask }
+			// 重新获取父页面的任务列表
+			const regetTaskList = () => {
+				if (typeof proxy.$parent.getTaskList === 'function') {
+					proxy.$parent.getTaskList()
+				}
+				if (typeof proxy.$parent.$parent.getTaskList === 'function') {
+					proxy.$parent.$parent.getTaskList()
+				}
+			}
+			// 完成任务
+			const completeTask = item => {
+				proxy.api.complete_task(item._id).then(({ success }) => {
+					if (success) {
+						regetTaskList()
+						openSetting()
+					}
+				})
+			}
+			// 取消任务
+			const cancelTask = item => {
+				proxy.api.cancel_task(item._id).then(({ success }) => {
+					if (success) {
+						regetTaskList()
+					}
+				})
+			}
+			return { isParent, openSetting, getSubText, getStateText, cancelTask, completeTask }
 		}
 	}
 </script>

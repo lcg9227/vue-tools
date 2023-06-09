@@ -55,7 +55,7 @@ const create_task = async function (userInfo, params) {
 		execute_days: Number(params.execute_days),
 		creator: userDetail.user.username
 	}
-	
+
 	await taskTable.add(data)
 	return ret
 }
@@ -91,7 +91,7 @@ const detele_task = async function (userInfo, id) {
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
 	// 从任务列表中删除已发布的任务
-	const taskListTableById = await taskListTable.where({ task_id: id })
+	const taskListTableById = taskListTable.where({ task_id: id })
 	const { deleted: del } = await taskListTableById.remove()
 	if (del === 0) return Object.assign(ret, { success: false, errMsg: '任务列表删除失败！' })
 	// 删除任务信息
@@ -166,8 +166,44 @@ const getTaskList = async function (userInfo, username) {
 	}))
 	return ret
 }
+/* 更新任务状态 */
+const update_task_state = async function (userInfo, id, state) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 更新状态
+	const taskListTableById = taskListTable.where({ _id: id })
+	const { updated } = await taskListTableById.update({ state })
+	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '状态修改失败！' })
+	return ret
+}
+/* 任务标记完成 */
+const complete_task = async function (userInfo, id) {
+	return update_task_state(userInfo, id, 2)
+}
+/* 取消任务 */
+const cancel_task = async function (userInfo, id, state) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 删除任务
+	const taskListTableById = taskListTable.where({ _id: id })
+	const { deleted } = await taskListTableById.remove()
+	if (deleted === 0) return Object.assign(ret, { success: false, errMsg: '取消失败！' })
+	return ret
+}
 module.exports = {
 	get,
+	cancel_task,
+	complete_task,
 	getTaskList,
 	dispense_task,
 	create_task,

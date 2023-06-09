@@ -169,8 +169,27 @@ export const get_user_task_list = (username, reload) => {
 	const cacheParams = { reload }
 	return cacheApiData(userInfo, 'task_list', cacheParams, () => taskObj.getTaskList(userInfo, username))
 }
-// 重新获取子账号的任务列表
-export const reget_user_task_list = username => {
+// 任务标记完成
+export const complete_task = id => {
 	const userInfo = getUserInfo()
-	return taskObj.getTaskList(userInfo, username)
+	return cacheReset(userInfo, 'task_list', () =>
+		taskObj.complete_task(userInfo, id).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('任务已标记完成！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
+}
+// 取消任务
+export const cancel_task = id => {
+	const userInfo = getUserInfo()
+	return cacheReset(userInfo, 'task_list', () =>
+		taskObj.cancel_task(userInfo, id).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('任务已取消！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
 }
