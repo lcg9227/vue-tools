@@ -57,10 +57,10 @@
 				if (!hasLogin) return
 				return this.getConfig(reload).then(() => (this.loading = false))
 			},
-			getConfig() {
+			getConfig(reload) {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				return this.api.get_config().then(config => (this.config = config))
+				return this.api.get_config(reload).then(config => (this.config = config))
 			},
 			onLvAdd() {
 				this.$refs.lv_easyForm.open('添加积分配置', this.pocket.deepCopy(lv_form), data => {

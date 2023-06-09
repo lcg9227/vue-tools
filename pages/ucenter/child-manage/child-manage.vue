@@ -44,8 +44,8 @@
 				if (!hasLogin) return
 				return this.getChildren(reload).then(() => (this.loading = false))
 			},
-			getChildren() {
-				return this.api.get_children().then(({ success, data }) => success && (this.children = data))
+			getChildren(reload) {
+				return this.api.get_children(reload).then(({ success, data }) => success && (this.children = data))
 			},
 			testClick() {
 				this.$refs.easyForm.open('添加子账号', this.pocket.deepCopy(form), data =>
