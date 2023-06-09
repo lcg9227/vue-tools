@@ -4,7 +4,7 @@
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
 		<button class="button" type="primary" size="mini" @click="editChildScore('add')">增加积分</button>
 		<button class="button" type="primary" size="mini" @click="editChildScore('lower')">消费积分</button>
-		<TaskList :list="taskList" :userInfo="userInfo"></TaskList>
+		<TaskList :list="taskList" :userInfo="userInfo" :userDetail="userDetail"></TaskList>
 	</view>
 	<lcg-easy-form ref="score_easyForm"></lcg-easy-form>
 </template>

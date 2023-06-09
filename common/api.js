@@ -170,10 +170,10 @@ export const get_user_task_list = (username, reload) => {
 	return cacheApiData(userInfo, 'task_list', cacheParams, () => taskObj.getTaskList(userInfo, username))
 }
 // 任务标记完成
-export const complete_task = id => {
+export const complete_task = (id, username) => {
 	const userInfo = getUserInfo()
 	return cacheReset(userInfo, 'task_list', () =>
-		taskObj.complete_task(userInfo, id).then(res => {
+		taskObj.complete_task(userInfo, id, username).then(res => {
 			const { success, errMsg } = res
 			if (success) toast.success('任务已标记完成！')
 			if (!success) toast.error(errMsg)

@@ -37,6 +37,10 @@
 				type: Object,
 				default: {}
 			},
+			userDetail: {
+				type: Object,
+				default: {}
+			},
 			list: {
 				type: Array,
 				default: []
@@ -47,7 +51,7 @@
 		},
 		setup(props) {
 			const { proxy } = getCurrentInstance()
-			const isParent = proxy.userInfo.role.includes('parent')
+			const isParent = props.userInfo.role.includes('parent')
 			const { EXECUTE_WEEKS, TASK_STATUS } = proxy.dataConfig
 			// 次信息
 			const getSubText = item => {
@@ -80,17 +84,20 @@
 				item.setOpen = !item.setOpen
 			}
 			// 重新获取父页面的任务列表
-			const regetTaskList = () => {
+			const regetTaskList = regetDetail => {
 				if (typeof proxy.$parent.getTaskList === 'function') {
 					proxy.$parent.getTaskList()
+					if (regetDetail) proxy.$parent.getDetail(true)
 				}
 				if (typeof proxy.$parent.$parent.getTaskList === 'function') {
 					proxy.$parent.$parent.getTaskList()
+					if (regetDetail) proxy.$parent.$parent.getDetail(true)
 				}
 			}
 			// 完成任务
 			const completeTask = item => {
-				proxy.api.complete_task(item._id).then(({ success }) => {
+				const { username } = props.userDetail
+				proxy.api.complete_task(item._id, username).then(({ success }) => {
 					if (success) {
 						regetTaskList()
 						openSetting()

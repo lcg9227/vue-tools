@@ -3,7 +3,8 @@ const dbCmd = db.command
 const usersTable = db.collection('uni-id-users')
 const taskTable = db.collection('lcg-task-config')
 const taskListTable = db.collection('lcg-task-list')
-const { getUserInfo } = require('lcg-common')
+const { getUserInfo, getUserInfoByName } = require('lcg-common')
+const userObj = uniCloud.importObject('lcg-user')
 
 // 任务信息检查
 const taskInfoCheck = params => {
@@ -182,11 +183,30 @@ const update_task_state = async function (userInfo, id, state) {
 	return ret
 }
 /* 任务标记完成 */
-const complete_task = async function (userInfo, id) {
-	return update_task_state(userInfo, id, 2)
+const complete_task = async function (userInfo, id, username) {
+	const ret = {
+		success: true,
+		errMsg: ''
+	}
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	// 查询任务信息
+	const taskListTableById = taskListTable.where({ _id: id })
+	const { data: taskInfos } = await taskListTableById.get()
+	const { task_id } = taskInfos[0]
+	const { data: taskConfigs } = await taskTable.where({ _id: task_id }).get()
+	const { reward } = taskConfigs[0]
+	// 修改子账号积分
+	const editRet = await userObj.editChildScore(userInfo, { username, score: reward, type: 'add', notes: '完成任务！' })
+	if (!editRet.success) return Object.assign(ret, editRet)
+	// 更新状态
+	const { updated } = await taskListTableById.update({ state: 2 })
+	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '状态修改失败！' })
+	return ret
 }
 /* 取消任务 */
-const cancel_task = async function (userInfo, id, state) {
+const cancel_task = async function (userInfo, id) {
 	const ret = {
 		success: true,
 		errMsg: ''

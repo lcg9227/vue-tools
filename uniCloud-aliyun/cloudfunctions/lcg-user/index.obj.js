@@ -13,7 +13,7 @@ module.exports = {
 		// 查询账号信息
 		let { isParent, user } = await getUserInfoByName(username)
 		const { nickname, avatar_file, score } = user
-		ret.data = { nickname, avatar_file, score: score || 0, isParent }
+		ret.data = { nickname, username, avatar_file, score: score || 0, isParent }
 		return ret
 	},
 	/* 修改子账号积分 */
