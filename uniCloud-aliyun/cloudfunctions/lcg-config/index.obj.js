@@ -6,10 +6,7 @@ const { getUserInfo } = require('lcg-common') // todo
 
 /* 获取配置 */
 const get = async function (userInfo, type) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	let __uid = userInfo._id
 	// 查询账号信息
 	const { isParent, user } = await getUserInfo(userInfo._id)
@@ -39,10 +36,7 @@ const get = async function (userInfo, type) {
 }
 /* 添加积分等级配置 */
 const add_score_level = async function (userInfo, params) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const { isParent } = await getUserInfo(userInfo._id)
 	if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
@@ -66,10 +60,7 @@ const add_score_level = async function (userInfo, params) {
 }
 /* 修改积分配置 */
 const edit_score_level = async function (userInfo, params, index) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const { isParent } = await getUserInfo(userInfo._id)
 	if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })
@@ -93,10 +84,7 @@ const edit_score_level = async function (userInfo, params, index) {
 }
 /* 删除积分配置 */
 const del_score_level = async function (userInfo, index) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const { isParent } = await getUserInfo(userInfo._id)
 	if (!isParent) return Object.assign(ret, { success: false, errMsg: '不是家长账号！' })

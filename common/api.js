@@ -205,3 +205,16 @@ export const take_task = id => {
 		})
 	)
 }
+// 子账号提交任务
+export const submit_task = id => {
+	const userInfo = getUserInfo()
+	const { username } = userInfo
+	return cacheReset(username, 'task_list', () =>
+		taskObj.submit_task(userInfo, id).then(res => {
+			const { success, errMsg } = res
+			if (success) toast.success('任务提交成功！')
+			if (!success) toast.error(errMsg)
+			return res
+		})
+	)
+}

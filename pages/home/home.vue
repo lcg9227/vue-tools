@@ -2,7 +2,10 @@
 	<view class="warp" v-if="!loading">
 		<lcg-nav-bar :statusBarStyle="{ backgroundColor: '#69c98b' }"></lcg-nav-bar>
 		<lcg-header :userDetail="userDetail" :config="config"></lcg-header>
-		<TaskList :list="taskList" :userInfo="userInfo" :userDetail="userDetail"></TaskList>
+		<template v-if="!userDetail.isParent">
+			<lcg-title title="我的任务"></lcg-title>
+			<TaskList :list="taskList" :userInfo="userInfo" :userDetail="userDetail"></TaskList>
+		</template>
 	</view>
 </template>
 

@@ -3,7 +3,7 @@
 		<template v-for="(item, index) in list" :key="index">
 			<div class="item">
 				<div class="left">
-					<uni-tag class="tag" :text="getStateText(item)" :mark="true" type="success" />
+					<uni-tag class="tag" :text="getStateText(item)" :mark="true" :type="getStateType(item)" />
 					<lcg-iconfont :type="item.icon" :color="item.icon_color || ''" :fontSize="60"></lcg-iconfont>
 				</div>
 				<div class="center">
@@ -21,7 +21,8 @@
 					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="isParent">
 						<button class="btn" type="warn" size="mini" @click="cancelTask(item)">取消</button>
 					</uni-transition>
-					<button class="button" size="mini" v-if="isParent" @click="completeTask(item)">完成</button>
+					<button class="button" size="mini" v-if="isParent && item.state === 2" @click="completeTask(item)">完成</button>
+					<button class="button" size="mini" v-if="!isParent" @click="submitTask(item)">提交</button>
 				</div>
 			</div>
 		</template>
@@ -79,6 +80,13 @@
 				const { text } = TASK_STATUS.find(v => v.value === state)
 				return text
 			}
+			const getStateType = item => {
+				const { state } = item
+				let type = ''
+				if (state === 1) type = 'success'
+				if (state === 2) type = 'primary'
+				return type
+			}
 			// 打开设置
 			const openSetting = item => {
 				item.setOpen = !item.setOpen
@@ -112,7 +120,15 @@
 					}
 				})
 			}
-			return { isParent, openSetting, getSubText, getStateText, cancelTask, completeTask }
+			// 子账号提交任务
+			const submitTask = item => {
+				proxy.api.submit_task(item._id).then(({ success }) => {
+					if (success) {
+						regetTaskList()
+					}
+				})
+			}
+			return { isParent, openSetting, getSubText, getStateType, getStateText, cancelTask, completeTask, submitTask }
 		}
 	}
 </script>

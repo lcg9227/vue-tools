@@ -6,10 +6,7 @@ const { getUserInfo, getUserInfoByName } = require('lcg-common')
 module.exports = {
 	/* 获取账号详细信息 */
 	getDetail: async function (username) {
-		const ret = {
-			success: true,
-			errMsg: ''
-		}
+		const ret = { success: true, errMsg: '' }
 		// 查询账号信息
 		let { isParent, user } = await getUserInfoByName(username)
 		const { nickname, avatar_file, score } = user
@@ -18,10 +15,7 @@ module.exports = {
 	},
 	/* 修改子账号积分 */
 	editChildScore: async function (userInfo, params) {
-		const ret = {
-			success: true,
-			errMsg: ''
-		}
+		const ret = { success: true, errMsg: '' }
 		const { username, score: _score, notes, type } = params
 		// 查询账号信息
 		const parentInfo = await getUserInfo(userInfo._id)
@@ -55,10 +49,7 @@ module.exports = {
 	},
 	/* 添加子账号 */
 	addChlid: async function (userInfo, childName) {
-		const ret = {
-			success: true,
-			errMsg: ''
-		}
+		const ret = { success: true, errMsg: '' }
 		// 查询账号信息
 		const { isParent, user: parent, userTable: parentTable } = await getUserInfo(userInfo._id)
 		let { children } = parent
@@ -84,10 +75,7 @@ module.exports = {
 	},
 	/* 获取全部子账号 */
 	getAllChildren: async function (userInfo) {
-		const ret = {
-			success: true,
-			errMsg: ''
-		}
+		const ret = { success: true, errMsg: '' }
 		// 查询账号信息
 		const { isParent, user } = await getUserInfo(userInfo._id)
 		let { children } = user

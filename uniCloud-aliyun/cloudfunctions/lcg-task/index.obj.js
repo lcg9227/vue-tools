@@ -8,10 +8,7 @@ const userObj = uniCloud.importObject('lcg-user')
 
 // 任务信息检查
 const taskInfoCheck = params => {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	if (!/^\+?[1-9]\d*$/.test(params.reward)) return Object.assign(ret, { success: false, errMsg: '积分只能是正整数！' })
 	if (params.execute_type === 1 && !/^\+?[1-9]\d*$/.test(params.execute_days)) return Object.assign(ret, { success: false, errMsg: '执行天数只能是正整数！' })
 	return ret
@@ -19,10 +16,7 @@ const taskInfoCheck = params => {
 
 /* 获取任务列表 */
 const get = async function (userInfo) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	let creator = userInfo.username
 	// 查询账号信息
 	const { isParent, user } = await getUserInfo(userInfo._id)
@@ -40,10 +34,7 @@ const get = async function (userInfo) {
 }
 /* 创建任务 */
 const create_task = async function (userInfo, params) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
@@ -62,10 +53,7 @@ const create_task = async function (userInfo, params) {
 }
 /* 编辑任务列表 */
 const edit_task = async function (userInfo, id, params) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
@@ -84,10 +72,7 @@ const edit_task = async function (userInfo, id, params) {
 }
 /* 删除任务 */
 const detele_task = async function (userInfo, id) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
@@ -103,10 +88,7 @@ const detele_task = async function (userInfo, id) {
 }
 /* 分发任务 */
 const dispense_task = async function (userInfo, id, params) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	const { child } = params
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
@@ -132,10 +114,7 @@ const dispense_task = async function (userInfo, id, params) {
 }
 /* 子账号领取任务 */
 const take_task = async function (userInfo, id) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是子账号！' })
@@ -153,10 +132,7 @@ const take_task = async function (userInfo, id) {
 }
 /* 获取执行任务列表 */
 const getTaskList = async function (userInfo, username) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	let __username = userInfo.username
 	// 查询账号信息
 	const { isParent, user } = await getUserInfo(userInfo._id)
@@ -172,7 +148,10 @@ const getTaskList = async function (userInfo, username) {
 	})
 	const taskTemp = dbJQL.collection('lcg-task-config').where({ creator: __username }).getTemp()
 	// 获取任务列表
-	const { data: taskList } = await dbJQL.collection('lcg-task-list', taskTemp).where({ execute_name: username, state: 1 }).get()
+	const { data: taskList } = await dbJQL
+		.collection('lcg-task-list', taskTemp)
+		.where({ execute_name: username, state: dbCmd.in([1, 2]) })
+		.get()
 	ret.data = taskList.map(({ dispense_nickname, state, _id, task_id }) => ({
 		_id,
 		state,
@@ -190,25 +169,28 @@ const getTaskList = async function (userInfo, username) {
 }
 /* 更新任务状态 */
 const update_task_state = async function (userInfo, id, state) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
-	// 查询账号信息
-	const userDetail = await getUserInfo(userInfo._id)
-	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
+	const ret = { success: true, errMsg: '' }
 	// 更新状态
 	const taskListTableById = taskListTable.where({ _id: id })
 	const { updated } = await taskListTableById.update({ state })
 	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '状态修改失败！' })
 	return ret
 }
+/*子账号提交任务 */
+const submit_task = async function (userInfo, id) {
+	const ret = { success: true, errMsg: '' }
+	// 查询账号信息
+	const userDetail = await getUserInfo(userInfo._id)
+	if (userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是子账号！' })
+	// 修改状态为已提交
+	const updateRet = await update_task_state(userInfo, id, 2)
+	if (!updateRet.success) return Object.assign(ret, updateRet)
+	return ret
+}
+
 /* 任务标记完成 */
 const complete_task = async function (userInfo, id, username) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
@@ -221,17 +203,14 @@ const complete_task = async function (userInfo, id, username) {
 	// 修改子账号积分
 	const editRet = await userObj.editChildScore(userInfo, { username, score: reward, type: 'add', notes: '完成任务！' })
 	if (!editRet.success) return Object.assign(ret, editRet)
-	// 更新状态
-	const { updated } = await taskListTableById.update({ state: 3 })
-	if (updated === 0) return Object.assign(ret, { success: false, errMsg: '状态修改失败！' })
+	// 修改状态为完成
+	const updateRet = await update_task_state(userInfo, id, 3)
+	if (!updateRet.success) return Object.assign(ret, updateRet)
 	return ret
 }
 /* 取消任务 */
 const cancel_task = async function (userInfo, id) {
-	const ret = {
-		success: true,
-		errMsg: ''
-	}
+	const ret = { success: true, errMsg: '' }
 	// 查询账号信息
 	const userDetail = await getUserInfo(userInfo._id)
 	if (!userDetail.isParent) return Object.assign(ret, { success: false, errMsg: '当前账号不是家长账号！' })
@@ -247,6 +226,7 @@ module.exports = {
 	complete_task,
 	getTaskList,
 	dispense_task,
+	submit_task,
 	take_task,
 	create_task,
 	edit_task,
