@@ -33,14 +33,19 @@
 		},
 		created() {
 			this.userInfo = this.api.getUserInfo()
-			this.getChildren()
+			this.getData()
 		},
-
+		onPullDownRefresh() {
+			this.getData(true).then(() => uni.stopPullDownRefresh())
+		},
 		methods: {
-			getChildren() {
+			getData(reload) {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.api.get_children().then(({ success, data }) => success && (this.children = data))
+				return this.getChildren(reload).then(() => (this.loading = false))
+			},
+			getChildren() {
+				return this.api.get_children().then(({ success, data }) => success && (this.children = data))
 			},
 			testClick() {
 				this.$refs.easyForm.open('添加子账号', this.pocket.deepCopy(form), data =>

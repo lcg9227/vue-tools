@@ -46,13 +46,21 @@
 		},
 		created() {
 			this.userInfo = this.api.getUserInfo()
-			this.getConfig()
+			this.getData()
+		},
+		onPullDownRefresh() {
+			this.getData(true).then(() => uni.stopPullDownRefresh())
 		},
 		methods: {
+			getData(reload) {
+				const { hasLogin } = this.userInfo
+				if (!hasLogin) return
+				return this.getConfig(reload).then(() => (this.loading = false))
+			},
 			getConfig() {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.api.get_config().then(config => (this.config = config))
+				return this.api.get_config().then(config => (this.config = config))
 			},
 			onLvAdd() {
 				this.$refs.lv_easyForm.open('添加积分配置', this.pocket.deepCopy(lv_form), data => {

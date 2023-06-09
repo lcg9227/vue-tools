@@ -22,8 +22,9 @@ export const getUserInfo = () => {
 	return userInfo
 }
 // 获取账号详情
-export const get_user_detail = username => {
-	return cacheApiData({ _id: username }, 'user_detail', () => userObj.getDetail(username))
+export const get_user_detail = (username, reload) => {
+	const cacheParams = { reload }
+	return cacheApiData({ _id: username }, 'user_detail', cacheParams, () => userObj.getDetail(username))
 }
 // 添加子账号
 export const add_child = childName => {
@@ -38,18 +39,20 @@ export const add_child = childName => {
 	)
 }
 // 获取子账号信息
-export const get_children = () => {
+export const get_children = reload => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'children', () => userObj.getAllChildren(userInfo)).then(res => {
+	const cacheParams = { reload }
+	return cacheApiData(userInfo, 'children', cacheParams, () => userObj.getAllChildren(userInfo)).then(res => {
 		console.log('get_children >>>', res)
 		return res
 	})
 }
 
 // 获取配置
-export const get_config = () => {
+export const get_config = reload => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'config', () => configObj.get(userInfo).then(res => res.data))
+	const cacheParams = { reload }
+	return cacheApiData(userInfo, 'config', cacheParams, () => configObj.get(userInfo).then(res => res.data))
 }
 
 // 添加积分等级
@@ -116,9 +119,10 @@ export const create_task = params => {
 	)
 }
 // 获取任务配置列表
-export const get_task_config_list = () => {
+export const get_task_config_list = reload => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'task_config', () => taskObj.get(userInfo))
+	const cacheParams = { reload }
+	return cacheApiData(userInfo, 'task_config', cacheParams, () => taskObj.get(userInfo))
 }
 // 任务配置编辑
 export const edit_task = (id, params) => {
@@ -160,9 +164,10 @@ export const dispense_task = (id, params) => {
 	)
 }
 // 获取子账号的任务列表
-export const get_user_task_list = username => {
+export const get_user_task_list = (username, reload) => {
 	const userInfo = getUserInfo()
-	return cacheApiData(userInfo, 'task_list', () => taskObj.getTaskList(userInfo, username))
+	const cacheParams = { reload }
+	return cacheApiData(userInfo, 'task_list', cacheParams, () => taskObj.getTaskList(userInfo, username))
 }
 // 重新获取子账号的任务列表
 export const reget_user_task_list = username => {

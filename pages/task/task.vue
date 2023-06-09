@@ -24,16 +24,19 @@
 			this.userInfo = this.api.getUserInfo()
 			this.getData()
 		},
+		onPullDownRefresh() {
+			this.getData(true).then(() => uni.stopPullDownRefresh())
+		},
 		methods: {
 			// 获取全部页面数据
-			getData() {
+			getData(reload) {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.getTaskConfigList().then(() => (this.loading = false))
+				return this.getTaskConfigList(reload).then(() => (this.loading = false))
 			},
 			// 获取任务配置列表
-			getTaskConfigList() {
-				return this.api.get_task_config_list().then(({ data }) => {
+			getTaskConfigList(reload) {
+				return this.api.get_task_config_list(reload).then(({ data }) => {
 					// console.log('get_task_config_list >>>', data)
 					const { userTaskList } = data
 					this.userTaskList = userTaskList

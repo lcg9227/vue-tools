@@ -65,14 +65,17 @@ export const checkError = error => {
 }
 
 // get接口缓存
-export const cacheApiData = (userInfo, name, api) => {
+export const cacheApiData = (userInfo, name, params, api) => {
+	const { reload } = params
 	const cacheData = uni.getStorageSync('cacheApiData') || {}
 	if (!cacheData[userInfo._id]) {
 		cacheData[userInfo._id] = {}
 	}
-	const cur = cacheData[userInfo._id][name]
-	if (cur && cur.expirationTime - Date.now() > 0) {
-		return new Promise(resolve => resolve(cur.data))
+	if (!reload) {
+		const cur = cacheData[userInfo._id][name]
+		if (cur && cur.expirationTime - Date.now() > 0) {
+			return new Promise(resolve => resolve(cur.data))
+		}
 	}
 	return api().then(res => {
 		// console.log('重新请求数据 >>>', name, res)

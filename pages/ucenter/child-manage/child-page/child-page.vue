@@ -48,23 +48,26 @@
 				}
 			}, 1000)
 		},
+		onPullDownRefresh() {
+			this.getData(true).then(() => uni.stopPullDownRefresh())
+		},
 		methods: {
-			getData() {
+			getData(reload) {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.getConfig()
-					.then(() => this.getDetail())
-					.then(() => this.getTaskList())
+				return this.getConfig(reload)
+					.then(() => this.getDetail(reload))
+					.then(() => this.getTaskList(reload))
 					.then(() => (this.loading = false))
 			},
 			// 获取配置
-			getConfig() {
-				return this.api.get_config().then(config => (this.config = config))
+			getConfig(reload) {
+				return this.api.get_config(reload).then(config => (this.config = config))
 			},
 			// 获取子账号详情
-			getDetail() {
+			getDetail(reload) {
 				if (!this.chlidName) return
-				return this.api.get_user_detail(this.chlidName).then(({ data: userDetail }) => {
+				return this.api.get_user_detail(this.chlidName, reload).then(({ data: userDetail }) => {
 					this.userDetail = userDetail
 					console.log('userDetail  >>>', this.chlidName, this.config, userDetail)
 				})
@@ -82,9 +85,9 @@
 				})
 			},
 			// 获取子账号的任务列表
-			getTaskList() {
+			getTaskList(reload) {
 				if (!this.chlidName) return
-				return this.api.reget_user_task_list(this.chlidName).then(({ data: taskList }) => {
+				return this.api.get_user_task_list(this.chlidName, reload).then(({ data: taskList }) => {
 					this.taskList = taskList
 					console.log('taskList  >>>', this.chlidName, taskList)
 				})

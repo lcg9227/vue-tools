@@ -20,23 +20,26 @@
 			this.userInfo = this.api.getUserInfo()
 			this.getData()
 		},
+		onPullDownRefresh() {
+			this.getData(true).then(() => uni.stopPullDownRefresh())
+		},
 		methods: {
 			// 获取全部页面数据
-			getData() {
+			getData(reload) {
 				const { hasLogin } = this.userInfo
 				if (!hasLogin) return
-				this.getConfig()
-					.then(() => this.getDetail())
+				return this.getConfig(reload)
+					.then(() => this.getDetail(reload))
 					.then(() => (this.loading = false))
 			},
 			// 获取配置
-			getConfig() {
-				return this.api.get_config().then(config => (this.config = config))
+			getConfig(reload) {
+				return this.api.get_config(reload).then(config => (this.config = config))
 			},
 			// 获取用户详情
-			getDetail() {
+			getDetail(reload) {
 				const { username } = this.userInfo
-				return this.api.get_user_detail(username).then(({ data: userDetail }) => {
+				return this.api.get_user_detail(username, reload).then(({ data: userDetail }) => {
 					this.userDetail = userDetail
 					console.log('userDetail >>>', username, this.config, userDetail)
 				})
