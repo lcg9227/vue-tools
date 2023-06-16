@@ -1,10 +1,15 @@
 <template>
 	<view class="uni-stat__select">
 		<span v-if="label" class="uni-label-text hide-on-phone">{{ label + '：' }}</span>
-		<view class="uni-stat-box" :class="{ 'uni-stat__actived': current }">
-			<view class="uni-select" :class="{ 'uni-select--disabled': disabled }">
-				<view class="uni-select__input-box" @click="toggleSelector">
-					<view v-if="current" class="uni-select__input-text">{{ current }}</view>
+		<view class="uni-stat-box" :class="{ 'uni-stat__actived': multiple ? current.length > 0 : current }">
+			<view class="uni-select" :class="{ 'uni-select--disabled': disabled, 'uni-select--multiple': multiple }">
+				<view class="uni-select__input-box" :class="{ 'uni-select__input-box--multiple': multiple }" @click="toggleSelector">
+					<view v-if="current.length > 0" :class="multiple ? 'uni-select__input-text-multiple' : 'uni-select__input-text'">
+						<view v-if="multiple">
+							<uni-tag class="uni-select__tag" v-for="(item, index) in current" :key="index" :text="item.text" type="success" />
+						</view>
+						<view v-else>{{ current }}</view>
+					</view>
 					<view v-else class="uni-select__input-text uni-select__input-placeholder">{{ typePlaceholder }}</view>
 					<uni-icons v-if="current && clear" type="clear" color="#c0c4cc" size="24" @click="clearVal" />
 					<uni-icons v-else :type="showSelector ? 'top' : 'bottom'" size="14" color="#999" />
@@ -12,13 +17,26 @@
 				<view class="uni-select--mask" v-if="showSelector" @click="toggleSelector" />
 				<view class="uni-select__selector" v-if="showSelector">
 					<view class="uni-popper__arrow"></view>
+					<uni-easyinput class="uni-input" type="number" confirm-type="search" :clearSize="18" v-model="search" v-if="hasSearch" placeholder="输入进行搜索" />
 					<scroll-view scroll-y="true" class="uni-select__selector-scroll">
 						<view class="uni-select__selector-empty" v-if="mixinDatacomResData.length === 0">
 							<text>{{ emptyTips }}</text>
 						</view>
-						<view v-else class="uni-select__selector-item" v-for="(item, index) in mixinDatacomResData" :key="index" @click="change(item)">
-							<RenderNode v-if="item.render && typeof item.render == 'function'" :render="item.render" :par="12"></RenderNode>
-							<text :class="{ 'uni-select__selector__disabled': item.disable }" v-else>{{ formatItemName(item) }}</text>
+						<view v-else>
+							<view
+								class="uni-select__selector-item"
+								:class="{ 'uni-select__selector-item--selected': (multiple && item.selected) || (!multiple && formatItemName(item) === current) }"
+								v-for="(item, index) in searchData"
+								:key="index"
+								@click="change(item)">
+								<view>
+									<RenderNode v-if="item.render && typeof item.render == 'function'" :render="item.render" :par="12"></RenderNode>
+									<text :class="{ 'uni-select__selector__disabled': item.disable }" v-else>{{ formatItemName(item) }}</text>
+								</view>
+								<view>
+									<uni-icons v-if="(multiple && item.selected) || (!multiple && formatItemName(item) === current)" type="checkmarkempty" size="14" color="#409eff" />
+								</view>
+							</view>
 						</view>
 					</scroll-view>
 				</view>
@@ -31,7 +49,6 @@
 	/**
 	 * DataChecklist 数据选择器
 	 * @description 通过数据渲染的下拉框组件
-	 * @tutorial https://uniapp.dcloud.io/component/uniui/uni-data-select
 	 * @property {String} value 默认值
 	 * @property {Array} localdata 本地数据 ，格式 [{text:'',value:''}]
 	 * @property {Boolean} clear 是否可以清空已选项
@@ -39,11 +56,13 @@
 	 * @property {String} label 左侧标题
 	 * @property {String} placeholder 输入框的提示文字
 	 * @property {Boolean} disabled 是否禁用
+	 * @property {Boolean} multiple 是否为多选
+	 * @property {Boolean} hasSearch 是否有搜索框
 	 * @event {Function} change  选中发生变化触发
 	 */
 	import RenderNode from '../RenderNode/RenderNode'
 	export default {
-		name: 'uni-stat-select',
+		name: 'lcg-select',
 		mixins: [uniCloud.mixinDatacom || {}],
 		components: { RenderNode },
 		data() {
@@ -52,7 +71,8 @@
 				current: '',
 				mixinDatacomResData: [],
 				apps: [],
-				channels: []
+				channels: [],
+				search: ''
 			}
 		},
 		props: {
@@ -63,11 +83,11 @@
 				}
 			},
 			value: {
-				type: [String, Number],
+				type: [String, Number, Array],
 				default: ''
 			},
 			modelValue: {
-				type: [String, Number],
+				type: [String, Number, Array],
 				default: ''
 			},
 			label: {
@@ -93,6 +113,14 @@
 			disabled: {
 				type: Boolean,
 				default: false
+			},
+			multiple: {
+				type: Boolean,
+				default: false
+			},
+			hasSearch: {
+				type: Boolean,
+				default: false
 			}
 		},
 		created() {
@@ -111,6 +139,12 @@
 				const common = this.placeholder
 				const placeholder = text[this.collection]
 				return placeholder ? common + placeholder : common
+			},
+			searchData() {
+				if (this.search) {
+					return this.mixinDatacomResData.filter(v => v.text.includes(this.search))
+				}
+				return this.mixinDatacomResData
 			}
 		},
 		watch: {
@@ -128,7 +162,7 @@
 			},
 			// #endif
 			// #ifdef VUE3
-			modelValue() {
+			modelValue(val) {
 				this.initDefVal()
 			},
 			// #endif
@@ -150,8 +184,12 @@
 			onMixinDatacomPropsChange() {
 				this.query()
 			},
+			// 初始化默认值
 			initDefVal() {
-				let defValue = ''
+				if (this.multiple && !Array.isArray(this.current)) {
+					this.current = []
+				}
+				let defValue = this.multiple ? [] : ''
 				if ((this.value || this.value === 0) && !this.isDisabled(this.value)) {
 					defValue = this.value
 				} else if ((this.modelValue || this.modelValue === 0) && !this.isDisabled(this.modelValue)) {
@@ -167,15 +205,28 @@
 						let defItem = ''
 						if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
 							defItem = this.mixinDatacomResData[this.defItem - 1].value
+							if (this.multiple) {
+								defItem.selected = true
+							}
 						}
-						defValue = defItem
+						defValue = this.multiple ? [] : defItem
 					}
 					if (defValue || defValue === 0) {
 						this.emit(defValue)
 					}
 				}
-				const def = this.mixinDatacomResData.find(item => item.value === defValue)
-				this.current = def ? this.formatItemName(def) : ''
+				if (this.multiple) {
+					this.mixinDatacomResData.forEach(item => {
+						item.selected = defValue.includes(item.value) || defValue.includes(item.text)
+						const curIndex = this.current.find(v => v.value == item.value)
+						if (item.selected && curIndex === -1) {
+							this.current.push(item)
+						}
+					})
+				} else {
+					const def = this.mixinDatacomResData.find(item => item.value === defValue)
+					this.current = def ? this.formatItemName(def) : ''
+				}
 			},
 
 			/**
@@ -195,19 +246,44 @@
 			},
 
 			clearVal() {
-				this.emit('')
+				this.current = this.multiple ? [] : ''
+				this.emit(this.current)
 				if (this.collection) {
 					uni.removeStorageSync(this.last)
 				}
 			},
+			// 值判断
 			change(item) {
 				if (!item.disable) {
+					// 多选
+					if (this.multiple) {
+						const cur = this.mixinDatacomResData.find(v => v.value === item.value)
+						if (cur) {
+							if (!cur.selected) {
+								cur.selected = true
+								this.current.push(cur)
+								this.emit(this.current)
+							} else {
+								const index = this.current.findIndex(v => v.value === item.value)
+								cur.selected = false
+								this.current.splice(index, 1)
+								this.emit(this.current)
+							}
+						}
+						return
+					}
 					this.showSelector = false
 					this.current = this.formatItemName(item)
 					this.emit(item.value)
 				}
 			},
 			emit(val) {
+				if (this.multiple) {
+					const valArr = val.map(v => v.value)
+					this.$emit('change', valArr, val)
+					this.$emit('update:modelValue', valArr)
+					return
+				}
 				this.$emit('change', val)
 				this.$emit('input', val)
 				this.$emit('update:modelValue', val)
@@ -274,7 +350,17 @@
 		margin: auto 0;
 		margin-right: 5px;
 	}
-
+	.uni-input {
+		font-size: 14px;
+		// border: 1px solid $uni-border-3;
+		box-sizing: border-box;
+		// border-radius: 4px;
+		// padding: 0 5px;
+		// height: 35px;
+		width: auto;
+		flex: 1;
+		margin: 3px 5px 5px 5px;
+	}
 	.uni-select {
 		font-size: 14px;
 		border: 1px solid $uni-border-3;
@@ -298,8 +384,18 @@
 			background-color: #f5f7fa;
 			cursor: not-allowed;
 		}
+		&--multiple {
+			height: auto;
+			min-height: 35px;
+			padding: 5px;
+			box-sizing: border-box;
+		}
 	}
-
+	.uni-select__tag {
+		display: inline-flex;
+		margin: 2px;
+		padding: 2px 4px;
+	}
 	.uni-select__label {
 		font-size: 16px;
 		// line-height: 22px;
@@ -317,8 +413,11 @@
 		flex: 1;
 		flex-direction: row;
 		align-items: center;
+		&--multiple {
+			height: auto;
+			min-height: 25px;
+		}
 	}
-
 	.uni-select__input {
 		flex: 1;
 		font-size: 14px;
@@ -356,15 +455,17 @@
 
 	.uni-select__selector-empty,
 	.uni-select__selector-item {
-		/* #ifndef APP-NVUE */
 		display: flex;
 		cursor: pointer;
-		/* #endif */
+		justify-content: space-between;
 		line-height: 35px;
 		font-size: 14px;
 		text-align: center;
 		/* border-bottom: solid 1px $uni-border-3; */
 		padding: 0px 10px;
+		&--selected {
+			color: #409eff;
+		}
 	}
 
 	.uni-select__selector-item:hover {
@@ -421,7 +522,10 @@
 		-o-text-overflow: ellipsis;
 		overflow: hidden;
 	}
-
+	.uni-select__input-text-multiple {
+		width: 100%;
+		color: $uni-main-color;
+	}
 	.uni-select__input-placeholder {
 		color: $uni-base-color;
 		font-size: 12px;
