@@ -17,7 +17,7 @@
 				<view class="uni-select--mask" v-if="showSelector" @click="toggleSelector" />
 				<view class="uni-select__selector" v-if="showSelector">
 					<view class="uni-popper__arrow"></view>
-					<uni-easyinput class="uni-input" type="number" confirm-type="search" :clearSize="18" v-model="search" v-if="hasSearch" placeholder="输入进行搜索" />
+					<uni-easyinput class="uni-input" type="text" confirm-type="search" :clearSize="18" v-model="search" v-if="hasSearch" placeholder="输入进行搜索" />
 					<scroll-view scroll-y="true" class="uni-select__selector-scroll">
 						<view class="uni-select__selector-empty" v-if="mixinDatacomResData.length === 0">
 							<text>{{ emptyTips }}</text>
