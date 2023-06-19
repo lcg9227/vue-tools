@@ -285,9 +285,9 @@
 					this.$emit('change', valArr, val)
 					return
 				}
-				this.$emit('change', val)
 				this.$emit('input', val)
 				this.$emit('update:modelValue', val)
+				this.$emit('change', val)
 				if (this.collection) {
 					uni.setStorageSync(this.last, val)
 				}
