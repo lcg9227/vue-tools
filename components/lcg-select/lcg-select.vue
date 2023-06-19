@@ -280,8 +280,9 @@
 			emit(val) {
 				if (this.multiple) {
 					const valArr = val.map(v => v.value)
-					this.$emit('change', valArr, val)
 					this.$emit('update:modelValue', valArr)
+					this.$emit('input', valArr)
+					this.$emit('change', valArr, val)
 					return
 				}
 				this.$emit('change', val)

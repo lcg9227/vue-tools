@@ -22,13 +22,14 @@
 						<uni-forms-item label="执行天数" name="execute_days" required v-if="fields.execute_type === 1">
 							<uni-easyinput type="number" v-model="fields.execute_days" placeholder="请输入执行天数" :maxlength="3" />
 						</uni-forms-item>
-						<uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
+						<!-- <uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
 							<uni-data-checkbox multiple v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></uni-data-checkbox>
-						</uni-forms-item>
-						<!-- 测试 -->
-						<!-- <uni-forms-item label="执行周选择" name="execute_weeks" required>
-							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
 						</uni-forms-item> -->
+						<!-- 测试 -->
+						<div>{{ JSON.stringify(execute_weeks) }}</div>
+						<uni-forms-item label="执行周选择" name="execute_weeks" required>
+							<lcg-select v-model="execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
+						</uni-forms-item>
 						<uni-forms-item label="奖励积分" name="reward" required>
 							<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
 						</uni-forms-item>
@@ -51,7 +52,9 @@
 	export default {
 		components: [],
 		data() {
-			return {}
+			return {
+				execute_weeks: []
+			}
 		},
 		setup(props) {
 			const { proxy } = getCurrentInstance()
@@ -86,13 +89,14 @@
 				proxy.$refs.popup.close()
 			}
 			const onSubmit = () => {
-				proxy.$refs.form.validate((err, formData) => {
-					// 如果校验成功 ，err 返回 null
-					if (!err) {
-						submit(formData)
-						return
-					}
-				})
+				console.log('textChange >>>', fields.value.execute_weeks)
+				// proxy.$refs.form.validate((err, formData) => {
+				// 	// 如果校验成功 ，err 返回 null
+				// 	if (!err) {
+				// 		submit(formData)
+				// 		return
+				// 	}
+				// })
 			}
 			const open = async (row, _submit) => {
 				const { _id } = row || {}
@@ -109,7 +113,7 @@
 				})
 			}
 			const textChange = (...ages) => {
-				console.log('textChange >>>', ages)
+				console.log('textChange >>>', fields.value.execute_weeks, ages)
 			}
 			return { id, style, scrollHeight, showForm, fields, rules, localdata, title, onSubmit, onClose, open, textChange }
 		}
