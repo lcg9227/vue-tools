@@ -3,7 +3,7 @@
 		<span v-if="label" class="uni-label-text hide-on-phone">{{ label + '：' }}</span>
 		<view class="uni-stat-box" :class="{ 'uni-stat__actived': multiple ? current.length > 0 : current }">
 			<view class="uni-select" :class="{ 'uni-select--disabled': disabled, 'uni-select--multiple': multiple }">
-				<view class="uni-select__input-box" :class="{ 'uni-select__input-box--multiple': multiple }" @click="toggleSelector">
+				<view class="uni-select__input-box" :class="{ 'uni-select__input-box--multiple': multiple, 'uni-select__input-box--search': hasSearch && showSelector }" @click="toggleSelector">
 					<view v-if="current.length > 0" :class="multiple ? 'uni-select__input-text-multiple' : 'uni-select__input-text'">
 						<view v-if="multiple">
 							<uni-tag class="uni-select__tag" v-for="(item, index) in current" :key="index" :text="item.text" type="success" />
@@ -14,12 +14,21 @@
 					<uni-icons v-if="current && clear" type="clear" color="#c0c4cc" size="24" @click="clearVal" />
 					<uni-icons v-else :type="showSelector ? 'top' : 'bottom'" size="14" color="#999" />
 				</view>
+				<uni-easyinput
+					ref="easyinput"
+					class="uni-input"
+					:styles="{ backgroundColor: 'transparent', borderColor: 'transparent' }"
+					focus
+					type="text"
+					confirm-type="search"
+					:clearSize="18"
+					v-model="search"
+					v-if="hasSearch && showSelector" />
 				<view class="uni-select--mask" v-if="showSelector" @click="toggleSelector" />
 				<view class="uni-select__selector" v-if="showSelector">
 					<view class="uni-popper__arrow"></view>
-					<uni-easyinput class="uni-input" type="text" confirm-type="search" :clearSize="18" v-model="search" v-if="hasSearch" placeholder="输入进行搜索" />
 					<scroll-view scroll-y="true" class="uni-select__selector-scroll">
-						<view class="uni-select__selector-empty" v-if="mixinDatacomResData.length === 0">
+						<view class="uni-select__selector-empty" v-if="searchData.length === 0">
 							<text>{{ emptyTips }}</text>
 						</view>
 						<view v-else>
@@ -351,16 +360,24 @@
 		margin: auto 0;
 		margin-right: 5px;
 	}
+	.uni-select__input-box--search {
+		opacity: 0.1;
+	}
 	.uni-input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 		font-size: 14px;
 		// border: 1px solid $uni-border-3;
 		box-sizing: border-box;
 		// border-radius: 4px;
 		// padding: 0 5px;
 		// height: 35px;
-		width: auto;
+		// width: auto;
 		flex: 1;
-		margin: 3px 5px 5px 5px;
+		z-index: 2;
 	}
 	.uni-select {
 		font-size: 14px;
@@ -538,5 +555,6 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
+		z-index: 1;
 	}
 </style>

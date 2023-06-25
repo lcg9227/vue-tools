@@ -515,6 +515,7 @@ $uni-border-1: #dcdfe6 !default;
 	box-sizing: border-box;
 	// min-height: 36px;
 	/* #endif */
+	height: 100%;
 	flex-direction: row;
 	align-items: center;
 	// 处理border动画刚开始显示黑色的问题
