@@ -26,9 +26,9 @@
 							<uni-data-checkbox multiple v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></uni-data-checkbox>
 						</uni-forms-item>
 						<!-- 测试 -->
-						<!-- <uni-forms-item label="执行周选择" name="execute_weeks" required>
+						<uni-forms-item label="执行周选择" name="execute_weeks" required>
 							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
-						</uni-forms-item> -->
+						</uni-forms-item>
 						<uni-forms-item label="奖励积分" name="reward" required>
 							<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
 						</uni-forms-item>
@@ -108,8 +108,8 @@
 					showForm.value = true
 				})
 			}
-			const textChange = (...ages) => {
-				console.log('textChange >>>', ages)
+			const textChange = val => {
+				console.log('textChange >>>', val)
 			}
 			return { id, style, scrollHeight, showForm, fields, rules, localdata, title, onSubmit, onClose, open, textChange }
 		}

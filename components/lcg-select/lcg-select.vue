@@ -10,7 +10,7 @@
 						</view>
 						<view v-else>{{ current }}</view>
 					</view>
-					<view v-else class="uni-select__input-text uni-select__input-placeholder">{{ typePlaceholder }}</view>
+					<view v-else class="uni-select__input-text uni-select__input-placeholder">{{ placeholder }}</view>
 					<uni-icons v-if="current && clear" type="clear" color="#c0c4cc" size="24" @click="clearVal" />
 					<uni-icons v-else :type="showSelector ? 'top' : 'bottom'" size="14" color="#999" />
 				</view>
@@ -72,7 +72,6 @@
 	import RenderNode from '../RenderNode/RenderNode'
 	export default {
 		name: 'lcg-select',
-		mixins: [uniCloud.mixinDatacom || {}],
 		components: { RenderNode },
 		data() {
 			return {
@@ -132,23 +131,7 @@
 				default: false
 			}
 		},
-		created() {
-			this.last = `${this.collection}_last_selected_option_value`
-			if (this.collection && !this.localdata.length) {
-				this.query()
-			}
-		},
 		computed: {
-			typePlaceholder() {
-				const text = {
-					'opendb-stat-app-versions': '版本',
-					'opendb-app-channels': '渠道',
-					'opendb-app-list': '应用'
-				}
-				const common = this.placeholder
-				const placeholder = text[this.collection]
-				return placeholder ? common + placeholder : common
-			},
 			searchData() {
 				if (this.search) {
 					return this.mixinDatacomResData.filter(v => v.text.includes(this.search))
@@ -163,6 +146,11 @@
 					if (Array.isArray(val) && old !== val) {
 						this.mixinDatacomResData = val
 					}
+				}
+			},
+			showSelector(val) {
+				if (val === false) {
+					this.search = ''
 				}
 			},
 			// #ifndef VUE3
@@ -185,14 +173,6 @@
 			}
 		},
 		methods: {
-			// 执行数据库查询
-			query() {
-				this.mixinDatacomEasyGet()
-			},
-			// 监听查询条件变更事件
-			onMixinDatacomPropsChange() {
-				this.query()
-			},
 			// 初始化默认值
 			initDefVal() {
 				if (this.multiple && !Array.isArray(this.current)) {
@@ -203,26 +183,6 @@
 					defValue = this.value
 				} else if ((this.modelValue || this.modelValue === 0) && !this.isDisabled(this.modelValue)) {
 					defValue = this.modelValue
-				} else {
-					let strogeValue
-					if (this.collection) {
-						strogeValue = uni.getStorageSync(this.last)
-					}
-					if (strogeValue || strogeValue === 0) {
-						defValue = strogeValue
-					} else {
-						let defItem = ''
-						if (this.defItem > 0 && this.defItem <= this.mixinDatacomResData.length) {
-							defItem = this.mixinDatacomResData[this.defItem - 1].value
-							if (this.multiple) {
-								defItem.selected = true
-							}
-						}
-						defValue = this.multiple ? [] : defItem
-					}
-					if (defValue || defValue === 0) {
-						this.emit(defValue)
-					}
 				}
 				if (this.multiple) {
 					this.mixinDatacomResData.forEach(item => {
@@ -257,9 +217,6 @@
 			clearVal() {
 				this.current = this.multiple ? [] : ''
 				this.emit(this.current)
-				if (this.collection) {
-					uni.removeStorageSync(this.last)
-				}
 			},
 			// 值判断
 			change(item) {
@@ -297,9 +254,6 @@
 				this.$emit('input', val)
 				this.$emit('update:modelValue', val)
 				this.$emit('change', val)
-				if (this.collection) {
-					uni.setStorageSync(this.last, val)
-				}
 			},
 
 			toggleSelector() {
@@ -310,9 +264,8 @@
 				this.showSelector = !this.showSelector
 			},
 			formatItemName(item) {
-				let { text, value, channel_code } = item
-				channel_code = channel_code ? `(${channel_code})` : ''
-				return this.collection.indexOf('app-list') > 0 ? `${text}(${value})` : text ? text : `未命名${channel_code}`
+				let { text } = item
+				return text
 			}
 		}
 	}
