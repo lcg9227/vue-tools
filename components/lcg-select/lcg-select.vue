@@ -148,11 +148,6 @@
 					}
 				}
 			},
-			showSelector(val) {
-				if (val === false) {
-					this.search = ''
-				}
-			},
 			// #ifndef VUE3
 			value() {
 				this.initDefVal()
@@ -187,7 +182,7 @@
 				if (this.multiple) {
 					this.mixinDatacomResData.forEach(item => {
 						item.selected = defValue.includes(item.value) || defValue.includes(item.text)
-						const curIndex = this.current.find(v => v.value == item.value)
+						const curIndex = this.current.findIndex(v => v.value == item.value)
 						if (item.selected && curIndex === -1) {
 							this.current.push(item)
 						}
@@ -260,8 +255,10 @@
 				if (this.disabled) {
 					return
 				}
-
 				this.showSelector = !this.showSelector
+				if (this.showSelector === false) {
+					this.search = ''
+				}
 			},
 			formatItemName(item) {
 				let { text } = item
@@ -332,6 +329,9 @@
 		flex: 1;
 		z-index: 2;
 	}
+	.uni-input >>> .uni-easyinput__content {
+		height: 100%;
+	}
 	.uni-select {
 		font-size: 14px;
 		border: 1px solid $uni-border-3;
@@ -354,6 +354,10 @@
 		&--disabled {
 			background-color: #f5f7fa;
 			cursor: not-allowed;
+			.uni-select__tag,
+			.uni-select__input-text {
+				opacity: 0.5;
+			}
 		}
 		&--multiple {
 			height: auto;

@@ -25,15 +25,18 @@
 						<uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
 							<uni-data-checkbox multiple v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></uni-data-checkbox>
 						</uni-forms-item>
-						<!-- 测试 -->
-						<uni-forms-item label="执行周选择" name="execute_weeks" required>
-							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
-						</uni-forms-item>
 						<uni-forms-item label="奖励积分" name="reward" required>
 							<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
 						</uni-forms-item>
 						<uni-forms-item label="任务说明" name="describe">
 							<uni-easyinput type="textarea" v-model="fields.describe" placeholder="请输入任务说明" :maxlength="200" />
+						</uni-forms-item>
+						<!-- 测试 -->
+						<uni-forms-item label="执行周选择" name="execute_weeks" required>
+							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
+						</uni-forms-item>
+						<uni-forms-item label="图标选择" name="icon" required>
+							<lcg-select v-model="fields.icon" :localdata="localdata.icon" :multiple="false" :hasSearch="true" @change="textChange"></lcg-select>
 						</uni-forms-item>
 					</uni-forms>
 				</div>
@@ -131,7 +134,7 @@
 			display: flex;
 			flex-direction: row;
 			width: 100%;
-			height: 70px;
+			height: 140rpx;
 			align-items: center;
 			box-sizing: border-box;
 			box-shadow: 0 -2rpx 20rpx #f2f2f2;
@@ -152,5 +155,6 @@
 	}
 	.content {
 		padding: 0 20px;
+		padding-bottom: 140rpx;
 	}
 </style>
