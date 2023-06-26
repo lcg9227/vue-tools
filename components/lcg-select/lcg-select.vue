@@ -148,6 +148,11 @@
 					}
 				}
 			},
+			showSelector(val) {
+				if (val === false) {
+					this.search = ''
+				}
+			},
 			// #ifndef VUE3
 			value() {
 				this.initDefVal()
@@ -256,9 +261,6 @@
 					return
 				}
 				this.showSelector = !this.showSelector
-				if (this.showSelector === false) {
-					this.search = ''
-				}
 			},
 			formatItemName(item) {
 				let { text } = item

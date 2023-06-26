@@ -11,7 +11,7 @@
 							<uni-easyinput type="text" v-model="fields.name" placeholder="请输入任务名称" :maxlength="20" />
 						</uni-forms-item>
 						<uni-forms-item label="图标选择" name="icon" required>
-							<lcg-select v-model="fields.icon" :localdata="localdata.icon"></lcg-select>
+							<lcg-select v-model="fields.icon" :localdata="localdata.icon" :multiple="false" :hasSearch="true" @change="textChange"></lcg-select>
 						</uni-forms-item>
 						<uni-forms-item label="图标颜色选择" name="icon_color" required v-if="fields.icon.includes('t-icon-')">
 							<lcg-select v-model="fields.icon_color" :localdata="localdata.icon_color"></lcg-select>
@@ -23,20 +23,13 @@
 							<uni-easyinput type="number" v-model="fields.execute_days" placeholder="请输入执行天数" :maxlength="3" />
 						</uni-forms-item>
 						<uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
-							<uni-data-checkbox multiple v-model="fields.execute_weeks" :localdata="localdata.execute_weeks"></uni-data-checkbox>
+							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
 						</uni-forms-item>
 						<uni-forms-item label="奖励积分" name="reward" required>
 							<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
 						</uni-forms-item>
 						<uni-forms-item label="任务说明" name="describe">
 							<uni-easyinput type="textarea" v-model="fields.describe" placeholder="请输入任务说明" :maxlength="200" />
-						</uni-forms-item>
-						<!-- 测试 -->
-						<uni-forms-item label="执行周选择" name="execute_weeks" required>
-							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
-						</uni-forms-item>
-						<uni-forms-item label="图标选择" name="icon" required>
-							<lcg-select v-model="fields.icon" :localdata="localdata.icon" :multiple="false" :hasSearch="true" @change="textChange"></lcg-select>
 						</uni-forms-item>
 					</uni-forms>
 				</div>
@@ -62,7 +55,7 @@
 			const winInfo = uni.getWindowInfo()
 			const height = `${winInfo.windowHeight - 20}px`
 			const paddingTop = `${winInfo.statusBarHeight + 20}px`
-			const scrollHeight = `${winInfo.windowHeight - 80}px`
+			const scrollHeight = `${winInfo.windowHeight - (winInfo.statusBarHeight + 20) - 20 - 70}px`
 			const style = reactive({
 				height,
 				maxHeight: height,
@@ -134,7 +127,7 @@
 			display: flex;
 			flex-direction: row;
 			width: 100%;
-			height: 140rpx;
+			height: 70px;
 			align-items: center;
 			box-sizing: border-box;
 			box-shadow: 0 -2rpx 20rpx #f2f2f2;
@@ -154,7 +147,6 @@
 		}
 	}
 	.content {
-		padding: 0 20px;
-		padding-bottom: 140rpx;
+		padding: 0 20px 10px 20px;
 	}
 </style>
