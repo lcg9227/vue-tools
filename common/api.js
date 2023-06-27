@@ -199,7 +199,6 @@ export const take_task = id => {
 	return cacheReset(username, 'task_list', () =>
 		taskObj.take_task(userInfo, id).then(res => {
 			const { success, errMsg } = res
-			if (success) toast.success('任务领取成功！')
 			if (!success) toast.error(errMsg)
 			return res
 		})

@@ -25,6 +25,9 @@
 			</div>
 		</template>
 	</div>
+	<uni-popup ref="takePopup" type="dialog">
+		<uni-popup-dialog message="领取成功！" confirmText="返回首页" cancelText="继续领取" @confirm="takeGoHome"></uni-popup-dialog>
+	</uni-popup>
 	<lcg-easy-form ref="easyForm"></lcg-easy-form>
 	<TaskForm ref="taskForm"></TaskForm>
 </template>
@@ -123,11 +126,15 @@
 			const take_task = item => {
 				proxy.api.take_task(item._id).then(({ success }) => {
 					if (success) {
-						// 提示是否跳转到首页 todo
+						proxy.$refs.takePopup.open()
 					}
 				})
 			}
-			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task, take_task }
+			// 确定返回首页
+			const takeGoHome = () => {
+				this.pocket.goPage('/pages/ucenter/child-manage/child-page/child-page', { reload: true })
+			}
+			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task, take_task, takeGoHome }
 		}
 	}
 </script>
