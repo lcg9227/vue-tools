@@ -53,6 +53,12 @@
 		data() {
 			return {}
 		},
+		methods: {
+			takeGoHome() { // todo 
+				console.log('>>>', this.pocket)
+				this.pocket.goPage('/pages/home/home', { reload: true })
+			}
+		},
 		setup(props) {
 			const { proxy } = getCurrentInstance()
 			const isParent = props.userInfo.role.includes('parent')
@@ -130,11 +136,7 @@
 					}
 				})
 			}
-			// 确定返回首页
-			const takeGoHome = () => {
-				this.pocket.goPage('/pages/ucenter/child-manage/child-page/child-page', { reload: true })
-			}
-			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task, take_task, takeGoHome }
+			return { isParent, openSetting, getSubText, editTask, deleteTask, dispense_task, take_task }
 		}
 	}
 </script>
