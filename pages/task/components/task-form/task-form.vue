@@ -11,7 +11,7 @@
 							<uni-easyinput type="text" v-model="fields.name" placeholder="请输入任务名称" :maxlength="20" />
 						</uni-forms-item>
 						<uni-forms-item label="图标选择" name="icon" required>
-							<lcg-select v-model="fields.icon" :localdata="localdata.icon" :multiple="false" :hasSearch="true" @change="textChange"></lcg-select>
+							<lcg-select v-model="fields.icon" :localdata="localdata.icon" :multiple="false" :hasSearch="true"></lcg-select>
 						</uni-forms-item>
 						<uni-forms-item label="图标颜色选择" name="icon_color" required v-if="fields.icon.includes('t-icon-')">
 							<lcg-select v-model="fields.icon_color" :localdata="localdata.icon_color"></lcg-select>
@@ -23,7 +23,7 @@
 							<uni-easyinput type="number" v-model="fields.execute_days" placeholder="请输入执行天数" :maxlength="3" />
 						</uni-forms-item>
 						<uni-forms-item label="执行周选择" name="execute_weeks" required v-if="fields.execute_type === 2">
-							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true" @change="textChange"></lcg-select>
+							<lcg-select v-model="fields.execute_weeks" :localdata="localdata.execute_weeks" :multiple="true" :hasSearch="true"></lcg-select>
 						</uni-forms-item>
 						<uni-forms-item label="奖励积分" name="reward" required>
 							<uni-easyinput type="number" v-model="fields.reward" placeholder="请输入当前任务的奖励积分" :maxlength="10" />
@@ -104,10 +104,7 @@
 					showForm.value = true
 				})
 			}
-			const textChange = val => {
-				console.log('textChange >>>', val)
-			}
-			return { id, style, scrollHeight, showForm, fields, rules, localdata, title, onSubmit, onClose, open, textChange }
+			return { id, style, scrollHeight, showForm, fields, rules, localdata, title, onSubmit, onClose, open }
 		}
 	}
 </script>
