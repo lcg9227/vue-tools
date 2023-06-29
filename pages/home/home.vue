@@ -24,9 +24,8 @@
 		},
 		created() {
 			this.userInfo = this.api.getUserInfo()
-			const eventChannel = this.getOpenerEventChannel()
 			// 获取上一页面通过eventChannel传送到当前页面的数据
-			eventChannel.on('getPageData', data => {
+			uni.$once('getPageData', data => {
 				const { reload } = data
 				if (reload) {
 					this.getData()

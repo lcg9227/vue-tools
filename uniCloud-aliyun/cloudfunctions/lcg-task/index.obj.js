@@ -48,7 +48,11 @@ const create_task = async function (userInfo, params) {
 		creator: userDetail.user.username
 	}
 
-	await taskTable.add(data)
+	// 添加任务配置 添加时用jql方式添加，可以获取默认值
+	const dbJQL = uniCloud.databaseForJQL({
+		clientInfo: this.getClientInfo()
+	})
+	await dbJQL.collection('lcg-task-config').add(data)
 	return ret
 }
 /* 编辑任务列表 */
@@ -108,8 +112,11 @@ const dispense_task = async function (userInfo, id, params) {
 		task_id: id,
 		state: 1 // 任务开始状态
 	}
-	// 添加任务到列表
-	await taskListTable.add(data)
+	// 添加任务到列表 添加时用jql方式添加，可以获取默认值
+	const dbJQL = uniCloud.databaseForJQL({
+		clientInfo: this.getClientInfo()
+	})
+	await dbJQL.collection('lcg-task-list').add(data)
 	return ret
 }
 /* 子账号领取任务 */
@@ -126,8 +133,11 @@ const take_task = async function (userInfo, id) {
 		task_id: id,
 		state: 1 // 任务开始状态
 	}
-	// 添加任务到列表
-	await taskListTable.add(data)
+	// 添加任务到列表 添加时用jql方式添加，可以获取默认值
+	const dbJQL = uniCloud.databaseForJQL({
+		clientInfo: this.getClientInfo()
+	})
+	await dbJQL.collection('lcg-task-list').add(data)
 	return ret
 }
 /* 获取执行任务列表 */
@@ -151,6 +161,7 @@ const getTaskList = async function (userInfo, username) {
 	const { data: taskList } = await dbJQL
 		.collection('lcg-task-list', taskTemp)
 		.where({ execute_name: username, state: dbCmd.in([1, 2]) })
+		.orderBy('create_date desc')
 		.get()
 	ret.data = taskList.map(({ dispense_nickname, state, _id, task_id }) => ({
 		_id,

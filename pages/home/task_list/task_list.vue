@@ -18,11 +18,11 @@
 					<div class="setting" @click="openSetting(item)" v-if="isParent">
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
-					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="isParent">
-						<button class="btn" type="warn" size="mini" @click="cancelTask(item)">取消</button>
+					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen">
+						<button class="btn" type="warn" size="mini" @click="cancelTask(item)" v-if="isParent">取消</button>
 					</uni-transition>
 					<button class="button" size="mini" v-if="isParent && item.state === 2" @click="completeTask(item)">完成</button>
-					<button class="button" size="mini" v-if="!isParent" @click="submitTask(item)">提交</button>
+					<button class="button" size="mini" v-if="!isParent && item.state === 1" @click="submitTask(item)">提交</button>
 				</div>
 			</div>
 		</template>

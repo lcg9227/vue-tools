@@ -1,3 +1,4 @@
+import pagesConfig from '../pages.json'
 // 提示
 export const toast = {
 	success: title => uni.showToast({ title, icon: 'success', duration: 3000 }),
@@ -44,15 +45,25 @@ export const throttle = (fn, delay = 300) => {
 
 // 跳转页面
 export const goPage = (url, data = {}, config = {}) => {
-	uni.navigateTo({
-		url,
-		animationType: 'slide-in-left',
-		animationDuration: 2000,
-		success: function (res) {
-			// 通过eventChannel向被打开页面传送数据
-			res.eventChannel.emit('getPageData', data)
-		},
-		...config
+	const tabIndex = pagesConfig.tabBar.list.findIndex(v => v.pagePath === url)
+	if (tabIndex === -1) {
+		uni.navigateTo({
+			url: `/${url}`,
+			animationType: 'slide-in-left',
+			animationDuration: 2000,
+			success: function (res) {
+				// 通过eventChannel向被打开页面传送数据
+				uni.$emit('getPageData', data)
+			},
+			...config
+		})
+		return
+	}
+	uni.switchTab({
+		url: `/${url}`,
+		success: function () {
+			uni.$emit('getPageData', { reload: true })
+		}
 	})
 }
 // 检查异常

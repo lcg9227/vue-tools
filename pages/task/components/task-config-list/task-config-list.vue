@@ -54,9 +54,8 @@
 			return {}
 		},
 		methods: {
-			takeGoHome() { // todo 
-				console.log('>>>', this.pocket)
-				this.pocket.goPage('/pages/home/home', { reload: true })
+			takeGoHome() {
+				this.pocket.goPage('pages/home/home', { reload: true })
 			}
 		},
 		setup(props) {

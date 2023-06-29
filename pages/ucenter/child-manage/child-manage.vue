@@ -61,7 +61,7 @@
 			},
 			// 跳转到子账号页面
 			goChildPage(username) {
-				this.pocket.goPage('/pages/ucenter/child-manage/child-page/child-page', { username })
+				this.pocket.goPage('pages/ucenter/child-manage/child-page/child-page', { username })
 			}
 		}
 	}
