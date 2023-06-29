@@ -15,6 +15,7 @@
 					<div class="setting" @click="openSetting(item)" v-if="isParent">
 						<lcg-iconfont type="t-icon-jinrong1" color="#fff" :fontSize="24"></lcg-iconfont>
 					</div>
+					<div class="setting-mask" v-if="item.setOpen" @click="openSetting(item)"></div>
 					<uni-transition mode-class="slide-right" class="setting-box" :show="item.setOpen" v-if="isParent">
 						<button class="btn" type="primary" size="mini" @click="editTask(item)">编辑</button>
 						<button class="btn" type="warn" size="mini" @click="deleteTask(item)">删除</button>
@@ -84,6 +85,9 @@
 			}
 			// 打开设置
 			const openSetting = item => {
+				if (!item.setOpen) {
+					props.list.forEach(v => (v.setOpen = false))
+				}
 				item.setOpen = !item.setOpen
 			}
 			// 编辑任务
@@ -232,6 +236,16 @@
 						width: 160rpx;
 						margin: 0;
 					}
+				}
+				.setting-mask {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background-color: #000;
+					z-index: 9;
+					opacity: 0.1;
 				}
 				.button {
 					display: flex;
