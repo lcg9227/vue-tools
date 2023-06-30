@@ -27,7 +27,7 @@
 		</template>
 	</div>
 	<uni-popup ref="takePopup" type="dialog">
-		<uni-popup-dialog message="领取成功！" confirmText="返回首页" cancelText="继续领取" @confirm="takeGoHome"></uni-popup-dialog>
+		<uni-popup-dialog content="领取成功！" confirmText="返回首页" cancelText="继续领取" @confirm="takeGoHome"></uni-popup-dialog>
 	</uni-popup>
 	<lcg-easy-form ref="easyForm"></lcg-easy-form>
 	<TaskForm ref="taskForm"></TaskForm>
