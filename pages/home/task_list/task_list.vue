@@ -142,6 +142,7 @@
 			position: relative;
 			height: 160rpx;
 			background-color: #fff;
+			// background-image: linear-gradient(to bottom, #3fa162 0%, #69c98b 20%, #f2f2f2 60%, #fff 100%);
 			box-shadow: 0 0 10rpx #f2f2f2;
 			border: 1px solid #f4f4f4;
 			border-radius: 10rpx;

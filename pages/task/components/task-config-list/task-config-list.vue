@@ -152,9 +152,9 @@
 		.item {
 			position: relative;
 			height: 160rpx;
-			background-color: #fff;
+			background-color: rgba(81, 231, 81, 0.2);
 			box-shadow: 0 0 10rpx #f2f2f2;
-			border: 1px solid #f4f4f4;
+			border: 1px solid rgba(81, 231, 81, 0.2);
 			border-radius: 10rpx;
 			box-sizing: border-box;
 			padding: 20rpx;
@@ -167,7 +167,7 @@
 				width: 120rpx;
 				height: 120rpx;
 				border-radius: 12rpx;
-				border: 1px solid #f4f4f4;
+				border: 1px solid rgba(80, 230, 80, 0.3);
 				display: flex;
 				align-items: center;
 				justify-content: center;
